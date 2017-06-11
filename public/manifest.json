@@ -1,0 +1,7 @@
+{
+  "name": "westwind.backbone.site message!",
+  "short_name": "WebPush",
+  "start_url": "https://westwind.backbone.site/",
+  "display": "standalone",
+  "gcm_sender_id": "861600582037"
+}

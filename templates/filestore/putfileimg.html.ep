@@ -1,0 +1,19 @@
+% layout 'mobidef2';
+% title 'putfileimg';
+%#<script     >
+%# scriptがあればココに
+%#</script>
+<div data-role="page" style="background: #80aa55">
+            <div>
+%           if ( $mimetype =~ /jpeg|jpg|png|gif/){
+       %#     <object data="/getfileimg?room=<%= $room %>" type="<%= $mimetype %>" width="100%"></object>
+            <img src="/getfileimg?room=<%= $room %>" width="100%">
+%               } elsif ( $mimetype =~ /mpeg|3gp|video/){
+            <video src="/getfileimg?room=<%= $room %>" controls width="100%"></video>
+%               } elsif ( $mimetype =~ /mp3|m4a|mp4/ ){
+            <audio src="/getfileimg?room=<%= $room %>" controls width="100%"></audio>
+%               } elsif ( $mimetype =~ /pdf/ ){
+            <object data="/getfileimg?room=<%= $room %>"></object>
+%               }
+            </div>
+</div>

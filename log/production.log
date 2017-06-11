@@ -1,0 +1,896 @@
+
+[Sun Jun  4 03:30:54 2017] [info] Starting zero downtime software upgrade
+[Sun Jun  4 03:30:55 2017] [info] Listening at "http://*:3800"
+[Sun Jun  4 03:30:55 2017] [info] Manager 2131 started
+[Sun Jun  4 03:30:55 2017] [info] Upgrade successful, stopping 1997
+[Sun Jun  4 03:30:55 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Sun Jun  4 03:30:55 2017] [info] Manager 1997 stopped
+[Sun Jun  4 03:31:02 2017] [info] DEBUG: nowprint
+[Sun Jun  4 03:31:02 2017] [info] DEBUG: wDxF0uDhWlcTrKVV/iLZfw
+[Sun Jun  4 03:31:02 2017] [info] DEBUG: 2IsBy4rJdeysoNSilNCY6A
+[Sun Jun  4 03:31:02 2017] [info] DEBUG: dbQFNFiUqW5WAb9CLK5OEQ
+[Sun Jun  4 03:31:02 2017] [info] DEBUG: r0zA78TgOKv2Y7FuX0briA
+[Sun Jun  4 03:31:09 2017] [info] DEBUG: gwMxZPrAKuKn3BRK7uDkaQ
+[Sun Jun  4 03:31:09 2017] [info] DEBUG: 2J7fUuMn7tldoSww72Banw
+[Sun Jun  4 03:31:09 2017] [info] DEBUG: RhAz/n6oQzLhIMjIhjn3CQ
+[Sun Jun  4 03:31:09 2017] [info] DEBUG: 8LC1cKFUCmLgteLhH8MLQw
+[Sun Jun  4 03:31:09 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 03:31:27 2017] [info] DEBUG: 8LC1cKFUCmLgteLhH8MLQw
+[Sun Jun  4 12:18:13 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Sun Jun  4 12:18:22 2017] [info] DEBUG: nowprint
+[Sun Jun  4 12:18:22 2017] [info] DEBUG: wDxF0uDhWlcTrKVV/iLZfw
+[Sun Jun  4 12:18:22 2017] [info] DEBUG: r0zA78TgOKv2Y7FuX0briA
+[Sun Jun  4 12:18:22 2017] [info] DEBUG: 2IsBy4rJdeysoNSilNCY6A
+[Sun Jun  4 12:18:22 2017] [info] DEBUG: dbQFNFiUqW5WAb9CLK5OEQ
+[Sun Jun  4 12:18:26 2017] [info] DEBUG: wDxF0uDhWlcTrKVV/iLZfw
+[Sun Jun  4 12:18:27 2017] [info] DEBUG: dbQFNFiUqW5WAb9CLK5OEQ
+[Sun Jun  4 12:18:27 2017] [info] DEBUG: r0zA78TgOKv2Y7FuX0briA
+[Sun Jun  4 12:18:27 2017] [info] DEBUG: 2IsBy4rJdeysoNSilNCY6A
+[Sun Jun  4 12:18:27 2017] [info] DEBUG: 2J7fUuMn7tldoSww72Banw
+[Sun Jun  4 12:18:31 2017] [info] DEBUG: 2IsBy4rJdeysoNSilNCY6A
+[Sun Jun  4 12:18:31 2017] [info] DEBUG: dbQFNFiUqW5WAb9CLK5OEQ
+[Sun Jun  4 12:18:32 2017] [info] DEBUG: r0zA78TgOKv2Y7FuX0briA
+[Sun Jun  4 12:18:32 2017] [info] DEBUG: 2J7fUuMn7tldoSww72Banw
+[Sun Jun  4 12:18:33 2017] [info] DEBUG: gwMxZPrAKuKn3BRK7uDkaQ
+[Sun Jun  4 12:18:33 2017] [info] DEBUG: 2IsBy4rJdeysoNSilNCY6A
+[Sun Jun  4 12:18:33 2017] [info] DEBUG: dbQFNFiUqW5WAb9CLK5OEQ
+[Sun Jun  4 12:18:33 2017] [info] DEBUG: r0zA78TgOKv2Y7FuX0briA
+[Sun Jun  4 12:18:37 2017] [info] DEBUG: dbQFNFiUqW5WAb9CLK5OEQ
+[Sun Jun  4 12:18:38 2017] [info] DEBUG: r0zA78TgOKv2Y7FuX0briA
+[Sun Jun  4 12:18:39 2017] [info] DEBUG: 2J7fUuMn7tldoSww72Banw
+[Sun Jun  4 12:18:39 2017] [info] DEBUG: gwMxZPrAKuKn3BRK7uDkaQ
+[Sun Jun  4 12:18:39 2017] [info] DEBUG: 8LC1cKFUCmLgteLhH8MLQw
+[Sun Jun  4 12:18:39 2017] [info] DEBUG: dbQFNFiUqW5WAb9CLK5OEQ
+[Sun Jun  4 12:18:39 2017] [info] DEBUG: r0zA78TgOKv2Y7FuX0briA
+[Sun Jun  4 12:18:56 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 12:18:56 2017] [info] DEBUG: RhAz/n6oQzLhIMjIhjn3CQ
+[Sun Jun  4 12:18:56 2017] [info] DEBUG: jz185u5rFIx2qpBlY02+hw
+[Sun Jun  4 12:18:56 2017] [info] DEBUG: 1TyIUKaXxSerbf6L3BTAQQ
+[Sun Jun  4 12:18:56 2017] [info] DEBUG: 5N+ZLDYsQhFCTGMxUkSEpA
+[Sun Jun  4 12:24:53 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 12:24:54 2017] [info] DEBUG: 1TyIUKaXxSerbf6L3BTAQQ
+[Sun Jun  4 12:24:54 2017] [info] DEBUG: jz185u5rFIx2qpBlY02+hw
+[Sun Jun  4 12:24:54 2017] [info] DEBUG: 5N+ZLDYsQhFCTGMxUkSEpA
+[Sun Jun  4 12:24:54 2017] [info] DEBUG: RhAz/n6oQzLhIMjIhjn3CQ
+[Sun Jun  4 12:25:06 2017] [info] DEBUG: dbQFNFiUqW5WAb9CLK5OEQ
+[Sun Jun  4 12:25:07 2017] [info] DEBUG: dbQFNFiUqW5WAb9CLK5OEQ
+[Sun Jun  4 12:25:07 2017] [info] DEBUG: r0zA78TgOKv2Y7FuX0briA
+[Sun Jun  4 12:25:07 2017] [info] DEBUG: 2J7fUuMn7tldoSww72Banw
+[Sun Jun  4 12:25:07 2017] [info] DEBUG: 8LC1cKFUCmLgteLhH8MLQw
+[Sun Jun  4 12:25:07 2017] [info] DEBUG: gwMxZPrAKuKn3BRK7uDkaQ
+[Sun Jun  4 12:25:26 2017] [info] DEBUG: r0zA78TgOKv2Y7FuX0briA
+[Sun Jun  4 12:25:26 2017] [info] DEBUG: 2J7fUuMn7tldoSww72Banw
+[Sun Jun  4 12:25:27 2017] [info] DEBUG: 8LC1cKFUCmLgteLhH8MLQw
+[Sun Jun  4 12:25:27 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 12:25:27 2017] [info] DEBUG: gwMxZPrAKuKn3BRK7uDkaQ
+[Sun Jun  4 12:25:27 2017] [info] DEBUG: r0zA78TgOKv2Y7FuX0briA
+[Sun Jun  4 12:25:37 2017] [info] DEBUG: 2J7fUuMn7tldoSww72Banw
+[Sun Jun  4 12:25:37 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 12:25:37 2017] [info] DEBUG: 8LC1cKFUCmLgteLhH8MLQw
+[Sun Jun  4 12:25:37 2017] [info] DEBUG: gwMxZPrAKuKn3BRK7uDkaQ
+[Sun Jun  4 12:25:37 2017] [info] DEBUG: RhAz/n6oQzLhIMjIhjn3CQ
+[Sun Jun  4 12:25:41 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 12:25:41 2017] [info] DEBUG: 8LC1cKFUCmLgteLhH8MLQw
+[Sun Jun  4 12:25:41 2017] [info] DEBUG: gwMxZPrAKuKn3BRK7uDkaQ
+[Sun Jun  4 12:25:41 2017] [info] DEBUG: RhAz/n6oQzLhIMjIhjn3CQ
+[Sun Jun  4 12:25:41 2017] [info] DEBUG: jz185u5rFIx2qpBlY02+hw
+[Sun Jun  4 12:25:44 2017] [info] DEBUG: jz185u5rFIx2qpBlY02+hw
+[Sun Jun  4 12:25:44 2017] [info] DEBUG: 1TyIUKaXxSerbf6L3BTAQQ
+[Sun Jun  4 12:25:44 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 12:25:44 2017] [info] DEBUG: RhAz/n6oQzLhIMjIhjn3CQ
+[Sun Jun  4 12:25:44 2017] [info] DEBUG: 8LC1cKFUCmLgteLhH8MLQw
+[Sun Jun  4 12:25:57 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Sun Jun  4 12:26:04 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 12:26:04 2017] [info] DEBUG: RhAz/n6oQzLhIMjIhjn3CQ
+[Sun Jun  4 12:26:04 2017] [info] DEBUG: 1TyIUKaXxSerbf6L3BTAQQ
+[Sun Jun  4 12:26:04 2017] [info] DEBUG: jz185u5rFIx2qpBlY02+hw
+[Sun Jun  4 12:26:04 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Sun Jun  4 12:26:55 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 12:26:55 2017] [info] DEBUG: jz185u5rFIx2qpBlY02+hw
+[Sun Jun  4 12:26:55 2017] [info] DEBUG: 1TyIUKaXxSerbf6L3BTAQQ
+[Sun Jun  4 12:26:55 2017] [info] DEBUG: RhAz/n6oQzLhIMjIhjn3CQ
+[Sun Jun  4 12:26:55 2017] [info] DEBUG: rRpieXkF1N8Oq+/Bw6Btdw
+[Sun Jun  4 12:27:09 2017] [info] DEBUG: rRpieXkF1N8Oq+/Bw6Btdw
+[Sun Jun  4 12:27:44 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 12:27:44 2017] [info] DEBUG: RhAz/n6oQzLhIMjIhjn3CQ
+[Sun Jun  4 12:27:44 2017] [info] DEBUG: jz185u5rFIx2qpBlY02+hw
+[Sun Jun  4 12:27:44 2017] [info] DEBUG: 1TyIUKaXxSerbf6L3BTAQQ
+[Sun Jun  4 12:27:44 2017] [info] DEBUG: rRpieXkF1N8Oq+/Bw6Btdw
+[Sun Jun  4 12:27:52 2017] [info] DEBUG: RhAz/n6oQzLhIMjIhjn3CQ
+[Sun Jun  4 12:27:52 2017] [info] DEBUG: jz185u5rFIx2qpBlY02+hw
+[Sun Jun  4 12:27:52 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 12:27:52 2017] [info] DEBUG: 1TyIUKaXxSerbf6L3BTAQQ
+[Sun Jun  4 12:27:52 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Sun Jun  4 12:36:30 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 12:36:30 2017] [info] DEBUG: 1TyIUKaXxSerbf6L3BTAQQ
+[Sun Jun  4 12:36:30 2017] [info] DEBUG: RhAz/n6oQzLhIMjIhjn3CQ
+[Sun Jun  4 12:36:30 2017] [info] DEBUG: jz185u5rFIx2qpBlY02+hw
+[Sun Jun  4 12:36:34 2017] [info] DEBUG: xClNT8f95h3vTQwwN4cV+Q
+[Sun Jun  4 12:37:30 2017] [info] DEBUG: StgFQYOAM/4Vn3RSSNrrlg
+[Sun Jun  4 12:37:30 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 12:37:30 2017] [info] DEBUG: RhAz/n6oQzLhIMjIhjn3CQ
+[Sun Jun  4 12:37:30 2017] [info] DEBUG: jz185u5rFIx2qpBlY02+hw
+[Sun Jun  4 12:37:41 2017] [info] DEBUG: StgFQYOAM/4Vn3RSSNrrlg
+[Sun Jun  4 13:06:49 2017] [info] Starting zero downtime software upgrade
+[Sun Jun  4 13:06:50 2017] [info] Listening at "http://*:3800"
+[Sun Jun  4 13:06:50 2017] [info] Manager 2793 started
+[Sun Jun  4 13:06:50 2017] [info] Upgrade successful, stopping 2131
+[Sun Jun  4 13:06:50 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Sun Jun  4 13:06:50 2017] [info] Manager 2131 stopped
+[Sun Jun  4 13:18:18 2017] [info] DEBUG: )®)í
+[Sun Jun  4 13:18:18 2017] [info] DEBUG: 
+[Sun Jun  4 13:21:44 2017] [info] DEBUG: uSbm5zyyI3AobSanNs22PA
+[Sun Jun  4 13:22:05 2017] [info] DEBUG: uSbm5zyyI3AobSanNs22PA
+[Sun Jun  4 14:03:57 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Sun Jun  4 14:04:16 2017] [info] DEBUG: StgFQYOAM/4Vn3RSSNrrlg
+[Sun Jun  4 14:04:16 2017] [info] DEBUG: RhAz/n6oQzLhIMjIhjn3CQ
+[Sun Jun  4 14:04:16 2017] [info] DEBUG: jz185u5rFIx2qpBlY02+hw
+[Sun Jun  4 14:04:16 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 14:04:42 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 14:04:56 2017] [info] DEBUG: StgFQYOAM/4Vn3RSSNrrlg
+[Sun Jun  4 14:05:08 2017] [info] DEBUG: StgFQYOAM/4Vn3RSSNrrlg
+[Sun Jun  4 14:27:35 2017] [info] DEBUG: StgFQYOAM/4Vn3RSSNrrlg
+[Sun Jun  4 14:27:58 2017] [info] DEBUG: StgFQYOAM/4Vn3RSSNrrlg
+[Sun Jun  4 14:32:50 2017] [info] DEBUG: StgFQYOAM/4Vn3RSSNrrlg
+[Sun Jun  4 23:47:38 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Sun Jun  4 23:47:44 2017] [info] DEBUG: StgFQYOAM/4Vn3RSSNrrlg
+[Sun Jun  4 23:47:44 2017] [info] DEBUG: C5s+eWtb8C5H9tjSq9kqxA
+[Sun Jun  4 23:47:44 2017] [info] DEBUG: jz185u5rFIx2qpBlY02+hw
+[Sun Jun  4 23:47:44 2017] [info] DEBUG: RhAz/n6oQzLhIMjIhjn3CQ
+[Sun Jun  4 23:50:04 2017] [info] DEBUG: JØA3þtRHÚë
+[Sun Jun  4 23:52:29 2017] [info] DEBUG: Ø¨<'¡"Â'¨æöTI
+[Mon Jun  5 00:30:18 2017] [info] DEBUG: xg180OWgnf4ywd72OKWtCw
+[Mon Jun  5 00:30:19 2017] [info] DEBUG: 46uZWZ0inCgIspny8HpfHA
+[Mon Jun  5 01:02:05 2017] [info] DEBUG: JØA3þtRHÚë
+[Mon Jun  5 01:03:05 2017] [info] Starting zero downtime software upgrade
+[Mon Jun  5 01:03:06 2017] [info] Listening at "http://*:3800"
+[Mon Jun  5 01:03:06 2017] [info] Manager 3270 started
+[Mon Jun  5 01:03:06 2017] [info] Upgrade successful, stopping 2793
+[Mon Jun  5 01:03:06 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Mon Jun  5 01:03:06 2017] [info] Manager 2793 stopped
+[Mon Jun  5 01:07:49 2017] [info] Starting zero downtime software upgrade
+[Mon Jun  5 01:07:49 2017] [info] Listening at "http://*:3800"
+[Mon Jun  5 01:07:49 2017] [info] Manager 3289 started
+[Mon Jun  5 01:07:49 2017] [info] Upgrade successful, stopping 3270
+[Mon Jun  5 01:07:49 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Mon Jun  5 01:07:50 2017] [info] Manager 3270 stopped
+[Mon Jun  5 01:08:00 2017] [info] DEBUG: imgload run...
+[Mon Jun  5 01:08:00 2017] [info] DEBUG: JØA3þtRHÚë
+[Mon Jun  5 01:09:20 2017] [info] Starting zero downtime software upgrade
+[Mon Jun  5 01:09:21 2017] [info] Listening at "http://*:3800"
+[Mon Jun  5 01:09:21 2017] [info] Manager 3306 started
+[Mon Jun  5 01:09:21 2017] [info] Upgrade successful, stopping 3289
+[Mon Jun  5 01:09:21 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Mon Jun  5 01:09:22 2017] [info] Manager 3289 stopped
+[Mon Jun  5 01:09:27 2017] [info] DEBUG: OID: JØA3þtRHÚë
+[Mon Jun  5 01:10:18 2017] [info] DEBUG: OID: %Kcm«´íËÝµ
+[Mon Jun  5 01:11:25 2017] [info] DEBUG: OID: %Kcm«´íËïvÔ
+[Mon Jun  5 01:13:09 2017] [info] Starting zero downtime software upgrade
+[Mon Jun  5 01:13:10 2017] [info] Listening at "http://*:3800"
+[Mon Jun  5 01:13:10 2017] [info] Manager 3329 started
+[Mon Jun  5 01:13:10 2017] [info] Upgrade successful, stopping 3306
+[Mon Jun  5 01:13:10 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Mon Jun  5 01:13:10 2017] [info] Manager 3306 stopped
+[Mon Jun  5 01:13:16 2017] [info] DEBUG: OID: %Kcm«´íËïvÔ :: oid_url: JUucY22rA7SPBe0fy+921A
+[Mon Jun  5 01:20:23 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 01:20:26 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Mon Jun  5 01:20:26 2017] [info] DEBUG: OID: StgFQYOAM/4Vn3RSSNrrlg :: oid_url: U3RnRlFZT0FNLzRWbjNSU1NOcnJsZw
+[Mon Jun  5 01:20:26 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 01:20:26 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Mon Jun  5 01:24:49 2017] [info] DEBUG: OID: StgFQYOAM/4Vn3RSSNrrlg :: oid_url: U3RnRlFZT0FNLzRWbjNSU1NOcnJsZw
+[Mon Jun  5 01:26:16 2017] [info] DEBUG: OID: JUucY22rA7SPBe0fy+921A :: oid_url: SlV1Y1kyMnJBN1NQQmUwZnkrOTIxQQ==
+[Mon Jun  5 01:35:23 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 01:35:28 2017] [info] DEBUG: OID: StgFQYOAM/4Vn3RSSNrrlg :: oid_url: U3RnRlFZT0FNLzRWbjNSU1NOcnJsZw
+[Mon Jun  5 01:35:28 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 01:35:28 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Mon Jun  5 01:35:28 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Mon Jun  5 01:35:56 2017] [info] DEBUG: OID: StgFQYOAM/4Vn3RSSNrrlg :: oid_url: U3RnRlFZT0FNLzRWbjNSU1NOcnJsZw
+[Mon Jun  5 01:35:57 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Mon Jun  5 01:35:57 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 01:35:57 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Mon Jun  5 01:39:13 2017] [info] DEBUG: OID: StgFQYOAM/4Vn3RSSNrrlg :: oid_url: U3RnRlFZT0FNLzRWbjNSU1NOcnJsZw
+[Mon Jun  5 01:39:14 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Mon Jun  5 01:39:14 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Mon Jun  5 01:39:14 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 01:40:56 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: 'QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ'
+[Mon Jun  5 01:41:35 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 01:42:23 2017] [info] DEBUG: OID: StgFQYOAM/4Vn3RSSNrrlg :: oid_url: U3RnRlFZT0FNLzRWbjNSU1NOcnJsZw
+[Mon Jun  5 13:47:16 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 13:47:22 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Mon Jun  5 13:47:22 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Mon Jun  5 13:47:22 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 13:47:22 2017] [info] DEBUG: OID: StgFQYOAM/4Vn3RSSNrrlg :: oid_url: U3RnRlFZT0FNLzRWbjNSU1NOcnJsZw
+[Mon Jun  5 13:47:27 2017] [info] DEBUG: OID: StgFQYOAM/4Vn3RSSNrrlg :: oid_url: U3RnRlFZT0FNLzRWbjNSU1NOcnJsZw
+[Mon Jun  5 13:47:37 2017] [info] DEBUG: OID: StgFQYOAM/4Vn3RSSNrrlg :: oid_url: U3RnRlFZT0FNLzRWbjNSU1NOcnJsZw
+[Mon Jun  5 17:15:42 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 17:15:45 2017] [info] DEBUG: OID: StgFQYOAM/4Vn3RSSNrrlg :: oid_url: U3RnRlFZT0FNLzRWbjNSU1NOcnJsZw
+[Mon Jun  5 17:15:45 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Mon Jun  5 17:15:45 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Mon Jun  5 17:15:45 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 17:15:55 2017] [info] DEBUG: OID: StgFQYOAM/4Vn3RSSNrrlg :: oid_url: U3RnRlFZT0FNLzRWbjNSU1NOcnJsZw
+[Mon Jun  5 17:15:56 2017] [info] DEBUG: OID: 1TyIUKaXxSerbf6L3BTAQQ :: oid_url: MVR5SVVLYVh4U2VyYmY2TDNCVEFRUQ
+[Mon Jun  5 17:15:56 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Mon Jun  5 17:15:56 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 17:15:56 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Mon Jun  5 17:16:07 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Mon Jun  5 17:16:07 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 17:16:07 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Mon Jun  5 17:16:07 2017] [info] DEBUG: OID: 1TyIUKaXxSerbf6L3BTAQQ :: oid_url: MVR5SVVLYVh4U2VyYmY2TDNCVEFRUQ
+[Mon Jun  5 17:16:07 2017] [info] DEBUG: OID: DdiohTwnoYsiwieo5vZUSQ :: oid_url: RGRpb2hUd25vWXNpd2llbzV2WlVTUQ
+[Mon Jun  5 17:16:49 2017] [info] DEBUG: OID: CUiVNE55g7q3qVaA5nOweg :: oid_url: Q1VpVk5FNTVnN3EzcVZhQTVuT3dlZw
+[Mon Jun  5 17:16:49 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 17:16:49 2017] [info] DEBUG: OID: 1TyIUKaXxSerbf6L3BTAQQ :: oid_url: MVR5SVVLYVh4U2VyYmY2TDNCVEFRUQ
+[Mon Jun  5 17:16:49 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Mon Jun  5 17:16:49 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Mon Jun  5 17:17:11 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Mon Jun  5 17:17:11 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 17:17:11 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Mon Jun  5 17:17:11 2017] [info] DEBUG: OID: CUiVNE55g7q3qVaA5nOweg :: oid_url: Q1VpVk5FNTVnN3EzcVZhQTVuT3dlZw
+[Mon Jun  5 17:17:11 2017] [info] DEBUG: OID: 1TyIUKaXxSerbf6L3BTAQQ :: oid_url: MVR5SVVLYVh4U2VyYmY2TDNCVEFRUQ
+[Mon Jun  5 17:17:13 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Mon Jun  5 17:17:13 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 17:17:13 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Mon Jun  5 17:17:13 2017] [info] DEBUG: OID: 1TyIUKaXxSerbf6L3BTAQQ :: oid_url: MVR5SVVLYVh4U2VyYmY2TDNCVEFRUQ
+[Mon Jun  5 17:17:14 2017] [info] DEBUG: OID: DdiohTwnoYsiwieo5vZUSQ :: oid_url: RGRpb2hUd25vWXNpd2llbzV2WlVTUQ
+[Mon Jun  5 17:17:40 2017] [info] DEBUG: OID: axVsX/4k8X29LeihfxCalQ :: oid_url: YXhWc1gvNGs4WDI5TGVpaGZ4Q2FsUQ
+[Mon Jun  5 17:17:40 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 17:17:40 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Mon Jun  5 17:17:40 2017] [info] DEBUG: OID: 1TyIUKaXxSerbf6L3BTAQQ :: oid_url: MVR5SVVLYVh4U2VyYmY2TDNCVEFRUQ
+[Mon Jun  5 17:17:40 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Mon Jun  5 19:45:20 2017] [info] Starting zero downtime software upgrade
+[Mon Jun  5 19:45:20 2017] [info] Listening at "http://*:3800"
+[Mon Jun  5 19:45:20 2017] [info] Manager 20999 started
+[Mon Jun  5 19:45:20 2017] [info] Upgrade successful, stopping 3329
+[Mon Jun  5 19:45:20 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Mon Jun  5 19:45:21 2017] [info] Manager 3329 stopped
+[Mon Jun  5 19:45:48 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 19:45:54 2017] [info] DEBUG: OID: axVsX/4k8X29LeihfxCalQ :: oid_url: YXhWc1gvNGs4WDI5TGVpaGZ4Q2FsUQ
+[Mon Jun  5 19:45:54 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 19:45:54 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Mon Jun  5 19:45:54 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Mon Jun  5 19:45:54 2017] [info] DEBUG: OID: 1TyIUKaXxSerbf6L3BTAQQ :: oid_url: MVR5SVVLYVh4U2VyYmY2TDNCVEFRUQ
+[Mon Jun  5 19:46:27 2017] [info] DEBUG: OID: ijdE/dRQJgtm5Se1+U3qvg :: oid_url: aWpkRS9kUlFKZ3RtNVNlMStVM3F2Zw
+[Mon Jun  5 19:46:27 2017] [info] DEBUG: OID: axVsX/4k8X29LeihfxCalQ :: oid_url: YXhWc1gvNGs4WDI5TGVpaGZ4Q2FsUQ
+[Mon Jun  5 19:46:27 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Mon Jun  5 19:46:27 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Mon Jun  5 19:46:27 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Mon Jun  5 19:46:47 2017] [info] DEBUG: OID: ijdE/dRQJgtm5Se1+U3qvg :: oid_url: aWpkRS9kUlFKZ3RtNVNlMStVM3F2Zw
+[Mon Jun  5 19:51:01 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 19:51:13 2017] [info] DEBUG: OID: OK/Q0CWsTW3pgCfbnxYyfA :: oid_url: T0svUTBDV3NUVzNwZ0NmYm54WXlmQQ
+[Mon Jun  5 19:51:13 2017] [info] DEBUG: OID: EWjMCv7GwUDkGt9bWrd8mg :: oid_url: RVdqTUN2N0d3VURrR3Q5YldyZDhtZw
+[Mon Jun  5 19:51:13 2017] [info] DEBUG: OID: 20kUnV/rZS1Eo9ZUOJHBtQ :: oid_url: MjBrVW5WL3JaUzFFbzlaVU9KSEJ0UQ
+[Mon Jun  5 19:51:13 2017] [info] DEBUG: OID: 7B2ofETQ37opimtWNVe4/Q :: oid_url: N0Iyb2ZFVFEzN29waW10V05WZTQvUQ
+[Mon Jun  5 19:51:13 2017] [info] DEBUG: OID: uvyemny0IbeechV9a+iopA :: oid_url: dXZ5ZW1ueTBJYmVlY2hWOWEraW9wQQ
+[Mon Jun  5 19:51:46 2017] [info] DEBUG: OID: 0TXWKEmo/7yR75j23daJNQ :: oid_url: MFRYV0tFbW8vN3lSNzVqMjNkYUpOUQ
+[Mon Jun  5 19:51:46 2017] [info] DEBUG: OID: OK/Q0CWsTW3pgCfbnxYyfA :: oid_url: T0svUTBDV3NUVzNwZ0NmYm54WXlmQQ
+[Mon Jun  5 19:51:46 2017] [info] DEBUG: OID: EWjMCv7GwUDkGt9bWrd8mg :: oid_url: RVdqTUN2N0d3VURrR3Q5YldyZDhtZw
+[Mon Jun  5 19:51:46 2017] [info] DEBUG: OID: 7B2ofETQ37opimtWNVe4/Q :: oid_url: N0Iyb2ZFVFEzN29waW10V05WZTQvUQ
+[Mon Jun  5 19:51:46 2017] [info] DEBUG: OID: 20kUnV/rZS1Eo9ZUOJHBtQ :: oid_url: MjBrVW5WL3JaUzFFbzlaVU9KSEJ0UQ
+[Mon Jun  5 19:52:59 2017] [info] DEBUG: OID: 0TXWKEmo/7yR75j23daJNQ :: oid_url: MFRYV0tFbW8vN3lSNzVqMjNkYUpOUQ
+[Mon Jun  5 19:52:59 2017] [info] DEBUG: OID: EWjMCv7GwUDkGt9bWrd8mg :: oid_url: RVdqTUN2N0d3VURrR3Q5YldyZDhtZw
+[Mon Jun  5 19:52:59 2017] [info] DEBUG: OID: 20kUnV/rZS1Eo9ZUOJHBtQ :: oid_url: MjBrVW5WL3JaUzFFbzlaVU9KSEJ0UQ
+[Mon Jun  5 19:52:59 2017] [info] DEBUG: OID: 7B2ofETQ37opimtWNVe4/Q :: oid_url: N0Iyb2ZFVFEzN29waW10V05WZTQvUQ
+[Mon Jun  5 19:52:59 2017] [info] DEBUG: OID: OK/Q0CWsTW3pgCfbnxYyfA :: oid_url: T0svUTBDV3NUVzNwZ0NmYm54WXlmQQ
+[Mon Jun  5 19:53:04 2017] [info] DEBUG: OID: OK/Q0CWsTW3pgCfbnxYyfA :: oid_url: T0svUTBDV3NUVzNwZ0NmYm54WXlmQQ
+[Mon Jun  5 19:53:04 2017] [info] DEBUG: OID: EWjMCv7GwUDkGt9bWrd8mg :: oid_url: RVdqTUN2N0d3VURrR3Q5YldyZDhtZw
+[Mon Jun  5 19:53:04 2017] [info] DEBUG: OID: 20kUnV/rZS1Eo9ZUOJHBtQ :: oid_url: MjBrVW5WL3JaUzFFbzlaVU9KSEJ0UQ
+[Mon Jun  5 19:53:05 2017] [info] DEBUG: OID: 7B2ofETQ37opimtWNVe4/Q :: oid_url: N0Iyb2ZFVFEzN29waW10V05WZTQvUQ
+[Mon Jun  5 19:53:05 2017] [info] DEBUG: OID: uvyemny0IbeechV9a+iopA :: oid_url: dXZ5ZW1ueTBJYmVlY2hWOWEraW9wQQ
+[Mon Jun  5 19:54:08 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 20:01:17 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 21:15:33 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 21:15:53 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:15:53 2017] [info] DEBUG: oid: 59354b79fed1375210559e21 content-type: image/gif
+[Mon Jun  5 21:16:09 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:16:09 2017] [info] DEBUG: oid: 59354b89fed137520f44aeb1 content-type: image/png
+[Mon Jun  5 21:16:10 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:16:10 2017] [info] DEBUG: oid: 59354b89fed137520f44aeb1 content-type: image/png
+[Mon Jun  5 21:16:24 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:16:24 2017] [info] DEBUG: oid: 59354b89fed137520f44aeb1 content-type: image/png
+[Mon Jun  5 21:16:48 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:16:48 2017] [info] DEBUG: oid: 59354b89fed137520f44aeb1 content-type: image/png
+[Mon Jun  5 21:17:53 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:17:53 2017] [info] DEBUG: oid: 59354bf1fed1375210559e26 content-type: image/jpeg
+[Mon Jun  5 21:20:52 2017] [info] Starting zero downtime software upgrade
+[Mon Jun  5 21:20:53 2017] [info] Listening at "http://*:3800"
+[Mon Jun  5 21:20:53 2017] [info] Manager 22962 started
+[Mon Jun  5 21:20:53 2017] [info] Upgrade successful, stopping 20999
+[Mon Jun  5 21:20:53 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Mon Jun  5 21:21:00 2017] [info] Manager 20999 stopped
+[Mon Jun  5 21:21:37 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:21:37 2017] [info] DEBUG: oid: 59354cd1fed13759ba5a52d1 content-type: audio/mp3
+[Mon Jun  5 21:22:04 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Mon Jun  5 21:22:04 2017] [info] DEBUG: 
+[Mon Jun  5 21:22:31 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:22:31 2017] [info] DEBUG: oid: 59354d07fed13759bb4ba361 content-type: audio/x-m4a
+[Mon Jun  5 21:26:48 2017] [error] Worker 22968 has no heartbeat, restarting
+[Mon Jun  5 21:26:51 2017] [error] Worker 22970 has no heartbeat, restarting
+[Mon Jun  5 21:26:51 2017] [error] Worker 22965 has no heartbeat, restarting
+[Mon Jun  5 21:26:51 2017] [error] Worker 22969 has no heartbeat, restarting
+[Mon Jun  5 21:26:51 2017] [error] Worker 22971 has no heartbeat, restarting
+[Mon Jun  5 21:26:51 2017] [error] Worker 22963 has no heartbeat, restarting
+[Mon Jun  5 21:26:51 2017] [error] Worker 22966 has no heartbeat, restarting
+[Mon Jun  5 21:26:51 2017] [error] Worker 22967 has no heartbeat, restarting
+[Mon Jun  5 21:26:51 2017] [error] Worker 22972 has no heartbeat, restarting
+[Mon Jun  5 21:33:38 2017] [info] Starting zero downtime software upgrade
+[Mon Jun  5 21:33:39 2017] [info] Listening at "http://*:3800"
+[Mon Jun  5 21:33:39 2017] [info] Manager 23227 started
+[Mon Jun  5 21:33:39 2017] [info] Upgrade successful, stopping 22962
+[Mon Jun  5 21:33:39 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Mon Jun  5 21:33:43 2017] [info] Manager 22962 stopped
+[Mon Jun  5 21:33:55 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 21:34:05 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Mon Jun  5 21:34:05 2017] [info] DEBUG: 
+[Mon Jun  5 21:34:24 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:34:24 2017] [info] DEBUG: oid: 59354fd0fed1375ac55a8b02 content-type: image/jpeg
+[Mon Jun  5 21:38:51 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 21:40:18 2017] [info] Starting zero downtime software upgrade
+[Mon Jun  5 21:40:19 2017] [info] Listening at "http://*:3800"
+[Mon Jun  5 21:40:19 2017] [info] Manager 23252 started
+[Mon Jun  5 21:40:19 2017] [info] Upgrade successful, stopping 23227
+[Mon Jun  5 21:40:19 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Mon Jun  5 21:40:20 2017] [info] Manager 23227 stopped
+[Mon Jun  5 21:40:25 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 21:41:34 2017] [info] Starting zero downtime software upgrade
+[Mon Jun  5 21:41:35 2017] [info] Listening at "http://*:3800"
+[Mon Jun  5 21:41:35 2017] [info] Manager 23267 started
+[Mon Jun  5 21:41:35 2017] [info] Upgrade successful, stopping 23252
+[Mon Jun  5 21:41:35 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Mon Jun  5 21:41:40 2017] [info] Manager 23252 stopped
+[Mon Jun  5 21:41:48 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Mon Jun  5 21:41:48 2017] [info] DEBUG: 
+[Mon Jun  5 21:42:13 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:42:14 2017] [info] DEBUG: oid: 593551a5fed1375aea123741 content-type: image/png
+[Mon Jun  5 21:45:20 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:45:20 2017] [info] DEBUG: oid: 59355260fed1375aed6e5071 content-type: audio/x-m4a
+[Mon Jun  5 21:52:28 2017] [info] Starting zero downtime software upgrade
+[Mon Jun  5 21:52:29 2017] [info] Listening at "http://*:3800"
+[Mon Jun  5 21:52:29 2017] [info] Manager 23379 started
+[Mon Jun  5 21:52:29 2017] [info] Upgrade successful, stopping 23267
+[Mon Jun  5 21:52:29 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Mon Jun  5 21:52:32 2017] [info] Manager 23267 stopped
+[Mon Jun  5 21:54:14 2017] [info] Starting zero downtime software upgrade
+[Mon Jun  5 21:54:15 2017] [info] Listening at "http://*:3800"
+[Mon Jun  5 21:54:15 2017] [info] Manager 23415 started
+[Mon Jun  5 21:54:15 2017] [info] Upgrade successful, stopping 23379
+[Mon Jun  5 21:54:15 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Mon Jun  5 21:54:19 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 21:54:19 2017] [info] Manager 23379 stopped
+[Mon Jun  5 21:54:30 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Mon Jun  5 21:54:30 2017] [info] DEBUG: 
+[Mon Jun  5 21:54:46 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:54:46 2017] [info] DEBUG: oid: 59355495fed1375b8125f691 content-type: audio/mp3
+[Mon Jun  5 21:56:28 2017] [info] Starting zero downtime software upgrade
+[Mon Jun  5 21:56:29 2017] [info] Listening at "http://*:3800"
+[Mon Jun  5 21:56:29 2017] [info] Manager 23461 started
+[Mon Jun  5 21:56:29 2017] [info] Upgrade successful, stopping 23415
+[Mon Jun  5 21:56:29 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Mon Jun  5 21:56:33 2017] [info] Manager 23415 stopped
+[Mon Jun  5 21:56:34 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 21:56:43 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Mon Jun  5 21:56:43 2017] [info] DEBUG: 
+[Mon Jun  5 21:57:00 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:57:00 2017] [info] DEBUG: oid: 5935551cfed1375bad043e81 content-type: image/gif
+[Mon Jun  5 21:57:21 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:57:21 2017] [info] DEBUG: oid: 59355531fed1375baf513542 content-type: image/jpeg
+[Mon Jun  5 21:57:35 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:57:35 2017] [info] DEBUG: oid: 5935553ffed1375bae0001a1 content-type: image/jpeg
+[Mon Jun  5 21:58:20 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 21:58:20 2017] [info] DEBUG: oid: 5935556bfed1375bae0001ad content-type: audio/x-m4a
+[Mon Jun  5 22:52:07 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Mon Jun  5 23:48:11 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Mon Jun  5 23:48:11 2017] [info] DEBUG: 
+[Mon Jun  5 23:48:50 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 23:48:50 2017] [info] DEBUG: oid: 59356f51fed1375bae0001e8 content-type: audio/x-m4a
+[Mon Jun  5 23:50:08 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 23:50:08 2017] [info] DEBUG: oid: 59356fa0fed1375ba744f981 content-type: application/pdf
+[Mon Jun  5 23:50:23 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 23:50:23 2017] [info] DEBUG: oid: 59356fa0fed1375ba744f981 content-type: application/pdf
+[Mon Jun  5 23:51:28 2017] [info] DEBUG:  roomname: rooma
+[Mon Jun  5 23:51:28 2017] [info] DEBUG: oid: 59356ff0fed1375baf513544 content-type: image/jpeg
+[Tue Jun  6 00:04:11 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fWNQkA5PhJQ:APA91bFO1JL4hU7iM9YpHWLWWCIoAJ1dBpDhhfj-izq9eWD4S_kVNfBWXPBmlj91SdxvEuYUMj6ollN1zp_zg-iWbwtc7KCiifxdZgMyz225dUoXN0nNWy8mn7THHKeL2MkJhin5gy4v","keys":{"auth":"iQrYzxJQezZgimytslaH8g==","p256dh":"BPV5xBkdZEPfdsh0B2yafQxVRODSH8CCk4XmjrRZVLnV17H1GC5_meCKbkdz431CQ_yeh1RmnoObjZw56rjNWBM="}}
+[Tue Jun  6 00:04:20 2017] [info] DEBUG: 5lbtbcnYRYhRuCAhlnlhSg
+[Tue Jun  6 00:04:20 2017] [info] DEBUG: 
+[Tue Jun  6 00:05:02 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:05:02 2017] [info] DEBUG: oid: 59357315fed1375bac5c9331 content-type: video/3gpp
+[Tue Jun  6 00:05:03 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:05:03 2017] [info] DEBUG: oid: 59357315fed1375bac5c9331 content-type: video/3gpp
+[Tue Jun  6 00:05:11 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:05:11 2017] [info] DEBUG: oid: 59357315fed1375bac5c9331 content-type: video/3gpp
+[Tue Jun  6 00:05:15 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:05:15 2017] [info] DEBUG: oid: 59357315fed1375bac5c9331 content-type: video/3gpp
+[Tue Jun  6 00:05:16 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:05:16 2017] [info] DEBUG: oid: 59357315fed1375bac5c9331 content-type: video/3gpp
+[Tue Jun  6 00:05:20 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:05:20 2017] [info] DEBUG: oid: 59357315fed1375bac5c9331 content-type: video/3gpp
+[Tue Jun  6 00:06:02 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:06:02 2017] [info] DEBUG: oid: 59357352fed1375baa24d451 content-type: video/3gpp
+[Tue Jun  6 00:06:02 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:06:02 2017] [info] DEBUG: oid: 59357352fed1375baa24d451 content-type: video/3gpp
+[Tue Jun  6 00:06:32 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:06:32 2017] [info] DEBUG: oid: 59357373fed1375bab4ae421 content-type: video/3gpp
+[Tue Jun  6 00:06:32 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:06:32 2017] [info] DEBUG: oid: 59357373fed1375bab4ae421 content-type: video/3gpp
+[Tue Jun  6 00:07:59 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:07:59 2017] [info] DEBUG: oid: 593573cbfed1375bab4ae433 content-type: audio/x-m4a
+[Tue Jun  6 00:08:00 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:08:00 2017] [info] DEBUG: oid: 593573cbfed1375bab4ae433 content-type: audio/x-m4a
+[Tue Jun  6 00:48:18 2017] [info] Starting zero downtime software upgrade
+[Tue Jun  6 00:48:19 2017] [info] Listening at "http://*:3800"
+[Tue Jun  6 00:48:19 2017] [info] Manager 23683 started
+[Tue Jun  6 00:48:19 2017] [info] Upgrade successful, stopping 23461
+[Tue Jun  6 00:48:19 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Tue Jun  6 00:48:19 2017] [info] Manager 23461 stopped
+[Tue Jun  6 00:49:04 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Tue Jun  6 00:49:33 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:49:33 2017] [info] DEBUG: oid: 59357d8dfed1375c8c0a8392 content-type: image/gif
+[Tue Jun  6 00:50:07 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:50:07 2017] [info] DEBUG: oid: 59357daffed1375c8b7942c1 content-type: audio/mp3
+[Tue Jun  6 00:54:55 2017] [info] Starting zero downtime software upgrade
+[Tue Jun  6 00:54:56 2017] [info] Listening at "http://*:3800"
+[Tue Jun  6 00:54:56 2017] [info] Manager 23707 started
+[Tue Jun  6 00:54:56 2017] [info] Upgrade successful, stopping 23683
+[Tue Jun  6 00:54:56 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Tue Jun  6 00:55:00 2017] [info] Manager 23683 stopped
+[Tue Jun  6 00:55:23 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 00:55:23 2017] [info] DEBUG: oid: 59357eeafed1375ca1218251 content-type: audio/mp3
+[Tue Jun  6 01:24:47 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Tue Jun  6 01:28:23 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 01:28:23 2017] [info] DEBUG: oid: 593586a7fed1375ca4784052 content-type: image/jpeg
+[Tue Jun  6 01:31:13 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 01:31:13 2017] [info] DEBUG: oid: 59358751fed1375ca50178c1 content-type: application/pdf
+[Tue Jun  6 01:31:13 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 01:31:13 2017] [info] DEBUG: oid: 59358751fed1375ca50178c1 content-type: application/pdf
+[Tue Jun  6 01:31:24 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 01:31:24 2017] [info] DEBUG: oid: 59358751fed1375ca50178c1 content-type: application/pdf
+[Tue Jun  6 01:42:34 2017] [info] Starting zero downtime software upgrade
+[Tue Jun  6 01:42:35 2017] [info] Listening at "http://*:3800"
+[Tue Jun  6 01:42:35 2017] [info] Manager 23794 started
+[Tue Jun  6 01:42:35 2017] [info] Upgrade successful, stopping 23707
+[Tue Jun  6 01:42:35 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Tue Jun  6 01:42:44 2017] [info] Manager 23707 stopped
+[Tue Jun  6 01:43:23 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 01:43:23 2017] [info] DEBUG: oid: 59358a16fed1375cf952c931 content-type: application/pdf
+[Tue Jun  6 01:45:25 2017] [info] Starting zero downtime software upgrade
+[Tue Jun  6 01:45:26 2017] [info] Listening at "http://*:3800"
+[Tue Jun  6 01:45:26 2017] [info] Manager 23815 started
+[Tue Jun  6 01:45:26 2017] [info] Upgrade successful, stopping 23794
+[Tue Jun  6 01:45:26 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Tue Jun  6 01:45:30 2017] [info] Manager 23794 stopped
+[Tue Jun  6 01:45:46 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 01:45:46 2017] [info] DEBUG: oid: 59358abafed1375d1167b331 content-type: application/pdf
+[Tue Jun  6 01:46:11 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 01:46:11 2017] [info] DEBUG: oid: 59358ad2fed1375d0e5905c1 content-type: application/pdf
+[Tue Jun  6 01:57:32 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 01:57:32 2017] [info] DEBUG: oid: 59358d7cfed1375d0b5516a1 content-type: application/pdf
+[Tue Jun  6 02:03:40 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 02:03:40 2017] [info] DEBUG: oid: 59358d7cfed1375d0b5516a1 content-type: application/pdf
+[Tue Jun  6 10:32:18 2017] [info] Listening at "http://*:3800"
+[Tue Jun  6 10:32:18 2017] [info] Manager 1948 started
+[Tue Jun  6 10:32:18 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Tue Jun  6 12:15:14 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Tue Jun  6 12:15:28 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Tue Jun  6 12:15:28 2017] [info] DEBUG: 
+[Tue Jun  6 12:20:19 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Tue Jun  6 12:20:19 2017] [info] DEBUG: 
+[Tue Jun  6 12:20:35 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 12:20:35 2017] [info] DEBUG: oid: 59361f83fed13707a6684b81 content-type: application/pdf
+[Tue Jun  6 12:24:29 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Tue Jun  6 12:24:29 2017] [info] DEBUG: 
+[Tue Jun  6 18:30:57 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fWNQkA5PhJQ:APA91bFO1JL4hU7iM9YpHWLWWCIoAJ1dBpDhhfj-izq9eWD4S_kVNfBWXPBmlj91SdxvEuYUMj6ollN1zp_zg-iWbwtc7KCiifxdZgMyz225dUoXN0nNWy8mn7THHKeL2MkJhin5gy4v","keys":{"auth":"iQrYzxJQezZgimytslaH8g==","p256dh":"BPV5xBkdZEPfdsh0B2yafQxVRODSH8CCk4XmjrRZVLnV17H1GC5_meCKbkdz431CQ_yeh1RmnoObjZw56rjNWBM="}}
+[Tue Jun  6 18:31:01 2017] [info] DEBUG: OID: 5lbtbcnYRYhRuCAhlnlhSg :: oid_url: NWxidGJjbllSWWhSdUNBaGxubGhTZw
+[Tue Jun  6 18:31:01 2017] [info] DEBUG: OID: ry0p4wa0NvRj74h4XJQKSw :: oid_url: cnkwcDR3YTBOdlJqNzRoNFhKUUtTdw
+[Tue Jun  6 18:31:51 2017] [info] DEBUG: OID: ry0p4wa0NvRj74h4XJQKSw :: oid_url: cnkwcDR3YTBOdlJqNzRoNFhKUUtTdw
+[Tue Jun  6 18:31:51 2017] [info] DEBUG: OID: 5lbtbcnYRYhRuCAhlnlhSg :: oid_url: NWxidGJjbllSWWhSdUNBaGxubGhTZw
+[Tue Jun  6 18:31:58 2017] [info] DEBUG: OID: fxCWzvaCpivDR467CgZkHg :: oid_url: ZnhDV3p2YUNwaXZEUjQ2N0NnWmtIZw
+[Tue Jun  6 18:32:10 2017] [info] DEBUG: OID: ry0p4wa0NvRj74h4XJQKSw :: oid_url: cnkwcDR3YTBOdlJqNzRoNFhKUUtTdw
+[Tue Jun  6 18:32:19 2017] [info] DEBUG: OID: ry0p4wa0NvRj74h4XJQKSw :: oid_url: cnkwcDR3YTBOdlJqNzRoNFhKUUtTdw
+[Tue Jun  6 18:32:19 2017] [info] DEBUG: OID: 5lbtbcnYRYhRuCAhlnlhSg :: oid_url: NWxidGJjbllSWWhSdUNBaGxubGhTZw
+[Tue Jun  6 18:32:22 2017] [info] DEBUG: OID: ry0p4wa0NvRj74h4XJQKSw :: oid_url: cnkwcDR3YTBOdlJqNzRoNFhKUUtTdw
+[Tue Jun  6 18:32:22 2017] [info] DEBUG: OID: 5lbtbcnYRYhRuCAhlnlhSg :: oid_url: NWxidGJjbllSWWhSdUNBaGxubGhTZw
+[Tue Jun  6 18:32:22 2017] [info] DEBUG: OID: ry0p4wa0NvRj74h4XJQKSw :: oid_url: cnkwcDR3YTBOdlJqNzRoNFhKUUtTdw
+[Tue Jun  6 18:32:25 2017] [info] DEBUG: OID: 5lbtbcnYRYhRuCAhlnlhSg :: oid_url: NWxidGJjbllSWWhSdUNBaGxubGhTZw
+[Tue Jun  6 18:32:48 2017] [info] DEBUG: OID: 5lbtbcnYRYhRuCAhlnlhSg :: oid_url: NWxidGJjbllSWWhSdUNBaGxubGhTZw
+[Tue Jun  6 18:32:48 2017] [info] DEBUG: OID: eBqyU1OgK07KqnX2ggjzyg :: oid_url: ZUJxeVUxT2dLMDdLcW5YMmdnanp5Zw
+[Tue Jun  6 18:32:50 2017] [info] DEBUG: OID: eBqyU1OgK07KqnX2ggjzyg :: oid_url: ZUJxeVUxT2dLMDdLcW5YMmdnanp5Zw
+[Tue Jun  6 18:32:53 2017] [info] DEBUG: OID: eBqyU1OgK07KqnX2ggjzyg :: oid_url: ZUJxeVUxT2dLMDdLcW5YMmdnanp5Zw
+[Tue Jun  6 18:33:07 2017] [info] DEBUG: OID: 5lbtbcnYRYhRuCAhlnlhSg :: oid_url: NWxidGJjbllSWWhSdUNBaGxubGhTZw
+[Tue Jun  6 18:33:07 2017] [info] DEBUG: OID: eBqyU1OgK07KqnX2ggjzyg :: oid_url: ZUJxeVUxT2dLMDdLcW5YMmdnanp5Zw
+[Tue Jun  6 18:33:13 2017] [info] DEBUG: OID: eBqyU1OgK07KqnX2ggjzyg :: oid_url: ZUJxeVUxT2dLMDdLcW5YMmdnanp5Zw
+[Tue Jun  6 18:33:39 2017] [info] DEBUG: 5lbtbcnYRYhRuCAhlnlhSg
+[Tue Jun  6 18:33:39 2017] [info] DEBUG: 
+[Tue Jun  6 18:34:22 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 18:34:22 2017] [info] DEBUG: oid: 5936771efed13707a477fdd2 content-type: image/jpeg
+[Tue Jun  6 18:35:29 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 18:35:29 2017] [info] DEBUG: oid: 5936775afed13707a6684b83 content-type: video/mp4
+[Tue Jun  6 18:35:31 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 18:35:32 2017] [info] DEBUG: oid: 5936775afed13707a6684b83 content-type: video/mp4
+[Tue Jun  6 18:36:39 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 18:36:39 2017] [info] DEBUG: oid: 5936775afed13707a6684b83 content-type: video/mp4
+[Tue Jun  6 18:37:43 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Tue Jun  6 18:37:49 2017] [info] DEBUG: 5lbtbcnYRYhRuCAhlnlhSg
+[Tue Jun  6 18:37:49 2017] [info] DEBUG: 
+[Tue Jun  6 18:37:49 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Tue Jun  6 18:37:49 2017] [info] DEBUG: 
+[Tue Jun  6 18:37:50 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Tue Jun  6 18:37:50 2017] [info] DEBUG: 
+[Tue Jun  6 18:38:20 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 18:38:20 2017] [info] DEBUG: oid: 5936780bfed13707a23ab031 content-type: audio/mp3
+[Tue Jun  6 18:39:41 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 18:39:41 2017] [info] DEBUG: oid: 5936785bfed13707a6684d30 content-type: audio/x-m4a
+[Tue Jun  6 18:39:42 2017] [info] DEBUG:  roomname: rooma
+[Tue Jun  6 18:39:42 2017] [info] DEBUG: oid: 5936785bfed13707a6684d30 content-type: audio/x-m4a
+[Tue Jun  6 23:55:57 2017] [info] Starting zero downtime software upgrade
+[Tue Jun  6 23:55:58 2017] [info] Listening at "http://*:3800"
+[Tue Jun  6 23:55:58 2017] [info] Manager 2424 started
+[Tue Jun  6 23:55:58 2017] [info] Upgrade successful, stopping 1948
+[Tue Jun  6 23:55:58 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Tue Jun  6 23:56:03 2017] [info] Manager 1948 stopped
+[Tue Jun  6 23:56:24 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Tue Jun  6 23:56:59 2017] [info] DEBUG: OID: ijdE/dRQJgtm5Se1+U3qvg :: oid_url: aWpkRS9kUlFKZ3RtNVNlMStVM3F2Zw
+[Tue Jun  6 23:56:59 2017] [info] DEBUG: OID: axVsX/4k8X29LeihfxCalQ :: oid_url: YXhWc1gvNGs4WDI5TGVpaGZ4Q2FsUQ
+[Tue Jun  6 23:56:59 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Tue Jun  6 23:56:59 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Tue Jun  6 23:57:03 2017] [info] DEBUG: OID: WQ77aVjHZ0UT4UjOtlM8pQ :: oid_url: V1E3N2FWakhaMFVUNFVqT3RsTThwUQ
+[Tue Jun  6 23:57:11 2017] [info] DEBUG: OID: WQ77aVjHZ0UT4UjOtlM8pQ :: oid_url: V1E3N2FWakhaMFVUNFVqT3RsTThwUQ
+[Tue Jun  6 23:57:16 2017] [info] DEBUG: OID: WQ77aVjHZ0UT4UjOtlM8pQ :: oid_url: V1E3N2FWakhaMFVUNFVqT3RsTThwUQ
+[Wed Jun  7 00:00:21 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Wed Jun  7 00:00:25 2017] [info] DEBUG: OID: axVsX/4k8X29LeihfxCalQ :: oid_url: YXhWc1gvNGs4WDI5TGVpaGZ4Q2FsUQ
+[Wed Jun  7 00:00:25 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Wed Jun  7 00:00:25 2017] [info] DEBUG: OID: ijdE/dRQJgtm5Se1+U3qvg :: oid_url: aWpkRS9kUlFKZ3RtNVNlMStVM3F2Zw
+[Wed Jun  7 00:00:25 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Wed Jun  7 00:01:01 2017] [info] DEBUG: OID: 4YbiBb76D1z5ETz8U2Hswg :: oid_url: NFliaUJiNzZEMXo1RVR6OFUySHN3Zw
+[Wed Jun  7 00:01:01 2017] [info] DEBUG: OID: axVsX/4k8X29LeihfxCalQ :: oid_url: YXhWc1gvNGs4WDI5TGVpaGZ4Q2FsUQ
+[Wed Jun  7 00:01:01 2017] [info] DEBUG: OID: ijdE/dRQJgtm5Se1+U3qvg :: oid_url: aWpkRS9kUlFKZ3RtNVNlMStVM3F2Zw
+[Wed Jun  7 00:01:01 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Wed Jun  7 00:04:07 2017] [info] DEBUG: OID: q+26RXirl0UawAPmlQSdmA :: oid_url: cSsyNlJYaXJsMFVhd0FQbWxRU2RtQQ
+[Wed Jun  7 00:04:07 2017] [info] DEBUG: OID: axVsX/4k8X29LeihfxCalQ :: oid_url: YXhWc1gvNGs4WDI5TGVpaGZ4Q2FsUQ
+[Wed Jun  7 00:04:07 2017] [info] DEBUG: OID: 4YbiBb76D1z5ETz8U2Hswg :: oid_url: NFliaUJiNzZEMXo1RVR6OFUySHN3Zw
+[Wed Jun  7 00:04:07 2017] [info] DEBUG: OID: ijdE/dRQJgtm5Se1+U3qvg :: oid_url: aWpkRS9kUlFKZ3RtNVNlMStVM3F2Zw
+[Wed Jun  7 11:11:05 2017] [info] Starting zero downtime software upgrade
+[Wed Jun  7 11:11:06 2017] [info] Listening at "http://*:3800"
+[Wed Jun  7 11:11:06 2017] [info] Manager 3029 started
+[Wed Jun  7 11:11:06 2017] [info] Upgrade successful, stopping 2424
+[Wed Jun  7 11:11:06 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Wed Jun  7 11:11:08 2017] [info] Manager 2424 stopped
+[Wed Jun  7 11:11:34 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Wed Jun  7 11:11:57 2017] [info] DEBUG: OID: cm/vuUuy3DOt/ZPGFKe6xg :: oid_url: Y20vdnVVdXkzRE90L1pQR0ZLZTZ4Zw
+[Wed Jun  7 11:11:57 2017] [info] DEBUG: OID: q+26RXirl0UawAPmlQSdmA :: oid_url: cSsyNlJYaXJsMFVhd0FQbWxRU2RtQQ
+[Wed Jun  7 11:11:57 2017] [info] DEBUG: OID: 4YbiBb76D1z5ETz8U2Hswg :: oid_url: NFliaUJiNzZEMXo1RVR6OFUySHN3Zw
+[Wed Jun  7 11:11:57 2017] [info] DEBUG: OID: ijdE/dRQJgtm5Se1+U3qvg :: oid_url: aWpkRS9kUlFKZ3RtNVNlMStVM3F2Zw
+[Wed Jun  7 11:12:00 2017] [info] DEBUG: OID: cm/vuUuy3DOt/ZPGFKe6xg :: oid_url: Y20vdnVVdXkzRE90L1pQR0ZLZTZ4Zw
+[Wed Jun  7 11:12:02 2017] [info] DEBUG: OID: q+26RXirl0UawAPmlQSdmA :: oid_url: cSsyNlJYaXJsMFVhd0FQbWxRU2RtQQ
+[Wed Jun  7 11:12:02 2017] [info] DEBUG: OID: ijdE/dRQJgtm5Se1+U3qvg :: oid_url: aWpkRS9kUlFKZ3RtNVNlMStVM3F2Zw
+[Wed Jun  7 11:12:02 2017] [info] DEBUG: OID: cm/vuUuy3DOt/ZPGFKe6xg :: oid_url: Y20vdnVVdXkzRE90L1pQR0ZLZTZ4Zw
+[Wed Jun  7 11:12:02 2017] [info] DEBUG: OID: 4YbiBb76D1z5ETz8U2Hswg :: oid_url: NFliaUJiNzZEMXo1RVR6OFUySHN3Zw
+[Wed Jun  7 11:17:49 2017] [info] Starting zero downtime software upgrade
+[Wed Jun  7 11:17:50 2017] [info] Listening at "http://*:3800"
+[Wed Jun  7 11:17:50 2017] [info] Manager 3064 started
+[Wed Jun  7 11:17:50 2017] [info] Upgrade successful, stopping 3029
+[Wed Jun  7 11:17:50 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Wed Jun  7 11:17:51 2017] [info] Manager 3029 stopped
+[Wed Jun  7 11:18:20 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:18:20 2017] [info] DEBUG: oid: 5937626cfed1370c02006691 content-type: image/gif
+[Wed Jun  7 11:18:37 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:18:37 2017] [info] DEBUG: oid: 5937627dfed1370bff414911 content-type: image/jpeg
+[Wed Jun  7 11:24:03 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:24:03 2017] [info] DEBUG: oid: 593763c3fed1370c007de951 content-type: image/jpeg
+[Wed Jun  7 11:24:27 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:24:27 2017] [info] DEBUG: oid: 593763dbfed1370c02006696 content-type: image/jpeg
+[Wed Jun  7 11:24:59 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Wed Jun  7 11:24:59 2017] [info] DEBUG: 
+[Wed Jun  7 11:25:15 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:25:15 2017] [info] DEBUG: oid: 5937640afed1370bfb763a01 content-type: image/jpeg
+[Wed Jun  7 11:25:31 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:25:31 2017] [info] DEBUG: oid: 5937641afed1370bfe3ec0e1 content-type: image/jpeg
+[Wed Jun  7 11:33:32 2017] [info] Starting zero downtime software upgrade
+[Wed Jun  7 11:33:33 2017] [info] Listening at "http://*:3800"
+[Wed Jun  7 11:33:33 2017] [info] Manager 3093 started
+[Wed Jun  7 11:33:33 2017] [info] Upgrade successful, stopping 3064
+[Wed Jun  7 11:33:33 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Wed Jun  7 11:33:54 2017] [info] Manager 3064 stopped
+[Wed Jun  7 11:34:17 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Wed Jun  7 11:34:38 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:34:38 2017] [info] DEBUG: oid: 5937663efed1370c1c0a7091 content-type: image/jpeg
+[Wed Jun  7 11:34:38 2017] [info] DEBUG: filename: 2014-04-09 08.26.53.jpg
+[Wed Jun  7 11:34:57 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:34:58 2017] [info] DEBUG: oid: 59376651fed1370c1f3597c2 content-type: image/jpeg
+[Wed Jun  7 11:34:58 2017] [info] DEBUG: filename: ゴーストアイコン2.jpeg
+[Wed Jun  7 11:38:26 2017] [info] Starting zero downtime software upgrade
+[Wed Jun  7 11:38:27 2017] [info] Listening at "http://*:3800"
+[Wed Jun  7 11:38:27 2017] [info] Manager 3128 started
+[Wed Jun  7 11:38:27 2017] [info] Upgrade successful, stopping 3093
+[Wed Jun  7 11:38:27 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Wed Jun  7 11:38:32 2017] [info] Manager 3093 stopped
+[Wed Jun  7 11:38:48 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:38:48 2017] [info] DEBUG: oid: 59376738fed1370c3b1abe81 content-type: image/gif
+[Wed Jun  7 11:38:48 2017] [info] DEBUG: filename: giphy.gif
+[Wed Jun  7 11:39:06 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:39:06 2017] [info] DEBUG: oid: 5937674afed1370c3f38ef21 content-type: image/jpeg
+[Wed Jun  7 11:39:06 2017] [info] DEBUG: filename: DSC_0028.JPG
+[Wed Jun  7 11:39:20 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:39:20 2017] [info] DEBUG: oid: 59376758fed1370c411eba81 content-type: image/jpeg
+[Wed Jun  7 11:39:20 2017] [info] DEBUG: filename: ゴーストアイコン2.jpeg
+[Wed Jun  7 11:40:50 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:40:50 2017] [info] DEBUG: oid: 593767b1fed1370c43716979 content-type: application/pdf
+[Wed Jun  7 11:40:50 2017] [info] DEBUG: filename: 江戸川ハザードマップ市川.pdf
+[Wed Jun  7 11:43:02 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:43:02 2017] [info] DEBUG: oid: 59376835fed1370c4371697e content-type: application/pdf
+[Wed Jun  7 11:43:02 2017] [info] DEBUG: filename: imgload.pdf
+[Wed Jun  7 11:44:27 2017] [info] DEBUG: OID: q+26RXirl0UawAPmlQSdmA :: oid_url: cSsyNlJYaXJsMFVhd0FQbWxRU2RtQQ
+[Wed Jun  7 11:44:29 2017] [info] DEBUG: OID: 4YbiBb76D1z5ETz8U2Hswg :: oid_url: NFliaUJiNzZEMXo1RVR6OFUySHN3Zw
+[Wed Jun  7 11:44:29 2017] [info] DEBUG: OID: cm/vuUuy3DOt/ZPGFKe6xg :: oid_url: Y20vdnVVdXkzRE90L1pQR0ZLZTZ4Zw
+[Wed Jun  7 11:44:30 2017] [info] DEBUG: OID: Ywpz+/dhb45bCGQ/T2aTVA :: oid_url: WXdweisvZGhiNDViQ0dRL1QyYVRWQQ
+[Wed Jun  7 11:48:52 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Wed Jun  7 11:49:17 2017] [info] DEBUG: OID: GB+FP9hhfePZazGRNN3GcQ :: oid_url: R0IrRlA5aGhmZVBaYXpHUk5OM0djUQ
+[Wed Jun  7 11:49:17 2017] [info] DEBUG: OID: cm/vuUuy3DOt/ZPGFKe6xg :: oid_url: Y20vdnVVdXkzRE90L1pQR0ZLZTZ4Zw
+[Wed Jun  7 11:49:17 2017] [info] DEBUG: OID: q+26RXirl0UawAPmlQSdmA :: oid_url: cSsyNlJYaXJsMFVhd0FQbWxRU2RtQQ
+[Wed Jun  7 11:49:17 2017] [info] DEBUG: OID: 4YbiBb76D1z5ETz8U2Hswg :: oid_url: NFliaUJiNzZEMXo1RVR6OFUySHN3Zw
+[Wed Jun  7 11:49:23 2017] [info] DEBUG: OID: GB+FP9hhfePZazGRNN3GcQ :: oid_url: R0IrRlA5aGhmZVBaYXpHUk5OM0djUQ
+[Wed Jun  7 11:55:19 2017] [info] Starting zero downtime software upgrade
+[Wed Jun  7 11:55:20 2017] [info] Listening at "http://*:3800"
+[Wed Jun  7 11:55:20 2017] [info] Manager 3161 started
+[Wed Jun  7 11:55:20 2017] [info] Upgrade successful, stopping 3128
+[Wed Jun  7 11:55:20 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Wed Jun  7 11:55:22 2017] [info] Manager 3128 stopped
+[Wed Jun  7 11:55:31 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Wed Jun  7 11:55:50 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:55:50 2017] [info] DEBUG: oid: 59376b35fed1370c5f4bbe21 content-type: image/gif
+[Wed Jun  7 11:55:50 2017] [info] DEBUG: filename: giphy.gif
+[Wed Jun  7 11:56:02 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:56:02 2017] [info] DEBUG: oid: 59376b42fed1370c63236132 content-type: image/jpeg
+[Wed Jun  7 11:56:02 2017] [info] DEBUG: filename: ゴーストアイコン2.jpeg
+[Wed Jun  7 11:57:13 2017] [info] Starting zero downtime software upgrade
+[Wed Jun  7 11:57:13 2017] [info] Listening at "http://*:3800"
+[Wed Jun  7 11:57:13 2017] [info] Manager 3180 started
+[Wed Jun  7 11:57:13 2017] [info] Upgrade successful, stopping 3161
+[Wed Jun  7 11:57:13 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Wed Jun  7 11:57:34 2017] [info] Manager 3161 stopped
+[Wed Jun  7 11:57:54 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Wed Jun  7 11:57:54 2017] [info] DEBUG: 
+[Wed Jun  7 11:58:09 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:58:09 2017] [info] DEBUG: oid: 59376bc0fed1370c730344c1 content-type: image/gif
+[Wed Jun  7 11:58:09 2017] [info] DEBUG: filename: giphy.gif
+[Wed Jun  7 11:58:24 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:58:24 2017] [info] DEBUG: oid: 59376bd0fed1370c6f072f31 content-type: image/jpeg
+[Wed Jun  7 11:58:24 2017] [info] DEBUG: filename: ゴーストアイコン2.jpeg
+[Wed Jun  7 11:58:41 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:58:41 2017] [info] DEBUG: oid: 59376be1fed1370c7236d201 content-type: image/jpeg
+[Wed Jun  7 11:58:41 2017] [info] DEBUG: filename: 2014-04-09 08.26.53.jpg
+[Wed Jun  7 11:59:57 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 11:59:57 2017] [info] DEBUG: oid: 59376c2cfed1370c76734ed1 content-type: application/pdf
+[Wed Jun  7 11:59:57 2017] [info] DEBUG: filename: 納品書3702206.pdf
+[Wed Jun  7 15:30:05 2017] [info] Manager 3180 stopped
+[Wed Jun  7 15:58:31 2017] [info] Listening at "http://*:3800"
+[Wed Jun  7 15:58:31 2017] [info] Manager 473 started
+[Wed Jun  7 15:58:31 2017] [info] Creating process id file "/media/storage/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Wed Jun  7 15:58:49 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/fHNXbgt7GYo:APA91bFP4PYHwa2aejMXGTjDFQbJUcBaktPMiyi7IKVYy6TQr0DsFKFed_c32tcI1I0QStn2nmSsY9sNXH1HKjCFqc53_GPE6Dg6cfyY7sKpANv7UkNe_HpG2N73H3II98i_MsDyihUo","keys":{"auth":"eeIjQYesRLOmF9p6_nPz2w==","p256dh":"BNOtri63Iz_sgI1_tGiv8ulj85FVyY0asmUxg2XTB4ASBNQDtWa8t8_53DZyMs4EXg2sd0hLaLBe9aT9AGEcpmo="}}
+[Wed Jun  7 15:58:56 2017] [info] DEBUG: OID: GB+FP9hhfePZazGRNN3GcQ :: oid_url: R0IrRlA5aGhmZVBaYXpHUk5OM0djUQ
+[Wed Jun  7 15:58:56 2017] [info] DEBUG: OID: cm/vuUuy3DOt/ZPGFKe6xg :: oid_url: Y20vdnVVdXkzRE90L1pQR0ZLZTZ4Zw
+[Wed Jun  7 15:58:56 2017] [info] DEBUG: OID: 4YbiBb76D1z5ETz8U2Hswg :: oid_url: NFliaUJiNzZEMXo1RVR6OFUySHN3Zw
+[Wed Jun  7 15:58:56 2017] [info] DEBUG: OID: q+26RXirl0UawAPmlQSdmA :: oid_url: cSsyNlJYaXJsMFVhd0FQbWxRU2RtQQ
+[Wed Jun  7 16:00:21 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Wed Jun  7 16:00:21 2017] [info] DEBUG: 
+[Wed Jun  7 16:00:49 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 16:00:49 2017] [info] DEBUG: oid: 5937a4a1fed13701e32dbee1 content-type: image/jpeg
+[Wed Jun  7 16:00:49 2017] [info] DEBUG: filename: Fantasticnight_IS01.jpg
+[Wed Jun  7 16:01:01 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 16:01:01 2017] [info] DEBUG: oid: 5937a4acfed13701dc025631 content-type: image/jpeg
+[Wed Jun  7 16:01:01 2017] [info] DEBUG: filename: yuriephoto00051.jpg
+[Wed Jun  7 16:01:45 2017] [info] DEBUG:  roomname: rooma
+[Wed Jun  7 16:01:45 2017] [info] DEBUG: oid: 5937a4d9fed13701e47857d1 content-type: application/pdf
+[Wed Jun  7 16:01:45 2017] [info] DEBUG: filename: manifest.pdf
+[Wed Jun  7 16:04:06 2017] [info] Manager 473 stopped
+[Wed Jun  7 09:48:13 2017] [info] Listening at "http://*:3800"
+[Wed Jun  7 09:48:13 2017] [info] Manager 22778 started
+[Wed Jun  7 09:48:13 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Wed Jun  7 10:30:27 2017] [error] DBI connect('dbname=sitedata;host=sitedata;port=3306','sitedata',...) failed: Unknown MySQL server host 'sitedata' (0) at /home/debian/perl5/lib/perl5/DBIx/Connector.pm line 32.
+
+[Wed Jun  7 10:32:04 2017] [info] DEBUG: OID: 8LC1cKFUCmLgteLhH8MLQw :: oid_url: OExDMWNLRlVDbUxndGVMaEg4TUxRdw
+[Wed Jun  7 10:32:04 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Wed Jun  7 10:32:04 2017] [info] DEBUG: OID: 1TyIUKaXxSerbf6L3BTAQQ :: oid_url: MVR5SVVLYVh4U2VyYmY2TDNCVEFRUQ
+[Wed Jun  7 10:32:04 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Wed Jun  7 10:32:04 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Wed Jun  7 10:32:35 2017] [info] DEBUG: OID: nR/Gglba7531SnyaTcum6w :: oid_url: blIvR2dsYmE3NTMxU255YVRjdW02dw
+[Wed Jun  7 10:32:35 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Wed Jun  7 10:32:35 2017] [info] DEBUG: OID: 8LC1cKFUCmLgteLhH8MLQw :: oid_url: OExDMWNLRlVDbUxndGVMaEg4TUxRdw
+[Wed Jun  7 10:32:35 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Wed Jun  7 10:32:35 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Wed Jun  7 10:33:59 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Wed Jun  7 10:34:09 2017] [error] MongoDB::SelectionError: No writable server available.  MongoDB server status:
+Topology type: Single; Member status:
+  192.168.0.5:27017 (type: Unknown, error: MongoDB::NetworkError: Could not connect to '192.168.0.5:27017': Connection timed out )
+
+[Wed Jun  7 10:34:58 2017] [error] DBD::mysql::st execute failed: MySQL server has gone away at /home/debian/perlwork/mojowork/server/site1/script/../lib/Site1/Controller/Filestore.pm line 77.
+
+[Wed Jun  7 10:35:34 2017] [error] DBD::mysql::st execute failed: MySQL server has gone away at /home/debian/perlwork/mojowork/server/site1/script/../lib/Site1/Controller/Filestore.pm line 77.
+
+[Wed Jun  7 10:37:26 2017] [info] Starting zero downtime software upgrade
+[Wed Jun  7 10:37:28 2017] [info] Listening at "http://*:3800"
+[Wed Jun  7 10:37:28 2017] [info] Manager 30582 started
+[Wed Jun  7 10:37:28 2017] [info] Upgrade successful, stopping 22778
+[Wed Jun  7 10:37:28 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Wed Jun  7 10:37:28 2017] [info] Manager 22778 stopped
+[Wed Jun  7 10:37:45 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Wed Jun  7 10:37:45 2017] [error] MongoDB::SelectionError: No writable server available.  MongoDB server status:
+Topology type: Single; Member status:
+  10.140.0.6:27017 (type: Unknown, error: MongoDB::NetworkError: Could not connect to '10.140.0.6:27017': Connection refused )
+
+[Wed Jun  7 10:37:59 2017] [info] DEBUG: OID: nR/Gglba7531SnyaTcum6w :: oid_url: blIvR2dsYmE3NTMxU255YVRjdW02dw
+[Wed Jun  7 10:37:59 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Wed Jun  7 10:37:59 2017] [info] DEBUG: OID: 8LC1cKFUCmLgteLhH8MLQw :: oid_url: OExDMWNLRlVDbUxndGVMaEg4TUxRdw
+[Wed Jun  7 10:37:59 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Wed Jun  7 10:37:59 2017] [info] DEBUG: OID: jz185u5rFIx2qpBlY02+hw :: oid_url: anoxODV1NXJGSXgycXBCbFkwMitodw
+[Wed Jun  7 10:38:32 2017] [info] DEBUG: OID: RhAz/n6oQzLhIMjIhjn3CQ :: oid_url: UmhBei9uNm9RekxoSU1qSWhqbjNDUQ
+[Wed Jun  7 10:38:32 2017] [info] DEBUG: OID: C5s+eWtb8C5H9tjSq9kqxA :: oid_url: QzVzK2VXdGI4QzVIOXRqU3E5a3F4QQ
+[Wed Jun  7 10:38:32 2017] [info] DEBUG: OID: 8LC1cKFUCmLgteLhH8MLQw :: oid_url: OExDMWNLRlVDbUxndGVMaEg4TUxRdw
+[Wed Jun  7 10:38:32 2017] [info] DEBUG: OID: nR/Gglba7531SnyaTcum6w :: oid_url: blIvR2dsYmE3NTMxU255YVRjdW02dw
+[Wed Jun  7 10:38:35 2017] [info] DEBUG: OID: GDCXhCLuzZDTDmm0/cDwrA :: oid_url: R0RDWGhDTHV6WkRURG1tMC9jRHdyQQ
+[Wed Jun  7 10:38:38 2017] [info] DEBUG: OID: GDCXhCLuzZDTDmm0/cDwrA :: oid_url: R0RDWGhDTHV6WkRURG1tMC9jRHdyQQ
+[Wed Jun  7 10:57:16 2017] [info] Starting zero downtime software upgrade
+[Wed Jun  7 10:57:17 2017] [info] Listening at "http://*:3800"
+[Wed Jun  7 10:57:17 2017] [info] Manager 30628 started
+[Wed Jun  7 10:57:17 2017] [info] Upgrade successful, stopping 30582
+[Wed Jun  7 10:57:17 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Wed Jun  7 10:57:22 2017] [info] Manager 30582 stopped
+[Wed Jun  7 15:44:19 2017] [info] Manager 30628 stopped
+[Fri Jun  9 05:59:58 2017] [info] Listening at "http://*:3800"
+[Fri Jun  9 05:59:58 2017] [info] Manager 1127 started
+[Fri Jun  9 05:59:58 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Fri Jun  9 06:29:21 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Fri Jun  9 06:29:21 2017] [error] MongoDB::SelectionError: No writable server available.  MongoDB server status:
+Topology type: Single; Member status:
+  10.140.0.6:27017 (type: Unknown, error: MongoDB::NetworkError: Could not connect to '10.140.0.6:27017': Connection refused )
+
+[Fri Jun  9 07:16:36 2017] [info] Starting zero downtime software upgrade
+[Fri Jun  9 07:16:37 2017] [info] Listening at "http://*:3800"
+[Fri Jun  9 07:16:37 2017] [info] Manager 1777 started
+[Fri Jun  9 07:16:37 2017] [info] Upgrade successful, stopping 1127
+[Fri Jun  9 07:16:37 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Fri Jun  9 07:16:37 2017] [info] Manager 1127 stopped
+[Fri Jun  9 07:16:52 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Fri Jun  9 07:16:52 2017] [error] MongoDB::SelectionError: No writable server available.  MongoDB server status:
+Topology type: Single; Member status:
+  10.140.0.6:27017 (type: Unknown, error: MongoDB::NetworkError: Could not connect to '10.140.0.6:27017': Connection refused )
+
+[Fri Jun  9 07:25:08 2017] [info] Starting zero downtime software upgrade
+[Fri Jun  9 07:25:09 2017] [info] Listening at "http://*:3800"
+[Fri Jun  9 07:25:09 2017] [info] Manager 1805 started
+[Fri Jun  9 07:25:09 2017] [info] Upgrade successful, stopping 1777
+[Fri Jun  9 07:25:09 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Fri Jun  9 07:25:09 2017] [info] Manager 1777 stopped
+[Fri Jun  9 07:25:16 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Fri Jun  9 07:25:16 2017] [error] MongoDB::SelectionError: No writable server available.  MongoDB server status:
+Topology type: Single; Member status:
+  10.140.0.6:27017 (type: Unknown, error: MongoDB::NetworkError: Could not connect to '10.140.0.6:27017': Connection refused )
+
+[Fri Jun  9 07:25:38 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Fri Jun  9 07:25:39 2017] [error] MongoDB::SelectionError: No writable server available.  MongoDB server status:
+Topology type: Single; Member status:
+  10.140.0.6:27017 (type: Unknown, error: MongoDB::NetworkError: Could not connect to '10.140.0.6:27017': Connection refused )
+
+[Fri Jun  9 07:26:25 2017] [info] Starting zero downtime software upgrade
+[Fri Jun  9 07:26:26 2017] [info] Listening at "http://*:3800"
+[Fri Jun  9 07:26:26 2017] [info] Manager 1821 started
+[Fri Jun  9 07:26:26 2017] [info] Upgrade successful, stopping 1805
+[Fri Jun  9 07:26:26 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Fri Jun  9 07:26:27 2017] [info] Manager 1805 stopped
+[Fri Jun  9 07:26:32 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Fri Jun  9 07:26:32 2017] [error] MongoDB::SelectionError: No writable server available.  MongoDB server status:
+Topology type: Single; Member status:
+  10.140.0.6:27017 (type: Unknown, error: MongoDB::NetworkError: Could not connect to '10.140.0.6:27017': Connection refused )
+
+[Fri Jun  9 07:31:43 2017] [info] Starting zero downtime software upgrade
+[Fri Jun  9 07:31:44 2017] [info] Listening at "http://*:3800"
+[Fri Jun  9 07:31:44 2017] [info] Manager 1889 started
+[Fri Jun  9 07:31:44 2017] [info] Upgrade successful, stopping 1821
+[Fri Jun  9 07:31:44 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Fri Jun  9 07:31:44 2017] [info] Manager 1821 stopped
+[Fri Jun  9 07:31:50 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Fri Jun  9 07:32:26 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Fri Jun  9 07:37:16 2017] [info] Manager 1889 stopped
+[Fri Jun  9 12:02:37 2017] [info] Listening at "http://*:3800"
+[Fri Jun  9 12:02:37 2017] [info] Manager 3405 started
+[Fri Jun  9 12:02:37 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Fri Jun  9 12:04:16 2017] [info] Starting zero downtime software upgrade
+[Fri Jun  9 12:04:17 2017] [info] Listening at "http://*:3800"
+[Fri Jun  9 12:04:17 2017] [info] Manager 3423 started
+[Fri Jun  9 12:04:17 2017] [info] Upgrade successful, stopping 3405
+[Fri Jun  9 12:04:17 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Fri Jun  9 12:04:17 2017] [info] Manager 3405 stopped
+[Fri Jun  9 12:04:33 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Fri Jun  9 12:10:18 2017] [info] Starting zero downtime software upgrade
+[Fri Jun  9 12:10:19 2017] [info] Listening at "http://*:3800"
+[Fri Jun  9 12:10:19 2017] [info] Manager 3462 started
+[Fri Jun  9 12:10:19 2017] [info] Upgrade successful, stopping 3423
+[Fri Jun  9 12:10:19 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Fri Jun  9 12:10:20 2017] [info] Manager 3423 stopped
+[Fri Jun  9 12:10:45 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Fri Jun  9 12:15:23 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Sat Jun 10 09:11:29 2017] [info] Manager 3462 stopped
+[Sat Jun 10 13:51:19 2017] [info] Listening at "http://*:3800"
+[Sat Jun 10 13:51:19 2017] [info] Manager 1441 started
+[Sat Jun 10 13:51:19 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Sat Jun 10 14:00:35 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Sat Jun 10 14:35:54 2017] [info] Starting zero downtime software upgrade
+[Sat Jun 10 14:35:55 2017] [info] Listening at "http://*:3800"
+[Sat Jun 10 14:35:55 2017] [info] Manager 1569 started
+[Sat Jun 10 14:35:55 2017] [info] Upgrade successful, stopping 1441
+[Sat Jun 10 14:35:55 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Sat Jun 10 14:35:56 2017] [info] Manager 1441 stopped
+[Sun Jun 11 02:26:12 2017] [info] Starting zero downtime software upgrade
+[Sun Jun 11 02:26:13 2017] [info] Listening at "http://*:3800"
+[Sun Jun 11 02:26:13 2017] [info] Manager 2628 started
+[Sun Jun 11 02:26:13 2017] [info] Upgrade successful, stopping 1569
+[Sun Jun 11 02:26:13 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Sun Jun 11 02:26:13 2017] [info] Manager 1569 stopped
+[Sun Jun 11 02:27:33 2017] [info] DEBUG: get_token err:  
+[Sun Jun 11 02:27:33 2017] [info] DEBUG: data: {"access_token":"ya29.GltmBPoPNQM4wpO0XC87bY2Zvs-V795pnti1YVIG84CneEVtpIeAw6R2vwuVo-mFY7Rr0s56uLGrXDxBEiRB-LMYbRxnLRRfRuYa-h_yIsCo8ZCvKTU7UCEGMKbs","expires_in":3600,"id_token":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImU0NzAxNzRiOTk5MDRkNThjMjQwZWM1ZTA4MWNjMzU3YzRiYjBmMmYifQ.eyJhenAiOiI4NjE2MDA1ODIwMzctazNhb3M4MWg1ZmVqb3Fva3BnOW12NDRnaHJhN2J2ZGIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4NjE2MDA1ODIwMzctazNhb3M4MWg1ZmVqb3Fva3BnOW12NDRnaHJhN2J2ZGIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTA1MzQzNTUzMzE3ODUxMzg4OTQiLCJlbWFpbCI6IjUydGhyb3VnaEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6Inc3WHJ0SlMyMFhTUkpoTmRhV0lEUmciLCJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJpYXQiOjE0OTcxNDgwNTMsImV4cCI6MTQ5NzE1MTY1MywibmFtZSI6IlJheSBreW0iLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDQuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1OWm9TMDBqaE1kVS9BQUFBQUFBQUFBSS9BQUFBQUFBQUJHdy96cXRYT1RaMjB4RS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiUmF5IiwiZmFtaWx5X25hbWUiOiJreW0iLCJsb2NhbGUiOiJqYSJ9.mT77GanbZeF446_JXoOX0buuXZmYwEZoWiwkeoJTgEXuN1PcluQ50hH4N5dAVmaRQhiKxfWgHrKEswZ9Rl_hdkfG0EhXnTL55yDIWTl5_Zum6LXin5SUwD6ZIN9W5T3cx4yPgmLo2S2O-5oVUV35OP2QLGI0lAQX29qJnRiTcKJe6yT45VZFOo25ULLY2N229uQBzuw8VobSA8Jr0BJKmbVWBS5Ljd90UYeEZ-Uzgh9YcIBMaNktIPVL-g6iAVRkGhIV3-HYW1eHRcu6m-O9uNb7b-M8TQqgXIMAoTWXFmRQ1KvoLKvhpaWlSrGKiXInwED919MoTzwSpdHfdMF6hg","refresh_token":"1\/rkJlRakBzV4XDNA2TJaTIOXATkvm1vwhuFBWXXANplY","token_type":"Bearer"}
+[Sun Jun 11 02:27:34 2017] [info] DEBUG: value: {"aboutMe":"どうぞよろしく(^^ゞ","circledByCount":0,"displayName":"Ray kym","emails":[{"type":"account","value":"52through@gmail.com"}],"etag":"\"Sh4n9u6EtD24TM0RmWv7jTXojqc\/C33NNgTFe4Q7q9R8s2gf744eprQ\"","gender":"male","id":"110534355331785138894","image":{"isDefault":false,"url":"https:\/\/lh4.googleusercontent.com\/-NZoS00jhMdU\/AAAAAAAAAAI\/AAAAAAAABGw\/zqtXOTZ20xE\/photo.jpg?sz=50"},"isPlusUser":true,"kind":"plus#person","language":"ja","name":{"familyName":"kym","givenName":"Ray"},"objectType":"person","url":"https:\/\/plus.google.com\/110534355331785138894","urls":[{"label":"バズ","type":"contributor","value":"https:\/\/profiles.google.com\/110534355331785138894\/buzz"}],"verified":false}
+[Sun Jun 11 02:27:34 2017] [info] DEBUG: guid: KddBdG05V88pwgUgNV4QlA
+[Sun Jun 11 02:27:34 2017] [info] DEBUG: set redis: {"email":"52through@gmail.com","icon":"nowprint","icon_url":"https:\/\/lh4.googleusercontent.com\/-NZoS00jhMdU\/AAAAAAAAAAI\/AAAAAAAABGw\/zqtXOTZ20xE\/photo.jpg?sz=50","uid":"KddBdG05V88pwgUgNV4QlA","username":"Ray kym"} 
+[Sun Jun 11 02:27:35 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Sun Jun 11 02:41:02 2017] [info] DEBUG: set redis: {"email":"test1@test.com","icon":"RGRpb2hUd25vWXNpd2llbzV2WlVTUQ","icon_url":"\/imgcomm?oid=RGRpb2hUd25vWXNpd2llbzV2WlVTUQ","uid":"YlnGejjoHus7vXWPgwUHMw","username":"Test1ユーザー"} 
+[Sun Jun 11 02:43:55 2017] [info] Starting zero downtime software upgrade
+[Sun Jun 11 02:43:56 2017] [info] Listening at "http://*:3800"
+[Sun Jun 11 02:43:56 2017] [info] Manager 2678 started
+[Sun Jun 11 02:43:56 2017] [info] Upgrade successful, stopping 2628
+[Sun Jun 11 02:43:56 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Sun Jun 11 02:43:57 2017] [info] Manager 2628 stopped
+[Sun Jun 11 02:49:24 2017] [info] Starting zero downtime software upgrade
+[Sun Jun 11 02:49:25 2017] [info] Listening at "http://*:3800"
+[Sun Jun 11 02:49:25 2017] [info] Manager 2703 started
+[Sun Jun 11 02:49:25 2017] [info] Upgrade successful, stopping 2678
+[Sun Jun 11 02:49:25 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Sun Jun 11 02:49:25 2017] [info] Manager 2678 stopped
+[Sun Jun 11 02:58:23 2017] [info] Starting zero downtime software upgrade
+[Sun Jun 11 02:58:24 2017] [info] Listening at "http://*:3800"
+[Sun Jun 11 02:58:24 2017] [info] Manager 2736 started
+[Sun Jun 11 02:58:24 2017] [info] Upgrade successful, stopping 2703
+[Sun Jun 11 02:58:24 2017] [info] Creating process id file "/home/debian/perlwork/mojowork/server/site1/script/hypnotoad.pid"
+[Sun Jun 11 02:58:24 2017] [info] Manager 2703 stopped
+[Sun Jun 11 02:58:34 2017] [info] DEBUG: get_token err:  
+[Sun Jun 11 02:58:34 2017] [info] DEBUG: data: {"access_token":"ya29.GltmBKE9K-CybjLkP8dMtl0l9y2tirTG_GyhvRPMfsRPFaf5REuMngOzYu7kDlgySO2-ESYKnJBEmlP0vdeI9sKzxZZO2jQMkjb6L8zpUGioL1F4DLK2CGZZkMPI","expires_in":3600,"id_token":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImU0NzAxNzRiOTk5MDRkNThjMjQwZWM1ZTA4MWNjMzU3YzRiYjBmMmYifQ.eyJhenAiOiI4NjE2MDA1ODIwMzctazNhb3M4MWg1ZmVqb3Fva3BnOW12NDRnaHJhN2J2ZGIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4NjE2MDA1ODIwMzctazNhb3M4MWg1ZmVqb3Fva3BnOW12NDRnaHJhN2J2ZGIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTA1MzQzNTUzMzE3ODUxMzg4OTQiLCJlbWFpbCI6IjUydGhyb3VnaEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IlFSNDkxSERHUEV1R2ExRmFZWVI0cHciLCJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJpYXQiOjE0OTcxNDk5MTQsImV4cCI6MTQ5NzE1MzUxNCwibmFtZSI6IlJheSBreW0iLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDQuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1OWm9TMDBqaE1kVS9BQUFBQUFBQUFBSS9BQUFBQUFBQUJHdy96cXRYT1RaMjB4RS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiUmF5IiwiZmFtaWx5X25hbWUiOiJreW0iLCJsb2NhbGUiOiJqYSJ9.S2V8nye0Hw5UPRzQ85ZtLVpFVI2AlhP692BvLrogs3joUrX5qqtyD3snJG_cJyD76jdgvAKcL5U1OlRy7Ddd9fQrcXm3MqS2Po9OZDXRDagGNu0Wskd1JqoaHESw9BhQEd5bOErnSmV8XIxjWdAQqJUCkJJrybcQ55zm1evR1br7mxWS8OSxnFpL1LiALfK7apGG6LoLSN90QE2IgISz8H8bxVnjzada802rEWOL4m_RmCzu9q0amirntsVeWpDJGzWZa1pc87DBiK05vsV_kzu40MHq8jEmocJjpAKp1k_HmhHnb9dhZtS4IIocVxBFj0cYHchqvZnGvFf93_SFrg","refresh_token":"1\/dghkFyRcbiW7AQPMrrLgdAesQwDKEtkqgHo2Qt9LzKE","token_type":"Bearer"}
+[Sun Jun 11 02:58:35 2017] [info] DEBUG: value: {"aboutMe":"どうぞよろしく(^^ゞ","circledByCount":0,"displayName":"Ray kym","emails":[{"type":"account","value":"52through@gmail.com"}],"etag":"\"Sh4n9u6EtD24TM0RmWv7jTXojqc\/C33NNgTFe4Q7q9R8s2gf744eprQ\"","gender":"male","id":"110534355331785138894","image":{"isDefault":false,"url":"https:\/\/lh4.googleusercontent.com\/-NZoS00jhMdU\/AAAAAAAAAAI\/AAAAAAAABGw\/zqtXOTZ20xE\/photo.jpg?sz=50"},"isPlusUser":true,"kind":"plus#person","language":"ja","name":{"familyName":"kym","givenName":"Ray"},"objectType":"person","url":"https:\/\/plus.google.com\/110534355331785138894","urls":[{"label":"バズ","type":"contributor","value":"https:\/\/profiles.google.com\/110534355331785138894\/buzz"}],"verified":false}
+[Sun Jun 11 02:58:35 2017] [info] DEBUG: guid: KddBdG05V88pwgUgNV4QlA
+[Sun Jun 11 02:58:35 2017] [info] DEBUG: set redis: {"email":"52through@gmail.com","icon":"nowprint","icon_url":"https:\/\/lh4.googleusercontent.com\/-NZoS00jhMdU\/AAAAAAAAAAI\/AAAAAAAABGw\/zqtXOTZ20xE\/photo.jpg?sz=50","uid":"KddBdG05V88pwgUgNV4QlA","username":"Ray kym"} 
+[Sun Jun 11 02:58:38 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/cF7lvdmQxeI:APA91bHwqlqgzgz-B10x_ZH_xLa5sLz4RUTc7gdCJfbhnU3GwcZPjAN1pMo17VuH8Ovs3A_7MyDc2-m3DXUFWBcEdCoOY5aTwRuU6QGVrKNIxb6YQUMFF_icseqZSI8oyJoEZGgyGePm","keys":{"auth":"hQ2VLH0ucyuLX5FNqc-37w==","p256dh":"BPS1vtvdoV8j8N4Ei8rsFRWC8At7N62CeJsCenOvuY707KicNLN9ugJ1Gey8ffsVmsmSjxnI7ytKNhofbNZNeZ4="}}
+[Sun Jun 11 02:58:59 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Sun Jun 11 02:59:16 2017] [info] DEBUG: sendwebpush hash: {"body":"Test1ユーザーさんから,voicechatの申請です。roomはroomaです。","from":"Test1ユーザー","page":"voicechat","roomname":"rooma","to":"52through@gmail.com","url":"https:\/\/westwind.backbone.site\/voicechat2n?rooma"}
+[Sun Jun 11 02:59:16 2017] [info] DEBUG: noti endpoint: https://android.googleapis.com/gcm/send/cF7lvdmQxeI:APA91bHwqlqgzgz-B10x_ZH_xLa5sLz4RUTc7gdCJfbhnU3GwcZPjAN1pMo17VuH8Ovs3A_7MyDc2-m3DXUFWBcEdCoOY5aTwRuU6QGVrKNIxb6YQUMFF_icseqZSI8oyJoEZGgyGePm
+[Sun Jun 11 03:04:22 2017] [info] DEBUG:  roomname: rooma
+[Sun Jun 11 03:04:22 2017] [info] DEBUG: oid: 593cb336ae0ce80ab7647e61 content-type: image/gif
+[Sun Jun 11 03:04:22 2017] [info] DEBUG: filename: giphy.gif
+[Sun Jun 11 05:45:52 2017] [info] DEBUG: rec hash: {"endpoint":"https:\/\/android.googleapis.com\/gcm\/send\/dqulvJF1JAw:APA91bHnoh1AhqLJS6K1Lb91w4Hekr9u2tTGStg1qnO0U2zCvmLSUYeBGQEtCJV8yRc-IYbUEgjzF8N7bGcxEsLiX5EPmnuPITYeQZsgoAZonZgwhLhSQmvkasVuGhaOW0M1cHyxulvy","keys":{"auth":"wHCaus1PHwtEDSQDQ_vJdQ==","p256dh":"BJ2wdUZtwUUsPmhOJUucw-bAu_1f5NNbc2NyYfJEVtNaDVGTA5eHiMd7pEGNLmT_Te8po4NMhTaxu3bi52wy5Jc="}}
+[Sun Jun 11 05:50:06 2017] [info] DEBUG: set redis: {"email":"npcuser1@test.com","icon":"K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","icon_url":"\/imgcomm?oid=K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","uid":"jpiPHc7lAnfwoUl9XkiDaQ","username":"npcuser1"} 
+[Sun Jun 11 05:51:40 2017] [info] DEBUG: set redis: {"email":"npcuser1@test.com","icon":"K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","icon_url":"\/imgcomm?oid=K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","uid":"jpiPHc7lAnfwoUl9XkiDaQ","username":"npcuser1"} 
+[Sun Jun 11 05:54:48 2017] [info] DEBUG: set redis: {"email":"npcuser1@test.com","icon":"K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","icon_url":"\/imgcomm?oid=K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","uid":"jpiPHc7lAnfwoUl9XkiDaQ","username":"npcuser1"} 
+[Sun Jun 11 07:59:27 2017] [info] DEBUG: on channel:(WALKCHAT) npcuser1 : {"chat":"o-i","geometry":{"coordinates":[138.6256173,35.2449471],"type":"Point"},"hms":"16:59:27","icon_url":"\/imgcomm?oid=RGRpb2hUd25vWXNpd2llbzV2WlVTUQ","loc":{"lat":35.2449471,"lng":138.6256173},"ttl":"2017-06-11T07:59:27","username":"Test1ユーザー"}
+[Sun Jun 11 07:59:27 2017] [info] DEBUG: on channel:(WALKCHAT) npcuser1 : {"chat":"o-i","geometry":{"coordinates":[138.6256173,35.2449471],"type":"Point"},"hms":"16:59:27","icon_url":"\/imgcomm?oid=RGRpb2hUd25vWXNpd2llbzV2WlVTUQ","loc":{"lat":35.2449471,"lng":138.6256173},"ttl":"2017-06-11T07:59:27","username":"Test1ユーザー"}
+[Sun Jun 11 07:59:27 2017] [info] DEBUG: on channel:(WALKCHAT) Test1ユーザー : {"chat":"o-i","geometry":{"coordinates":[138.6256173,35.2449471],"type":"Point"},"hms":"16:59:27","icon_url":"\/imgcomm?oid=RGRpb2hUd25vWXNpd2llbzV2WlVTUQ","loc":{"lat":35.2449471,"lng":138.6256173},"ttl":"2017-06-11T07:59:27","username":"Test1ユーザー"}
+[Sun Jun 11 07:59:27 2017] [info] DEBUG: DdiohTwnoYsiwieo5vZUSQ
+[Sun Jun 11 07:59:27 2017] [info] DEBUG: 
+[Sun Jun 11 07:59:34 2017] [info] DEBUG: on channel:(WALKCHAT) npcuser1 : {"chat":"おーい","geometry":{"coordinates":[138.6256173,35.2449471],"type":"Point"},"hms":"16:59:34","icon_url":"\/imgcomm?oid=RGRpb2hUd25vWXNpd2llbzV2WlVTUQ","loc":{"lat":35.2449471,"lng":138.6256173},"ttl":"2017-06-11T07:59:34","username":"Test1ユーザー"}
+[Sun Jun 11 07:59:34 2017] [info] DEBUG: on channel:(WALKCHAT) npcuser1 : {"chat":"おーい","geometry":{"coordinates":[138.6256173,35.2449471],"type":"Point"},"hms":"16:59:34","icon_url":"\/imgcomm?oid=RGRpb2hUd25vWXNpd2llbzV2WlVTUQ","loc":{"lat":35.2449471,"lng":138.6256173},"ttl":"2017-06-11T07:59:34","username":"Test1ユーザー"}
+[Sun Jun 11 07:59:34 2017] [info] DEBUG: on channel:(WALKCHAT) Test1ユーザー : {"chat":"おーい","geometry":{"coordinates":[138.6256173,35.2449471],"type":"Point"},"hms":"16:59:34","icon_url":"\/imgcomm?oid=RGRpb2hUd25vWXNpd2llbzV2WlVTUQ","loc":{"lat":35.2449471,"lng":138.6256173},"ttl":"2017-06-11T07:59:34","username":"Test1ユーザー"}
+[Sun Jun 11 07:59:48 2017] [info] DEBUG: on channel:(WALKCHAT) Test1ユーザー : {"chat":"追跡モードになったよ！","geometry":{"coordinates":[138.60979447025,35.2420931122346],"type":"Point"},"hms":"16:59:48","icon_url":"\/imgcomm?oid=K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","loc":{"lat":35.2420931122346,"lng":138.60979447025},"ttl":"2017-06-11T07:59:48","username":"npcuser1"}
+[Sun Jun 11 07:59:48 2017] [info] DEBUG: on channel:(WALKCHAT) Test1ユーザー : {"chat":"Randomモードになったよ！","geometry":{"coordinates":[138.60979447025,35.2420931122346],"type":"Point"},"hms":"16:59:48","icon_url":"\/imgcomm?oid=K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","loc":{"lat":35.2420931122346,"lng":138.60979447025},"ttl":"2017-06-11T07:59:48","username":"npcuser1"}
+[Sun Jun 11 07:59:48 2017] [info] DEBUG: on channel:(WALKCHAT) npcuser1 : {"chat":"追跡モードになったよ！","geometry":{"coordinates":[138.60979447025,35.2420931122346],"type":"Point"},"hms":"16:59:48","icon_url":"\/imgcomm?oid=K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","loc":{"lat":35.2420931122346,"lng":138.60979447025},"ttl":"2017-06-11T07:59:48","username":"npcuser1"}
+[Sun Jun 11 07:59:48 2017] [info] DEBUG: on channel:(WALKCHAT) npcuser1 : {"chat":"Randomモードになったよ！","geometry":{"coordinates":[138.60979447025,35.2420931122346],"type":"Point"},"hms":"16:59:48","icon_url":"\/imgcomm?oid=K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","loc":{"lat":35.2420931122346,"lng":138.60979447025},"ttl":"2017-06-11T07:59:48","username":"npcuser1"}
+[Sun Jun 11 07:59:48 2017] [info] DEBUG: on channel:(WALKCHAT) npcuser1 : {"chat":"追跡モードになったよ！","geometry":{"coordinates":[138.60979447025,35.2420931122346],"type":"Point"},"hms":"16:59:48","icon_url":"\/imgcomm?oid=K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","loc":{"lat":35.2420931122346,"lng":138.60979447025},"ttl":"2017-06-11T07:59:48","username":"npcuser1"}
+[Sun Jun 11 07:59:48 2017] [info] DEBUG: on channel:(WALKCHAT) npcuser1 : {"chat":"Randomモードになったよ！","geometry":{"coordinates":[138.60979447025,35.2420931122346],"type":"Point"},"hms":"16:59:48","icon_url":"\/imgcomm?oid=K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","loc":{"lat":35.2420931122346,"lng":138.60979447025},"ttl":"2017-06-11T07:59:48","username":"npcuser1"}
+[Sun Jun 11 07:59:48 2017] [info] DEBUG: +FDFVwsFRqD8G/uT6s6MTQ
+[Sun Jun 11 07:59:48 2017] [info] DEBUG: 
+[Sun Jun 11 07:59:58 2017] [info] DEBUG: on channel:(WALKCHAT) Test1ユーザー : {"chat":"周回モードになったよ！","geometry":{"coordinates":[138.609632139346,35.242240909619],"type":"Point"},"hms":"16:59:58","icon_url":"\/imgcomm?oid=K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","loc":{"lat":35.242240909619,"lng":138.609632139346},"ttl":"2017-06-11T07:59:58","username":"npcuser1"}
+[Sun Jun 11 07:59:58 2017] [info] DEBUG: on channel:(WALKCHAT) npcuser1 : {"chat":"周回モードになったよ！","geometry":{"coordinates":[138.609632139346,35.242240909619],"type":"Point"},"hms":"16:59:58","icon_url":"\/imgcomm?oid=K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","loc":{"lat":35.242240909619,"lng":138.609632139346},"ttl":"2017-06-11T07:59:58","username":"npcuser1"}
+[Sun Jun 11 07:59:58 2017] [info] DEBUG: on channel:(WALKCHAT) npcuser1 : {"chat":"周回モードになったよ！","geometry":{"coordinates":[138.609632139346,35.242240909619],"type":"Point"},"hms":"16:59:58","icon_url":"\/imgcomm?oid=K0ZERlZ3c0ZScUQ4Ry91VDZzNk1UUQ","loc":{"lat":35.242240909619,"lng":138.609632139346},"ttl":"2017-06-11T07:59:58","username":"npcuser1"}
+[Sun Jun 11 08:03:26 2017] [info] DEBUG: set redis: {"email":"searchnpc1@test.com","icon":"V1Y0Q05HazdSTlBIV0ppdytTK2RUUQ","icon_url":"\/imgcomm?oid=V1Y0Q05HazdSTlBIV0ppdytTK2RUUQ","uid":"c73mbOo+sI0z0ejX+snTuA","username":"searchnpc1"} 
+[Sun Jun 11 08:03:37 2017] [info] DEBUG: set redis: {"email":"searchnpc1@test.com","icon":"V1Y0Q05HazdSTlBIV0ppdytTK2RUUQ","icon_url":"\/imgcomm?oid=V1Y0Q05HazdSTlBIV0ppdytTK2RUUQ","uid":"c73mbOo+sI0z0ejX+snTuA","username":"searchnpc1"} 
+[Sun Jun 11 08:05:47 2017] [info] DEBUG: on channel:(WALKCHAT) Test1ユーザー : {"chat":"Searchモードに変わったよ！","geometry":{"coordinates":[138.623268931519,35.2507214988052],"type":"Point"},"hms":"17:05:47","icon_url":"\/imgcomm?oid=V1Y0Q05HazdSTlBIV0ppdytTK2RUUQ","loc":{"lat":35.2507214988052,"lng":138.623268931519},"ttl":"2017-06-11T08:05:47","username":"searchnpc1"}
+[Sun Jun 11 08:05:47 2017] [info] DEBUG: on channel:(WALKCHAT) searchnpc1 : {"chat":"Searchモードに変わったよ！","geometry":{"coordinates":[138.623268931519,35.2507214988052],"type":"Point"},"hms":"17:05:47","icon_url":"\/imgcomm?oid=V1Y0Q05HazdSTlBIV0ppdytTK2RUUQ","loc":{"lat":35.2507214988052,"lng":138.623268931519},"ttl":"2017-06-11T08:05:47","username":"searchnpc1"}
+[Sun Jun 11 08:05:47 2017] [info] DEBUG: on channel:(WALKCHAT) searchnpc1 : {"chat":"Searchモードに変わったよ！","geometry":{"coordinates":[138.623268931519,35.2507214988052],"type":"Point"},"hms":"17:05:47","icon_url":"\/imgcomm?oid=V1Y0Q05HazdSTlBIV0ppdytTK2RUUQ","loc":{"lat":35.2507214988052,"lng":138.623268931519},"ttl":"2017-06-11T08:05:47","username":"searchnpc1"}
+[Sun Jun 11 08:05:47 2017] [info] DEBUG: WV4CNGk7RNPHWJiw+S+dTQ
+[Sun Jun 11 08:05:47 2017] [info] DEBUG: 
+[Sun Jun 11 08:05:57 2017] [info] DEBUG: on channel:(WALKCHAT) Test1ユーザー : {"chat":"今から富士宮市役所 あすなろ園へ行くよ！","geometry":{"coordinates":[138.623268931519,35.2507214988052],"type":"Point"},"hms":"17:05:57","icon_url":"\/imgcomm?oid=V1Y0Q05HazdSTlBIV0ppdytTK2RUUQ","loc":{"lat":35.2507214988052,"lng":138.623268931519},"ttl":"2017-06-11T08:05:57","username":"searchnpc1"}
+[Sun Jun 11 08:05:57 2017] [info] DEBUG: on channel:(WALKCHAT) searchnpc1 : {"chat":"今から富士宮市役所 あすなろ園へ行くよ！","geometry":{"coordinates":[138.623268931519,35.2507214988052],"type":"Point"},"hms":"17:05:57","icon_url":"\/imgcomm?oid=V1Y0Q05HazdSTlBIV0ppdytTK2RUUQ","loc":{"lat":35.2507214988052,"lng":138.623268931519},"ttl":"2017-06-11T08:05:57","username":"searchnpc1"}
+[Sun Jun 11 08:05:58 2017] [info] DEBUG: on channel:(WALKCHAT) searchnpc1 : {"chat":"今から富士宮市役所 あすなろ園へ行くよ！","geometry":{"coordinates":[138.623268931519,35.2507214988052],"type":"Point"},"hms":"17:05:57","icon_url":"\/imgcomm?oid=V1Y0Q05HazdSTlBIV0ppdytTK2RUUQ","loc":{"lat":35.2507214988052,"lng":138.623268931519},"ttl":"2017-06-11T08:05:57","username":"searchnpc1"}
