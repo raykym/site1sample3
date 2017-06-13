@@ -7,6 +7,7 @@ use Data::Dumper;
 use Encode;
 use MIME::Base64::URLSafe; # uid,oidをページで受け渡すにはエンコードが必要
 use Mojo::Asset::File;
+use Mojo::JSON qw(encode_json decode_json from_json to_json);
 
 use lib '/home/debian/perlwork/mojowork/server/site1/lib/Site1';
 use Sessionid; #oidをuidと同じ仕組みで提供するため
@@ -378,13 +379,22 @@ sub seticonact {
 sub putfileimg {
    my $self = shift;
 
+      $self->app->log->info("DEBUG: putfileimg start...");
+
+   # postで受けるのでencodeは無し
    my $roomname = $self->param('room');
    if (! defined $roomname) {
        return $self->render( template => 'top/unknown');
       }
 
+      $self->app->log->info("DEBUG: roomname: $roomname");
+
+
    my $imgDB = $self->app->mongoclient->get_database($roomname);
+      $imgDB->drop;  # 1回削除　ファイル1個のみ残す
+      $imgDB = $self->app->mongoclient->get_database($roomname);
    my $bucket = $imgDB->gfs;
+
       
       # filenameはformの指定name 
    my $fileobj = $self->req->upload('filename');
@@ -421,18 +431,19 @@ sub putfileimg {
 
    my $roomname_enc = encode_utf8($roomname);
    my $roomname_b64 = urlsafe_b64encode($roomname_enc);
-      $oid = urlsafe_b64encode($oid);
  
-# Ajaxのつもりで考えていたが、そのまま表示するように変えてみる 
-#   my $ft = { "filename" => $filename, "contenttype" => $mimetype , "oid" => $oid, "size" => $fileobj->size, "roomname" => $roomname };
-#   # resuponseにcontent-typeを付けて戻す
-#   $self->res->headers->header("Access-Control-Allow-Origin" => 'https://westwind.backbone.site' );
-#   $self->render( json => $ft );
-
 # 呼び出し用画面を表示する。
    $self->stash('room' => $roomname_b64); 
    $self->stash('mimetype' => $mimetype);
-   $self->render( template => 'filestore/putfileimg' );
+#   $self->render( template => 'filestore/putfileimg' );
+   $self->render( text => 'file uploaded' );
+
+  #redisへ直接room名でpulishして、更新を一斉通知する
+  my $reloadimg = { type => "reloadimg" };
+     $reloadimg = to_json($reloadimg);
+
+   $self->app->redis->publish($roomname,$reloadimg);
+   $self->app->log->info("DEBUG: publish: reloadimg message...");
 
    undef $fileobj;
    undef $filename;
@@ -442,15 +453,19 @@ sub putfileimg {
    undef $roomname;
    undef $roomname_enc;
    undef $roomname_b64;
+   undef $reloadimg;
 }
 
 sub getfileimg {
    my $self = shift;
 
+   $self->app->log->info("DEBUG: getfileimg start...");
+
    my $room = $self->param('room');
       $room = urlsafe_b64decode($room);
       $room = decode_utf8($room);
    if (! defined $room) {
+       $self->app->log->info("DEBUG: unknown page getfileimg");
        return $self->render( template => 'top/unknown');
       }
 #   my $oid = $self->param('oid');
@@ -492,6 +507,36 @@ use Mojolicious::Types;
    undef $assetfile;
    undef $extention;
    undef $types;
+}
+
+sub reloadimg {
+    my $self = shift;
+
+    $self->app->log->info("DEBUG: reloadimg start...");
+
+    my $roomname = $self->param('room');
+       $roomname = urlsafe_b64decode($roomname);
+       $roomname = decode_utf8($roomname);
+
+    if (! defined $roomname) {
+        $self->app->log->info("DEBUG: unknown page reloadimg");
+        return $self->render( template => 'top/unknown');
+       }
+
+    my $imgDB = $self->app->mongoclient->get_database($roomname);
+    my $bucket = $imgDB->gfs;
+    my $resobj = $bucket->find();
+    my @res_all = $resobj->all;
+    my $oid = $res_all[$#res_all]->{_id};
+    my $mimetype = $res_all[$#res_all]->{metadata}->{'content-type'};
+    my $filename = $res_all[$#res_all]->{filename};
+
+    my $roomname_enc = encode_utf8($roomname);
+    my $roomname_b64 = urlsafe_b64encode($roomname_enc);
+
+    $self->stash('room' => $roomname_b64); 
+    $self->stash('mimetype' => $mimetype);
+    $self->render();
 }
 
 1;

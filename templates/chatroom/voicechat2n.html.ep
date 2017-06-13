@@ -1,5 +1,5 @@
 % layout 'mobidef2';
-% title 'Voice Chat REmake';
+% title 'Voice Chat';
 <script type="text/javascript">
 
  if (! navigator.webkitGetUserMedia) {  alert("Not Supported!!!"); }
@@ -23,6 +23,9 @@
         }, 50000);
 
        autoentry();
+
+       %# imgchat
+       fetchupload = Promise.resolve();
 
     };
 
@@ -151,6 +154,19 @@
               startvoice();
               return;
           }
+
+          if ( evt.type === "reloadimg"){
+             %# putfileimgでuploadした時に、サーバ側からpushされる
+            console.log("DEBUG: reloadimg on message...");
+
+            var roomname = $('#roomname').val();
+            var roomname_b64 = btoa(roomname);
+            var src="https://westwind.backbone.site/reloadimg?room=" + roomname_b64;
+
+            $('#imgchat').attr("src",src);
+            return;
+          }
+
 
     // SDP,ICE処理 
     var id = evt.from;
@@ -390,6 +406,7 @@ $(document).on('pageshow',function () {
             console.log("DEBUG: reloadmember: " + JSON.stringify(reloadmember) );
             }
        });
+
 }); // pageshow
 
 function standby(){
@@ -652,12 +669,24 @@ function imgupload(){
         // submitされた時点で、loadイベントをbind
         $iframe.unbind().bind('load', function() {
             var response = $iframe.contents();
-
             // responseを調べて、送信後の処理を完結させる
             console.log(response);
         });
     });
+%#   adumCall();  仕様変更
+}
 
+%# 仕様変更未利用
+function reloadimgsend(){
+      var reloadimg = {"type":"reloadimg"};
+      ws.send(JSON.stringify(reloadimg));   //reloadimgのブロードキャスト
+      console.log("DEBUG: send reloadimg message...");
+}
+
+%# 仕様変更未利用
+function reloadimgkey(){
+    fetchupload.then(imgupload(reloadimgsend))
+               .then(reloadimgsend());
 }
 
 </script>
@@ -683,11 +712,17 @@ function imgupload(){
                 <input type="hidden" name="room" value="" id="roomsend">
                 <button type="botton" onclick="imgupload();">upload</button>
             </form>
+               <div>
+               <iframe src="/img/Now.jpeg" id="imgchat" name="ajaxPostImage" width="100%" hight="80%"></iframe>
+               </div>
+               <ul>
+                   <li>room内で1個のファイルを共有表示します。後書きが優先で残るので同時アップロードしないようにして下さい。</li>
+                   <li>・表示可能なファイルは画像(jpeg gif png)、音楽(mp3 m4a)、動画(3gp)です。</li>
+               </il>
          </div>
     <div style="color: #ff0000"><%= $msg_w %></div>
         <div style="border: 1px solid">
             <p>
-            <iframe src="/img/Now.jpeg" id="imgchat" name="ajaxPostImage" width="100%" hight="80%"></iframe>
                <div data-role="collapsibleset">
                 <div data-role="collapsible">
                   <h4>使い方</h4>

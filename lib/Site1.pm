@@ -146,6 +146,7 @@ sub startup {
 
   $bridge->post('/putfileimg')->to('filestore#putfileimg'); 
   $r->get('/getfileimg')->to('filestore#getfileimg'); 
+  $bridge->get('/reloadimg')->to('filestore#reloadimg'); # iframeでgetfileimgから表示を得るためのhtml
 
   $listbridge->any('/menu/delfileview')->to('filestore#delfileview');
   $bridge->post('/menu/delfileviewact')->to('filestore#delfileviewact');

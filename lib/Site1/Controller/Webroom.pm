@@ -186,7 +186,7 @@ my @recvlist;
                        my $jsontxt = to_json($jsonobj);
                        $self->redis->publish( "$chatroomname" , $jsontxt);
                        $self->redis->expire( $chatroomname => 3600 );
-                       $self->app->log->debug("DEBUG: publish: $username :  $chatroomname : $jsontxt");
+                       $self->app->log->info("DEBUG: publish: $username :  $chatroomname : $jsontxt");
 
                 }); # onmessageのはず。。。
 
@@ -273,7 +273,7 @@ sub webpubsub {
                   my ($self, $msg) = @_;
                    # on messageはブラウザからのみ 他のユーザからはredis経由になる
 
-                   $self->app->log->debug("DEBUG: $username ws message: $msg ");
+                   $self->app->log->info("DEBUG: $username ws message: $msg ");
 
                    # $msgはJSONキャラを想定
                    my $jsonobj = from_json($msg);
