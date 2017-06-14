@@ -160,8 +160,8 @@
             console.log("DEBUG: reloadimg on message...");
 
             var roomname = $('#roomname').val();
-            var roomname_b64 = btoa(roomname);
-            var src="https://westwind.backbone.site/reloadimg?room=" + roomname_b64;
+            var roomname_b64url = window.btoa( unescape(encodeURIComponent( roomname )) );
+            var src="https://westwind.backbone.site/reloadimg?room=" + roomname_b64url;
 
             $('#imgchat').attr("src",src);
             return;
@@ -641,6 +641,7 @@ function pushcall(){
 function autoentry(){
     //通知の場合の自動エントリー
     var rname = getRoomName();
+    $('#roomname').val(rname);
     console.log("DEBUG: roomname: " + rname );
     if ( typeof rname != 'undefined'){
             var entryevt = {'entry' : rname };

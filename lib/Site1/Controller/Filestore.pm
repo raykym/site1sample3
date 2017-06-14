@@ -8,6 +8,7 @@ use Encode;
 use MIME::Base64::URLSafe; # uid,oidをページで受け渡すにはエンコードが必要
 use Mojo::Asset::File;
 use Mojo::JSON qw(encode_json decode_json from_json to_json);
+use Mojo::Redis2;
 
 use lib '/home/debian/perlwork/mojowork/server/site1/lib/Site1';
 use Sessionid; #oidをuidと同じ仕組みで提供するため
@@ -379,6 +380,7 @@ sub seticonact {
 sub putfileimg {
    my $self = shift;
 
+   my $redis ||= Mojo::Redis2->new;
       $self->app->log->info("DEBUG: putfileimg start...");
 
    # postで受けるのでencodeは無し
@@ -442,7 +444,7 @@ sub putfileimg {
   my $reloadimg = { type => "reloadimg" };
      $reloadimg = to_json($reloadimg);
 
-   $self->app->redis->publish($roomname,$reloadimg);
+   $redis->publish($roomname,$reloadimg);
    $self->app->log->info("DEBUG: publish: reloadimg message...");
 
    undef $fileobj;
