@@ -9,13 +9,16 @@ use Inputchk;
 use feature 'say';
 
 
-my $str = 'soreha  エロアホ';
-my $email = Inputchk->new($str);
-my $res = $email->string;
+#my $str = 'soreha  エロアホ';
+#my $str = '本日は晴天なり';
+my $str = 'アホ';
+
+my $chkobj = Inputchk->new($str);
+my $res = $chkobj->string;
 #   $email->email;
 #say $email->result;
-   say "$res";
+   say "string: $res";
 
-   $email->ngword;
-my $resp = $email->result;
+   $chkobj->ngword;
+my $resp = $chkobj->result;
    say "$resp";

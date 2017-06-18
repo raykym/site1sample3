@@ -680,7 +680,7 @@ function autoentry(){
         <a href="#panel" data-icon="bars" data-iconpos="notext">panel</a>
         <h3>Video Chat</h3>
     </div>
-         <div data-role="panel" id="panel" data-display="overlay">
+         <div data-role="panel" id="panel" data-display="overlay" style="background-color: #aac78d;">
             <div id="errormess"></div>
             <p><input type="text" id="pushemail" placeholder="email"></p>
             <button type="button" onclick="pushcall();">呼び出しpush通知</button>

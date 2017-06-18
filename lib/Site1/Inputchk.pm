@@ -2,7 +2,9 @@ package Inputchk;
 
 use strict;
 use warnings;
-use Encode;
+use Encode;   #encodeされている事が前提で利用  内部で利用する
+use utf8;
+use Text::MeCab;
 
 # 入力結果のチェックルーチン集
 # email:e-mail形式のチェック
@@ -128,6 +130,8 @@ sub ngword {
     my $str = $self->{string};
     my $res = $self->{result};
 
+    my $mecab = Text::MeCab->new;
+
      #空白チェック
         if ( $str eq '') { push (@{$res},1) } else { push (@{$res},0)};
 
@@ -137,10 +141,17 @@ sub ngword {
 
     my @ngword = <IN>;
 
+# mecabでワードに分解
+for(my $node = $mecab->parse($str); $node; $node = $node->next) {
+  if ( ! defined $node->surface ) { next; }
+  my $word = $node->surface;
+
+    # ワード毎にNGワードをチェック
     foreach my $w (@ngword){
         chomp $w;
-        if ( $str =~ /\s$w\s/m or $str =~ /^$w$/ ) { push (@{$res},1) } else { push (@{$res},0)};
+        if ( $word =~ /^$w$/ ) { push (@{$res},1) } else { push (@{$res},0)};
         }
+} # for node
 
    undef $str;
  #  undef @ngword;  #パフォーマンスを優先するとundefしない、

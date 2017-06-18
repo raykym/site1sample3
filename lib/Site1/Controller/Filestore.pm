@@ -437,8 +437,8 @@ sub putfileimg {
 # 呼び出し用画面を表示する。
    $self->stash('room' => $roomname_b64); 
    $self->stash('mimetype' => $mimetype);
-#   $self->render( template => 'filestore/putfileimg' );
-   $self->render( text => 'file uploaded' );
+   $self->render( template => 'filestore/putfileimg' );
+#   $self->render( text => 'file uploaded' );
 
   #redisへ直接room名でpulishして、更新を一斉通知する
   my $reloadimg = { type => "reloadimg" };
@@ -512,6 +512,7 @@ use Mojolicious::Types;
 }
 
 sub reloadimg {
+    # getfileimgを受け取る画面を出す為のページ、タグの判別を行う
     my $self = shift;
 
     $self->app->log->info("DEBUG: reloadimg start...");

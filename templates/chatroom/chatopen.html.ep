@@ -101,7 +101,7 @@ function record()
     <div style="color: #ff0000"><%= $msg_w %></div>
         <div style="border: 1px solid">
         <p><input type="text" id="msg" placeholder="message..."></p>
-        <p><input type="file" id="sendfile" name="fname"></p>
+  %#      <p><input type="file" id="sendfile" name="fname"></p>
         <p><input type="button" onClick="record()" value="SOUND INPUT" /></p>
         <ul id="output" data-role="listview" data-inset="true"></ul>
         </div>
