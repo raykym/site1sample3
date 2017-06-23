@@ -163,6 +163,7 @@
             var roomname_b64url = window.btoa( unescape(encodeURIComponent( roomname )) );
             var src="https://westwind.backbone.site/reloadimg?room=" + roomname_b64url;
 
+            $('#imgchat').attr("src","");
             $('#imgchat').attr("src",src);
             return;
           }
@@ -701,7 +702,7 @@ function reloadimgkey(){
          <!--  left panel -->
          <div data-role="panel" id="panel" data-display="overlay" style="background-color: #aac78d;">
             <div id="errormess"></div>
-            <p><input type="text" id="pushemail" placeholder="email"></p>
+            <p><input type="text" id="pushemail" placeholder="email" data-clear-btn="true"></p>
             <button type="button" onclick="pushcall();">呼び出しpush通知</button>
          </div>
          <!-- right panel -->

@@ -9,6 +9,7 @@ use MIME::Base64::URLSafe; # uid,oidをページで受け渡すにはエンコ�
 use Mojo::Asset::File;
 use Mojo::JSON qw(encode_json decode_json from_json to_json);
 use Mojo::Redis2;
+use Mojo::IOLoop::Delay;
 
 use lib '/home/debian/perlwork/mojowork/server/site1/lib/Site1';
 use Sessionid; #oidをuidと同じ仕組みで提供するため
@@ -282,6 +283,10 @@ sub fileview {
     if ($mime =~ /mpeg|3gp|mp4|m4a|mpg|realtext|mp3|octet-stream/ ){
         return $self->render(template => 'filestore/videview',msg => '');
         }
+    #pdf
+    if ($mime =~ /pdf/ ){
+        return $self->render(template => 'filestore/pdfview',msg => '');
+        }
     
     $self->render(msg => '');
 }
@@ -380,7 +385,8 @@ sub seticonact {
 sub putfileimg {
    my $self = shift;
 
-   my $redis ||= Mojo::Redis2->new;
+ #  my $redis ||= Mojo::Redis2->new;
+    my $redis = $self->app->redis;
       $self->app->log->info("DEBUG: putfileimg start...");
 
    # postで受けるのでencodeは無し
@@ -437,8 +443,8 @@ sub putfileimg {
 # 呼び出し用画面を表示する。
    $self->stash('room' => $roomname_b64); 
    $self->stash('mimetype' => $mimetype);
-   $self->render( template => 'filestore/putfileimg' );
-#   $self->render( text => 'file uploaded' );
+#   $self->render( template => 'filestore/putfileimg' );
+   $self->render( text => 'file uploaded' );
 
   #redisへ直接room名でpulishして、更新を一斉通知する
   my $reloadimg = { type => "reloadimg" };
@@ -487,12 +493,13 @@ sub getfileimg {
       $self->app->log->info("DEBUG: oid: $oid content-type: $mimetype");
       $self->app->log->info("DEBUG: filename: $filename");
 
-   my $assetfile = Mojo::Asset::File->new;
-      binmode($assetfile->handle);
+#   my $assetfile = Mojo::Asset::File->new;    #小さなファイルを扱うと表示ができなくなる。ファイルハンドルは使わず、メモリ上で処理できると、表示が出来るようになった。 が、今度は一度で確実に表示出来ない。。。 undefをきちんと組み込んだら動くようになった。
+#      binmode($assetfile->handle);
+#      $bucket->download_to_stream($oid,$assetfile->handle);
 
-      $bucket->download_to_stream($oid,$assetfile->handle);
+   my $stream = $bucket->open_download_stream($oid);
+   my $imgdata = do { local $/; $stream->readline() }; 
 
-   #   $self->app->log->info("DEBUG: assetsize: $assetfile->size");
       $self->res->headers->header("Access-Control-Allow-Origin" => 'https://westwind.backbone.site' );
 
       $filename = encode_utf8($filename);
@@ -501,14 +508,18 @@ sub getfileimg {
 use Mojolicious::Types;
    my $types = Mojolicious::Types->new;
    my $extention = $types->detect($mimetype);
-      $self->render(data => $assetfile->slurp, format => $extention);
+#      $self->render(data => $assetfile->slurp, format => $extention);
+      $self->render(data => $imgdata, format => $extention);
 
    undef $resobj;
    undef $oid;
    undef $mimetype;
-   undef $assetfile;
+#   undef $assetfile;
    undef $extention;
    undef $types;
+
+   undef $stream;
+   undef $imgdata;
 }
 
 sub reloadimg {
@@ -540,6 +551,17 @@ sub reloadimg {
     $self->stash('room' => $roomname_b64); 
     $self->stash('mimetype' => $mimetype);
     $self->render();
+
+    undef $roomname_enc;
+    undef $roomname_b64;
+    undef $filename;
+    undef $mimetype;
+    undef $oid;
+    undef @res_all;
+    undef $resobj;
+    undef $bucket;
+    undef $imgDB;
+
 }
 
 1;

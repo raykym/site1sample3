@@ -11,7 +11,7 @@ use Inputchk;
 subtest 'ngword check' => sub {
    local $SIG{__WARN__} = sub { fail shift };
 
-my $str = 'アホ';
+my $str = 'エロ';
 my $obj = Inputchk->new($str);
    $obj->ngword;
 
@@ -49,7 +49,7 @@ say "";
 subtest 'CR contain check' => sub {
    local $SIG{__WARN__} = sub { fail shift };
 
-my $str = 'asakitume\n アホ ヤ';
+my $str = 'asakitume\n エロ ヤ';
 my $obj = Inputchk->new($str);
    $obj->ngword;
 
