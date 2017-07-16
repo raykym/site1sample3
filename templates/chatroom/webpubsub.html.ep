@@ -17,7 +17,7 @@
 
 
     var ws = null;
-    ws = new WebSocket('wss://westwind.iobb.net/wsocket/webpubsub');
+    ws = new WebSocket('wss://<%= $url_host %>/wsocket/webpubsub');
 
     var socket_wait = null;
 

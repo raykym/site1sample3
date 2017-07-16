@@ -695,6 +695,10 @@ sub overviewWW {
     my $self = shift;
     # TOP表示用にsuperviseのコピー
 
+    # 認証を通らないのでここに書く
+    my $url_host = Mojo::URL->new($self->url_for->to_abs);
+       $self->stash( url_host => $url_host->host );
+
     $self->render(msg_w => '');
 }
 

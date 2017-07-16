@@ -8,7 +8,7 @@
     var socketReady = false;
 
     var ws = null;
-    ws = new WebSocket('wss://westwind.backbone.site/wsocket/webpubsub');
+    ws = new WebSocket('wss://<%= $url_host %>/wsocket/webpubsub');
 
     var socket_wait = null;
 
@@ -161,7 +161,7 @@
 
             var roomname = $('#roomname').val();
             var roomname_b64url = window.btoa( unescape(encodeURIComponent( roomname )) );
-            var src="https://westwind.backbone.site/reloadimg?room=" + roomname_b64url;
+            var src="https://<%= $url_host %>/reloadimg?room=" + roomname_b64url;
 
             $('#imgchat').attr("src","");
             $('#imgchat').attr("src",src);
@@ -575,7 +575,7 @@ function member(){
 function hangUp(){
 
  %#   window.location.reload();
-    window.location.replace('https://westwind.backbone.site/voicechat2n');
+    window.location.replace('https://<%= $url_host %>/voicechat2n');
 
 }
 
@@ -605,7 +605,7 @@ function pushcall(){
        return;
      }
 
-  var pushurl = "https://westwind.backbone.site/voicechat2n?" + roomname;
+  var pushurl = "https://<%= $url_host %>/voicechat2n?" + roomname;
   var encurl = encodeURI(pushurl);
 
   var bodymess = username + "さんから,voicechatの申請です。roomは" + roomname + "です。";
@@ -624,20 +624,20 @@ function pushcall(){
  function postpush(){
      return $.ajax({
             type: "POST",
-                    url: "https://westwind.backbone.site/sendwebpush",
+                    url: "https://<%= $url_host %>/sendwebpush",
                     dataType: "json",
                     cache: false,
                     data: data,
                     success: responseget,
            });
-          }
+    }
 
-  postpush();
+    postpush();
 
-    function responseget(data){
+  function responseget(data){
        $('#errormess').text(data.mess);
     }
-}
+} // pushcall
 
 function autoentry(){
     //通知の場合の自動エントリー

@@ -493,9 +493,20 @@ sub getfileimg {
       $self->app->log->info("DEBUG: oid: $oid content-type: $mimetype");
       $self->app->log->info("DEBUG: filename: $filename");
 
-#   my $assetfile = Mojo::Asset::File->new;    #小さなファイルを扱うと表示ができなくなる。ファイルハンドルは使わず、メモリ上で処理できると、表示が出来るようになった。 が、今度は一度で確実に表示出来ない。。。 undefをきちんと組み込んだら動くようになった。
-#      binmode($assetfile->handle);
-#      $bucket->download_to_stream($oid,$assetfile->handle);
+   if ($mimetype =~ /pdf/) {
+      # pdfだけはファイルに落としてから配信させる。
+       my $assetfile = Mojo::Asset::File->new;    #小さなファイルを扱うと表示ができなくなる。ファイルハンドルは使わず、メモリ上で処理できると、表示が出来るようになった。 が、今度は一度で確実に表示出来ない。。。 undefをきちんと組み込んだら動くようになった。
+          binmode($assetfile->handle);
+          $bucket->download_to_stream($oid,$assetfile->handle);
+
+          $self->res->headers->content_disposition("attachment; filename=$filename;");
+          $self->res->headers->content_type('application/pdf');
+          $self->res->content->asset($assetfile);
+          $self->rendered(200);
+
+          return;
+   } # if mimetype
+
 
    my $stream = $bucket->open_download_stream($oid);
    my $imgdata = do { local $/; $stream->readline() }; 

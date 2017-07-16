@@ -189,7 +189,7 @@ function getPosition(aCallback){
 
 // WebSocket
 function wsCall(aCallback){
-      ws = new WebSocket('wss://westwind.backbone.site/walkworldsupv');
+      ws = new WebSocket('wss://<%= $url_host %>/walkworldsupv');
       console.log("DEBUG: ws Connect!!");
       $('#output').text("接続中");
       aCallback();

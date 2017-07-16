@@ -14,7 +14,7 @@
     var socketReady = false;
 
     var ws = null;
-    ws = new WebSocket('wss://westwind.backbone.site/wsocket/webpubsub');
+    ws = new WebSocket('wss://<%= $url_host %>/wsocket/webpubsub');
 
     var socket_wait = null;
 
@@ -596,7 +596,7 @@ function member(){
 function hangUp(){
 
   %#  window.location.reload();
-    window.location.replace('https://westwind.backbone.site/videochat2n');
+    window.location.replace('https://<%= $url_host %>/videochat2n');
 
 }
 
@@ -626,7 +626,7 @@ function pushcall(){
        return;
      }
 
-  var pushurl = "https://westwind.backbone.site/videochat2n?" + roomname;
+  var pushurl = "https://<%= $url_host %>/videochat2n?" + roomname;
   var encurl = encodeURI(pushurl);
 
   var bodymess = username + "さんから、videochatの申請です。room名は" + roomname + "です。";
@@ -645,7 +645,7 @@ function pushcall(){
  function postpush(){
      return $.ajax({
             type: "POST",
-                    url: "https://westwind.backbone.site/sendwebpush",
+                    url: "https://<%= $url_host %>/sendwebpush",
                     dataType: "json",
                     cache: false,
                     data: data,

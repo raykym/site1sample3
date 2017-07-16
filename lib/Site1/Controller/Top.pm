@@ -9,6 +9,8 @@ use DateTime;
 sub top {
   my $self = shift;
 
+     # 認証を通ら通らない場合はstashを指定する必要がある
+     $self->stash(url_orig => $self->url_for->to_abs);
   $self->render(msg => 'Welcome to this site!');
 }
 

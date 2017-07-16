@@ -9,7 +9,8 @@ $(document).on('pageshow',function () {
   var ws = null;
 
 function wsopen() {
-   var ws = new WebSocket('wss://westwind.backbone.site/echopubsub');
+ %#  var ws = new WebSocket('wss://westwind.backbone.site/echopubsub');
+   var ws = new WebSocket('wss://<%= $url_host %>/echopubsub');
 
   return ws;
 }

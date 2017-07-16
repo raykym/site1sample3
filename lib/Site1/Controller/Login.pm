@@ -5,6 +5,7 @@ use DateTime;
 use MIME::Base64::URLSafe; # icon用oidを渡す
 use Mojo::JSON qw(from_json to_json encode_json decode_json);
 use Mojo::Util qw(dumper);
+use Mojo::URL;
 
 # 独自パスを指定して自前モジュールを利用
 use lib '/home/debian/perlwork/mojowork/server/site1/lib/Site1';
@@ -148,6 +149,10 @@ sub usercheck {
             $self->stash( icon => $userobj->{icon} );
             $self->stash( icon_url => $userobj->{icon_url} );
 
+            $self->stash( url_orig => $self->url_for->to_abs );
+          my $url_host = Mojo::URL->new($self->url_for->to_abs );
+            $self->stash( url_host => $url_host->host );
+
         undef $userredis;
         undef $userobj;
 
@@ -286,6 +291,10 @@ sub usercheck {
     $self->stash( uid => $uid ); #uidはページで利用しないのでencodeしない
     $self->stash( icon => $icon );
     $self->stash( icon_url => $icon_url );
+
+    $self->stash( url_orig => $self->url_for->to_abs );
+ my $url_host = Mojo::URL->new($self->url_for->to_abs );
+    $self->stash( url_host => $url_host->host );
 
     # redis登録
     if ( ! defined $icon_url) {

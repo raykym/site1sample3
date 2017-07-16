@@ -8,7 +8,7 @@
     <div><h3>ThisSite</h3></div>
     <div style="color: #ff0000"><%= $msg %></div>
         <div style="border: 1px solid">
-        <div><embed src="/imgload?oid=<%= $oid %>" type="application/pdf" width="320" hight="240"></embed></div>
+        <div><object data="/imgload?oid=<%= $oid %>" type="application/pdf" width="320" hight="240"></object></div>
         <div>
             ファイル名：<%= $filename %> | 登録日付：<%= $datetime %>
             <form method="post" action="/menu/fileviewact" enctype="multipart/form-data" data-ajax="false">

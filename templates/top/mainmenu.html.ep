@@ -121,7 +121,7 @@ function sendSubscriptionToServer(subscription) {
         var data = JSON.stringify(subscription);
         $.ajax({
             type: "POST",
-            url: "https://westwind.backbone.site/receive",
+            url: "<%= $url_orig %>receive",
             dataType: "json",
             cache: false,
             data: data
@@ -134,7 +134,7 @@ function sendSubscriptionToServerForDelete(subscrption) {
         //認証結果で削除するので何も送らない
         $.ajax({
           type: "GET",
-          url: "https://westwind.backbone.site/delwebpush",
+          url: "<%= $url_orig %>delwebpush",
           cache: false
           });
 }

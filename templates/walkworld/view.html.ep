@@ -381,7 +381,7 @@ function enmset(){
 
 // カウント取得
 function pointget(){
-        var cnt_url = "https://westwind.backbone.site/walkworld/pointget";
+        var cnt_url = "https://<%= $url_host %>/walkworld/pointget";
 
         $.ajax({
             type : 'get',
@@ -502,7 +502,7 @@ function getPosition(aCallback){
                           });
       
                if (typeof hit_tar[0] !== 'undefined'){
-                  image = 'https://westwind.backbone.site/img/target_icon.png';  
+                  image = 'https://<%= $url_host %>/img/target_icon.png';  
                   makerobj.setMap(null);
                   makerobj = new google.maps.Marker({
                                position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
@@ -560,7 +560,7 @@ function centerMap(alat,alng) {
 
 // WebSocket
 function wsCall(aCallback){
-      ws = new WebSocket('wss://westwind.backbone.site/walkworld');
+      ws = new WebSocket('wss://<%= $url_host %>/walkworld');
       console.log("DEBUG: ws Connect!!");
       $('#output').text("online");
       aCallback();
@@ -664,7 +664,7 @@ function wsCall(aCallback){
                               position: new google.maps.LatLng( e.loc.lat, e.loc.lng ),
                                    map: mapobj,
                                  title: e.message,
-                                  icon: 'https://westwind.backbone.site/img/eventpoint.png'
+                                  icon: 'https://<%= $url_host %>/img/eventpoint.png'
                           }));
                  }) // trapmess filter
 
@@ -1079,8 +1079,8 @@ function setEventMess(){
 
   </div> <!-- #map -->
   <div id="voice">
-    <object type="text/html" data="https://westwind.backbone.site/voicechat2n" style="width : 100%; height : 360px;" alt="objectに対応していない場合はこれが表示される">
-  %#  <object type="text/html" data="https://westwind.backbone.site/menu/chatopen" style="width : 100%; height : 360px;" alt="objectに対応していない場合はこれが表示される">
+    <object type="text/html" data="https://<%= $url_host %>/voicechat2n" style="width : 100%; height : 360px;" alt="objectに対応していない場合はこれが表示される">
+  %#  <object type="text/html" data="https://<%= $url_host %>/menu/chatopen" style="width : 100%; height : 360px;" alt="objectに対応していない場合はこれが表示される">
     </object>
   </div>
 </div> <!-- tabs -->
