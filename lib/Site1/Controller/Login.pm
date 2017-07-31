@@ -149,6 +149,7 @@ sub usercheck {
             $self->stash( icon => $userobj->{icon} );
             $self->stash( icon_url => $userobj->{icon_url} );
 
+        # ホスト名オリジンを共有するための指定、ソースを同一にする
             $self->stash( url_orig => $self->url_for->to_abs );
           my $url_host = Mojo::URL->new($self->url_for->to_abs );
             $self->stash( url_host => $url_host->host );
@@ -292,6 +293,7 @@ sub usercheck {
     $self->stash( icon => $icon );
     $self->stash( icon_url => $icon_url );
 
+ # ホスト名オリジンを共有するための指定、ソースを同一にする
     $self->stash( url_orig => $self->url_for->to_abs );
  my $url_host = Mojo::URL->new($self->url_for->to_abs );
     $self->stash( url_host => $url_host->host );

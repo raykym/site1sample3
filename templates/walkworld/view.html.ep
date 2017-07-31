@@ -460,6 +460,7 @@ function getPosition(aCallback){
                        status : "dummy",
                        time : timerecord,
                        icon_url : iconurl,
+                       category : "USER",
                       };
 
       //    console.log("user_stat:" + JSON.stringify(user_stat) );
