@@ -715,8 +715,8 @@ function wsCall(aCallback){
                   return element.category == "NPC";
                           });
 
-        // 自動エネミーセットチェック
-        if ( plist_nonuser.length <= 2 ) {
+        // 自動エネミーセットチェック NPCが5以下なら追加で起動する
+        if ( plist_nonuser.length <= 5 ) {
            setEnmyPos++;
            console.log("DEBUG: setEnmyPos:" + setEnmyPos);
            if ( setEnmyPos > 2 ){
