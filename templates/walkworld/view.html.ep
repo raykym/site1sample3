@@ -365,18 +365,17 @@ function loopstart(){
 
 // エネミー初期化
 function enmset(){
-     %#   var enm_url = "https://instance-1.backbone.site:3000/ghostman" ;
+        var enm_url = "https://westwind.backbone.site/ghostman/gaccput" ;
         // キックするだけ
-     %#   $.ajax({
-     %#     type : 'post',
-     %#     url : enm_url,
-     %#     data : {
-     %#         "c" : 3,
-     %#         "lat" : lat,
-     %#         "lng" : lng,
-     %#         "target" : user_stat.userid
-     %#         }
-     %#     });
+        $.ajax({
+          type : 'post',
+          url : enm_url,
+          data : {
+              "c" : 1,
+              "lat" : lat,
+              "lng" : lng,
+              }
+          });
     };
 
 // カウント取得
@@ -698,13 +697,16 @@ function wsCall(aCallback){
 
         var plist = evt.pointlist;
 
-        // 自分を除外する。
+        // 自分を除外する。 ユーザーも除外する MAP上で他のユーザは表示しない
         var plist_nonself = plist.filter( function( element, index) {
-                  return element.userid != uid; 
+                 // return element.userid != uid; 
+                  return element.category != "USER";
                           });
 
         // サーバで重複排除したので、単純にコピーのみに表示用
-        var plist_nd = JSON.parse(JSON.stringify(plist_nonself));
+        var plist_nd = plist_nonself.filter( function (element, index){
+                         return element;
+                        });
 
         // Makerを除外する。
         var plist_nonmaker = plist_nonself.filter( function( element, index) {

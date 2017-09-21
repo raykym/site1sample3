@@ -268,7 +268,10 @@ function wsCall(aCallback){
   //                });
 
     // test pass plist_nd
-        var plist_nd = JSON.parse(JSON.stringify(plist_nonself));
+     //   var plist_nd = JSON.parse(JSON.stringify(plist_nonself));
+        var plist_nd = plist_nonself.filter( function(element,index){
+                         return element;
+                       });
 
           // 10秒対応の為に、timeでsortして、
   //            plist_nonself.sort(function(a,b){

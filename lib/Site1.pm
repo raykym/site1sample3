@@ -13,7 +13,7 @@ sub startup {
   $self->config(hypnotoad=>{
                        listen => ['http://*:3800'],
                        accepts => 100,
-                       clients => 2,
+                       clients => 10,
                        workers => 10,
                        proxy => 1,
                        });
@@ -58,7 +58,7 @@ sub startup {
 
    # $self->app->redis
    $self->app->helper( redis =>
-        ###sub { shift->stash->{redis} ||= Mojo::Redis2->new;
+        ###sub { shift->stash->{redis} ||= Mojo::Redis2->new(url => 'redis://10.140.0.6:6379');
         sub { state $redis = Mojo::Redis2->new;
          });
 
