@@ -259,6 +259,7 @@ sub webpubsub {
     #websocket 確認
        my $wsid = $self->tx->connection;
        $self->app->log->debug(sprintf 'Client connected: %s', $self->tx->connection);
+       $clients->{$wsid} = $self->tx;
 
     my $recvlist = '';
     my @recvArray = ( $wsid );
@@ -334,7 +335,7 @@ sub webpubsub {
  
                          $self->app->log->debug("DEBUG: memberlist: $memberlist_json ");
 
-                         $self->tx->send($memberlist_json);
+                         $clients->{$wsid}->send($memberlist_json);
 
                          return;
                         } 
@@ -370,6 +371,7 @@ sub webpubsub {
                    $redis->del("$wsid");
 
                    delete $stream_io->{$wsid};
+                   delete $clients->{$wsid};
 
          return;
         });  # onfinish...
@@ -380,7 +382,7 @@ sub webpubsub {
 
                    if (( $channel eq $recvlist ) || ( $channel eq $wsid )) {
                         $self->app->log->debug("DEBUG: $username redis on message: $channel | $mess ");
-                        $self->tx->send($mess); # redisは受信したらwebsocketで送信
+                        $clients->{$wsid}->send($mess); # redisは受信したらwebsocketで送信
                       }
 
           });  # redis on message

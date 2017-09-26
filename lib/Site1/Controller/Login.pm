@@ -118,14 +118,14 @@ sub usercheck {
     # 認証が必要な場合すべてこのパスを通過する
     # redisでキャッシュして応答速度を上げる
 
-#       $self->app->log->debug('Notice: Usercheck ON!');
+       $self->app->log->info('Notice: Usercheck ON!');
 
 
     my $sid = $self->cookie('site1');
 
     # cookieが取れない->リダイレクト
     if ( ! defined $sid ){ 
-#        $self->app->log->debug('Notice: Not get Cookie!');
+        $self->app->log->info('Notice: Not get Cookie!');
         $self->redirect_to('/');
         return;
       }
@@ -139,8 +139,8 @@ sub usercheck {
 
              my $userobj = from_json($userredis);
 
-#             $self->app->log->debug("DEBUG: redis: $userredis");
-#             $self->app->log->debug("DEBUG: redis: $userobj->{email}");
+             $self->app->log->info("DEBUG: redis: $userredis");
+             $self->app->log->info("DEBUG: redis: $userobj->{email}");
 
         # $iconを無くす方向で考えていたが、表示で利用していたので削除出来なかった。
             $self->stash( email => $userobj->{email} );
@@ -180,9 +180,9 @@ sub usercheck {
        $sth_user_chk->execute($email);
     my $get_uname = $sth_user_chk->fetchrow_hashref();
     my $username = $get_uname->{username};
-#       $self->app->log->debug("DEBUG: username(local): $username") if ( defined $username);
+       $self->app->log->info("DEBUG: username(local): $username") if ( defined $username);
     my $uid = $get_uname->{uid};
-#       $self->app->log->debug("DEBUG: uid(local): $uid") if ( defined $uid);
+       $self->app->log->info("DEBUG: uid(local): $uid") if ( defined $uid);
     my $icon = $get_uname->{icon};
     # $iconが空ならNow printingが設定される。
        if (! defined $icon ) { $icon = 'nowprint';}

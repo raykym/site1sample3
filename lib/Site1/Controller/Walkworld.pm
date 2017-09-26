@@ -88,7 +88,7 @@ my $debugCount = 3;
 sub echo {
     my $self = shift;
 
-       $self->app->log->debug(sprintf 'Client connected: %s', $self->tx);
+       $self->app->log->info(sprintf 'Client connected: %s', $self->tx);
     my $id = sprintf "%s", $self->tx->connection;
        $clients->{$id} = $self->tx;
 
@@ -174,6 +174,12 @@ sub echo {
 #           $self->app->log->info("DEBUG: $username ws msg: $msg");
 
            my $jsonobj = from_json($msg);
+
+           if ( $jsonobj->{dummy} ) {
+              # TEST dummy そのま返す
+              $clients->{$id}->send({ json => $jsonobj }); 
+              return;
+           }
 
            # chatデータの判定用データ Makerでも利用
            $userobj = clone($jsonobj) if ( $jsonobj->{userid} eq $userid ); 
@@ -750,6 +756,12 @@ sub echo3 {
         my ($self,$msg) = @_;
 
            my $jsonobj = from_json($msg);
+
+           if ( $jsonobj->{dummy} ) {
+              # TEST dummy そのま返す
+              $clients->{$id}->send({ json => $jsonobj }); 
+              return;
+           }
 
            if ( defined($jsonobj->{username})) {
 
