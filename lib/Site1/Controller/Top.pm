@@ -17,6 +17,44 @@ sub top {
 sub mainmenu {
     my $self = shift;
 
+    #sessionidの付け替えを確率で行う チェックはせずに強制書き換え
+    if ( int(rand(100)) == int(rand(100)) ) {
+
+            # DB設定
+            my $config = $self->app->plugin('Config');
+            my $sth_signup_update = $self->app->dbconn->dbh->prepare("$config->{sql_signup_update}");
+
+            my $email = $self->stash('email');
+
+            # SIDのredis削除処理を加える必要がある cacheが古いSIDでヒットしてしまう
+                my $sth_sessionid_chk = $self->app->dbconn->dbh->prepare("$config->{sql_sessionid_chk}");
+                $sth_sessionid_chk->execute($email);
+
+                if ( $sth_sessionid_chk->rows ){
+                    my $reshash = $sth_sessionid_chk->fetchrow_hashref();
+                    my $oldsid = $reshash->{sessionid};
+
+                    $self->app->redis->del("SID$oldsid");
+                    $self->app->log->info("DELETE redis cache SID$oldsid   maybe error but ok.");
+                    undef $oldsid;
+                 }
+
+            
+            # sessionidのアップデート
+            my $sid = Sessionid->new->sid;
+            $sth_signup_update->execute($sid,$email);
+
+            # cookie設定
+            $self->cookie('site1'=>"$sid",{httponly => 'true',path => '/', max_age => '31506000', secure => 'true'});
+
+            undef $sid;
+            undef $sth_signup_update;
+            undef $email;
+            undef $config;
+            undef $sth_sessionid_chk;
+
+    } # if
+
     $self->render(msg => 'OPEN the Menu!');
 }
 
@@ -36,6 +74,24 @@ sub valhara {
     my $self = shift;
     # ヴァルハラゲート用タグ集
     $self->render();
+}
+
+sub qrcode {
+    my $self = shift;
+
+    my $text = $self->param('data');
+       # urlencodeのままコードにする
+    if (! defined $text ){
+        $self->render( text => "" );
+        return ;
+    }
+
+    use HTML::Barcode::QRCode;
+
+    my $code = HTML::Barcode::QRCode->new(text => $text);
+
+    $self->render( inline => $code->render );
+
 }
 
 sub notifications {

@@ -354,6 +354,19 @@ sub signinact {
            return;
           }
 
+  # SIDのredis削除処理を加える必要がある cacheが古いSIDでヒットしてしまう
+    my $sth_sessionid_chk = $self->app->dbconn->dbh->prepare("$config->{sql_sessionid_chk}");
+       $sth_sessionid_chk->execute($email);
+
+    if ( $sth_sessionid_chk->rows ){
+        my $reshash = $sth_sessionid_chk->fetchrow_hashref();
+        my $oldsid = $reshash->{sessionid};
+
+           $self->app->redis->del("SID$oldsid");
+           $self->app->log->info("DELETE redis cache SID$oldsid   maybe error but ok.");
+           undef $oldsid;
+    }
+
     # sessionidのアップデート
     my $sid = Sessionid->new->sid;
        $sth_signup_update->execute($sid,$email);

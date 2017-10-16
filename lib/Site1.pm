@@ -110,6 +110,8 @@ sub startup {
   $r->post('/signinact')->to('login#signinact'); #template未使用
   $r->post('/signupact')->to('login#signupact'); #template未使用 
 
+  $r->post('/qrcode')->to('top#qrcode'); # QRCode 
+
   $r->get('/valhara')->to('top#valhara');
 
   $r->get('/googleauth')->to('top#googleauth'); # login short url

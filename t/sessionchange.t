@@ -15,20 +15,6 @@ subtest 'Top page' => sub {
     $t->get_ok('/')->status_is(200)->content_like(qr/Mojolicious/i);
 };
 
-# 入力ミスでログインページに飛ぶ
-subtest 'Login miss' => sub {
-   my $email = 'testtest@test.com';
-
-   $t->post_ok('/signinact' => form => { email => $email, password => $emailpass})
-     ->status_is(200)
-     ->content_like(qr/e-mail or password Not match!/);
-
-  #  my $content = $t->tx->res->body;
-  #  say $content;
-
-};
-
-
 subtest 'Login' => sub {
   # 認証にcoolieが必要なのでproxy経由のパスを指定しないと動作しない secure属性
 
@@ -46,20 +32,49 @@ subtest 'Login' => sub {
   #  my $cookies = $t->ua->cookie_jar->all;
   #  for my $i (@$cookies){
   #      say $i;
+  #      say $i->name;
+  #      say $i->value;
   #  }
 
 };
 
 
-subtest 'websocket' => sub {
-# WebSocket
-# TEST用応答を組み込んだ(dummy)
+subtest 'Sessionid Change' => sub {
 
-    $t->websocket_ok("https://$server/walkworld")
-      ->send_ok('{"dummy":"testdata"}')
-      ->message_ok
-      ->message_is('{"dummy":"testdata"}')
-      ->finish_ok;
+    $t->get_ok("https://$server/menu");
+
+    my $cookies = $t->ua->cookie_jar->all;
+    my $sid;
+    for my $cookie (@$cookies){
+        if ($cookie->name eq 'site1'){
+            $sid = $cookie->value;
+            say "SID: $sid";
+        }
+ 
+    } # for
+
+    my $newsid = $sid; # 初期
+    my $cnt = 0;
+
+    # 1/1000で一致する想定
+    while ( $sid eq $newsid ) {
+        $cnt++;
+        $t->get_ok("https://$server/menu");
+
+        my $newcookies = $t->ua->cookie_jar->all;
+           for my $cookie (@$newcookies){
+           $newsid = $cookie->value;
+       #    say "NEWSID: $newsid";
+           }
+       # sleep 1;
+    }
+    say "CNT: $cnt"; 
+
+    ok($cnt,'pass');    
+
 };
+
+
+
 
 done_testing();
