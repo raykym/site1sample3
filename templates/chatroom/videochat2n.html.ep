@@ -2,7 +2,7 @@
 % title 'Video Chat2 Remake';
 <script type="text/javascript">
 
- if (! navigator.webkitGetUserMedia) {  alert("Not Supported!!!"); }
+%# if (! navigator.webkitGetUserMedia) {  alert("Not Supported!!!"); }
 
    %# カメラ切り替えボタンをクリックイベント
     function changecam() {
@@ -234,18 +234,30 @@ function startvoice() {
     console.log('Start local Media');
 
  %#   navigator.webkitGetUserMedia({video: true, audio: true},
-    navigator.webkitGetUserMedia({video: true, audio: {mandatory: {echoCancellation : false, googEchoCancellation: false}}  },
-%#    navigator.webkitGetUserMedia({video: {optional: [{sourceId: cameraData[camnum].id }]}, audio: true},
-
-    function (stream) { // success
+ %#   navigator.webkitGetUserMedia({video: true, audio: {mandatory: {echoCancellation : false, googEchoCancellation: false}}  },
+ %#   navigator.webkitGetUserMedia({video: {optional: [{sourceId: cameraData[camnum].id }]}, audio: true},
+%#    navigator.getUserMedia({video: true, audio: {mandatory: {echoCancellation : false, googEchoCancellation: false}}  },
+%#    function (stream) { // success
+%#      localstream = stream;
+%#      document.getElementById(connid).src = window.URL.createObjectURL(stream);
+%#    },
+%#    function (error) { // error
+%#      console.error('An error occurred: [CODE ' + error.code + ']');
+%#      return;
+%#    }
+%#    );
+    %# rewrite promise
+ %#   navigator.mediaDevices.getUserMedia({video: true, audio: {mandatory: {echoCancellation : false, googEchoCancellation: false}}  })
+    navigator.mediaDevices.getUserMedia({video: true, audio: {mandatory: {echoCancellation : false}} })   // for safari
+    .then( function (stream) { // success
       localstream = stream;
-      document.getElementById(connid).src = window.URL.createObjectURL(stream);
-    },
-    function (error) { // error
+    %#  document.getElementById(connid).src = window.URL.createObjectURL(stream);
+      document.getElementById(connid).srcObject = stream;
+    })
+    .catch( function (error) { // error
       console.error('An error occurred: [CODE ' + error.code + ']');
       return;
-    }
-    );
+    });
 } // startvoice
 
   function getConnectionCount() {
@@ -271,32 +283,57 @@ function startvoice() {
     if (!conn) {
       conn = prepareNewConnection(id);
     }
-    conn.peerconnection.createOffer(function (sessionDescription) { // in case of success
-      conn.iceReady = true;
-      conn.peerconnection.setLocalDescription(sessionDescription);
-      sessionDescription.sendto = id;
+%#    conn.peerconnection.createOffer(function (sessionDescription) { // in case of success
+%#      conn.iceReady = true;
+%#      conn.peerconnection.setLocalDescription(sessionDescription);
+%#      sessionDescription.sendto = id;
 
-      %# SDPにsendtoが付加出来ないのでコピーして付加し直す。
-      var cpsdp = JSON.parse(JSON.stringify(sessionDescription));
-          cpsdp.sendto = id;
-      var newsdp = JSON.parse(JSON.stringify(cpsdp));
+%#      %# SDPにsendtoが付加出来ないのでコピーして付加し直す。
+%#      var cpsdp = JSON.parse(JSON.stringify(sessionDescription));
+%#          cpsdp.sendto = id;
+%#      var newsdp = JSON.parse(JSON.stringify(cpsdp));
 
-      sendSDP(newsdp);
-    }, function () { // in case of error
-      console.log("Create Offer failed");
-    }, mediaConstraints);
+%#      sendSDP(newsdp);
+%#    }, function () { // in case of error
+%#      console.log("Create Offer failed");
+%#    }, mediaConstraints);
+    %# rewrite promise
+    conn.peerconnection.createOffer()
+      .then( function (sessionDescription) { // in case of success
+          conn.iceReady = true;
+          conn.peerconnection.setLocalDescription(sessionDescription);
+          sessionDescription.sendto = id;
+
+          %# SDPにsendtoが付加出来ないのでコピーして付加し直す。
+          var cpsdp = JSON.parse(JSON.stringify(sessionDescription));
+              cpsdp.sendto = id;
+          var newsdp = JSON.parse(JSON.stringify(cpsdp));
+
+          sendSDP(newsdp);
+        })
+      .catch( function () { // in case of error
+          console.log("Create Offer failed");
+        }, mediaConstraints);
+
     conn.iceReady = true;
   }
 
   // ---------------------- connection handling -----------------------
   function prepareNewConnection(id) {
-    var pc_config = {"iceServers":[]};
+ %#   var pc_config = {"iceServers":[]};
  %#   var pc_config = {"iceServers":[{"url":"stun:stun.l.google.com:19302"}]};
-    var pc_config = {"iceServers":[{"url":"stun:instance-1.backbone.site:5349"}]};
-    var pc_config = {"iceServers":[{"url":"turn:instance-1.backbone.site:5349","username":"debiansv","credential":"debiansvpass"}]};
+ %#   var pc_config = {"iceServers":[{"url":"stun:instance-1.backbone.site:5349"}]};
+ %#   var pc_config = {"iceServers":[{"url":"turn:instance-1.backbone.site:5349","username":"debiansv","credential":"debiansvpass"}]};
+
+      var pc_config = {"iceServers":[
+                              { urls: "stun:instance-1.backbone.site:5349"},
+                              { urls: "turn:instance-1.backbone.site:5349", username: "debiansv", credential: "0xb7b9c73f9cba1d0f51454edec4fac01a"},
+                      ]};
+
     var peer = null;
     try {
-      peer = new webkitRTCPeerConnection(pc_config);
+   %#   peer = new webkitRTCPeerConnection(pc_config);
+      peer = new RTCPeerConnection(pc_config);
     } catch (e) {
       console.log("Failed to create PeerConnection, exception: " + e.message);
     }
@@ -329,7 +366,8 @@ function startvoice() {
     // when remote adds a stream, hand it on to the local video element
     function onRemoteStreamAdded(event) {
       console.log("Added remote stream");
-      attachvoice(this.id, event.stream);
+    %#  attachvoice(this.id, event.stream);
+      attachvoice(id, event.stream);
       //remoteVideo.src = window.webkitURL.createObjectURL(event.stream);
     }
 
@@ -531,20 +569,38 @@ function sendcall(){
       return
     }
 
-    conn.peerconnection.createAnswer(function (sessionDescription) {
-      // in case of success
-      conn.iceReady = true;
-      conn.peerconnection.setLocalDescription(sessionDescription);
-      sessionDescription.sendto = id;
+%#    conn.peerconnection.createAnswer(function (sessionDescription) {
+%#      // in case of success
+%#      conn.iceReady = true;
+%#      conn.peerconnection.setLocalDescription(sessionDescription);
+%#      sessionDescription.sendto = id;
 
-      var cpsdp = JSON.parse(JSON.stringify(sessionDescription));
-          cpsdp.sendto = id;
-      var newsdp = JSON.parse(JSON.stringify(cpsdp));
+%#      var cpsdp = JSON.parse(JSON.stringify(sessionDescription));
+%#          cpsdp.sendto = id;
+%#      var newsdp = JSON.parse(JSON.stringify(cpsdp));
 
-      sendSDP(newsdp);
-    }, function () { // in case of error
-      console.log("Create Answer failed");
-    }, mediaConstraints);
+%#      sendSDP(newsdp);
+%#    }, function () { // in case of error
+%#      console.log("Create Answer failed");
+%#    }, mediaConstraints);
+    %# rewite promise
+    conn.peerconnection.createAnswer()
+      .then( function (sessionDescription) {
+          // in case of success
+          conn.iceReady = true;
+          conn.peerconnection.setLocalDescription(sessionDescription);
+          sessionDescription.sendto = id;
+
+          var cpsdp = JSON.parse(JSON.stringify(sessionDescription));
+              cpsdp.sendto = id;
+          var newsdp = JSON.parse(JSON.stringify(cpsdp));
+
+          sendSDP(newsdp);
+        })
+      .catch( function () { // in case of error
+          console.log("Create Answer failed");
+            }, mediaConstraints);
+
     conn.iceReady = true;
   }
 
@@ -555,13 +611,19 @@ function sendcall(){
       console.error('peerConnection not exist!');
       return
     }
-    conn.peerconnection.setRemoteDescription(new RTCSessionDescription(evt));
-    console.log("setAnswer Compleate!-----------------------");
+    conn.peerconnection.setRemoteDescription(new RTCSessionDescription(evt))
+        .then( function(){ 
+                     console.log("setAnswer Compleate!-----------------------");
+             })
+        .catch( function(){
+                     console.error('setRemoteDescription(answer) ERROR: ', err);
+          });
   }
 
     function attachvoice(id, stream) {
         console.log('try to attach voice. id=' + id);
-        document.getElementById(id).src = window.URL.createObjectURL(stream);
+     %#   document.getElementById(id).src = window.URL.createObjectURL(stream);
+        document.getElementById(id).srcObject = stream;
     }
 
   function detachAllvoice() {

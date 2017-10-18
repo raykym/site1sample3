@@ -625,26 +625,26 @@ function wsCall(aCallback){
                 });
 
             // 録音終了時トリガー
-                recognition.addEventListener('result', function(event){
-                var text = event.results.item(0).item(0).transcript;
-                $("#msg").val(text);
-                if (ws.readyState != 1) { setTimeout("wsCall(dumCall)" , 1000);} //remain readyState
-                var chatmsg = { 
-                                chat : $('#msg').val(),
-                                geometry: {
-                                     type : "Point",
-                                     coordinates : [ lng, lat ]
-                                          },
-                                 loc : { lat : lat ,
-                                         lng : lng
-                                        },
-                              };
-
-                     chatmsg = JSON.stringify(chatmsg);
-
-                ws.send(chatmsg);
-                $('#msg').val('');
-                }, false);
+          %#      recognition.addEventListener('result', function(event){
+          %#      var text = event.results.item(0).item(0).transcript;
+          %#      $("#msg").val(text);
+          %#      if (ws.readyState != 1) { setTimeout("wsCall(dumCall)" , 1000);} //remain readyState
+          %#      var chatmsg = { 
+          %#                      chat : $('#msg').val(),
+          %#                      geometry: {
+          %#                           type : "Point",
+          %#                           coordinates : [ lng, lat ]
+          %#                                },
+          %#                       loc : { lat : lat ,
+          %#                               lng : lng
+          %#                              },
+          %#                    };
+          %#
+          %#           chatmsg = JSON.stringify(chatmsg);
+          %#
+          %#      ws.send(chatmsg);
+          %#      $('#msg').val('');
+          %#      }, false);
 
          <!-- ChatScreen -->
          <!-- Trapevent -->
@@ -926,10 +926,10 @@ function keyInput(){
 
 
 // sound input
-
-window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
-var recognition = new webkitSpeechRecognition();
-recognition.lang = 'ja';
+   %# for safari
+%# window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
+%# var recognition = new webkitSpeechRecognition();
+%# recognition.lang = 'ja';
 
 // 録音開始
 function record()

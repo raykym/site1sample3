@@ -526,24 +526,6 @@ function sendcall(){
     ws.send(text);
   }
 
-%#  function setOffer(evt) {
-%#    var id = evt.from;
-%#    var conn = getConnection(id);
-%#    if (! conn) {
-%#      conn = prepareNewConnection(id);
-%#      conn.peerconnection.setRemoteDescription(new RTCSessionDescription(evt)) 
-%#         .then( function() {
-%#             console.log('setRemoteDescription(offer) succsess in promise');
-%#          })
-%#         .catch( function() {
-%#             console.error('setRemoteDescription(offer) ERROR: ', err);
-%#          });
-%#    }
-%#    else {
-%#      console.error('peerConnection alreay exist!');
-%#    }
-%#  }
-
   function setOffer(evt) {
     var id = evt.from;
     var conn = getConnection(id);
@@ -631,6 +613,7 @@ function sendcall(){
   function detachvoice(id) {
      console.log("Detach Voice id=" + id);
      document.getElementById(id).src = "";
+     document.getElementById(id).srcObject = "";
   }
 
 

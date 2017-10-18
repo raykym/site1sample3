@@ -32,7 +32,7 @@
         <h5 style="color: #000000;">このサイトはMojoliciousとJQuery mobileで作成しています。</h5>
         <h5 style="color: #550000;">このサイトの参照はGoogle Chromeでお願いします。</h5>
         <h5 style="color: #550000;">Android 4.2以上が必須です</h5>
-        <h5 style="color: #550000;">iOSではChromeでも動かないです。</h5>
+        <h5 style="color: #550000;">iOS11ではsafariで利用できますが、Chromeとの相互通話はchrome側で設定を加えないとvideochatは利用できません。</h5>
         </div>
     </div><!-- /footer -->
 </div><!-- /page -->
