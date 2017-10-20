@@ -435,14 +435,12 @@ $(document).on('pageshow',function () {
             ws.send(JSON.stringify(entryevt));
             console.log("key Down echo");
             %# 画面更新
+            qrcodeset();
             member();
       %# 他のメンバーへ画面のリロード指定
             var reloadmember = {"type":"reloadmember"};
             ws.send(JSON.stringify(reloadmember));
             console.log("DEBUG: reloadmember: " + JSON.stringify(reloadmember) );
-
-            qrcodeset();
-
             }
        });
 
@@ -708,26 +706,27 @@ function qrcodeset(){
    var qrurl = "https://<%= $url_host %>/voicechat2n?" + roomname;
    var encurl = encodeURI(qrurl);
    console.log("DEBUG: qrcode: " + encurl );
-   var data = " data:" + encurl ;
+   var param = "data=" + encurl;
+%#   var data = JSON.stringify(param);
 
- function qrcodepost(){
-     return $.ajax({
-                    type: "POST",
-                    url: "https://<%= $url_host %>/qrcode",
-                    dataType: "text",
-                    cache: false,
-                    data: data,
-                    success: qrrespons,
+   return $.ajax({
+                type: "POST",
+                url: "https://<%= $url_host %>/qrcode",
+                dataType: "html",
+                cache: false,
+                data: param,
+                timeout: 3000,
+                async: true,
+                success: qrrespons
            });
+
+  function qrrespons(html){
+       %#  console.log("HTML: " + html);
+         $('#qrcode').html(html);
     }
 
-  qrcodepost();
+} // qrcodeset
 
-  function qrrespons(data){
-         console.log("DATA: " + data);
-    }
-
-}
 
 function autoentry(){
     //通知の場合の自動エントリー
@@ -795,6 +794,7 @@ function reloadimgkey(){
             <p><input type="text" id="pushemail" placeholder="email" data-clear-btn="true"></p>
             <button type="button" onclick="pushcall();">呼び出しpush通知</button>
             <div id="qrcode"></div>
+            <div> room名を打ち込むとQRcodeが表示され、スキャンすればチャットルームに入れます。</div>
          </div>
          <!-- right panel -->
          <div data-role="panel" id="panel_r" data-display="overlay" data-position="right" style="background-color: #aac78d;">

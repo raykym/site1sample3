@@ -80,6 +80,7 @@ sub qrcode {
     my $self = shift;
 
     my $text = $self->param('data');
+  #   my $text = "test cord";
        # urlencodeのままコードにする
     if (! defined $text ){
         $self->render( text => "" );
@@ -90,7 +91,7 @@ sub qrcode {
 
     my $code = HTML::Barcode::QRCode->new(text => $text);
 
-    $self->render( inline => $code->render );
+    $self->render( text => $code->render );
 
 }
 
