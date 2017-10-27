@@ -116,7 +116,7 @@ sub echo {
        $icon_url = "/imgcomm?oid=$icon" if (! defined $icon_url);
 
     my $chatname = "WALKCHAT";
-    my $attackCH = "ATTACHCHN"; # 送信のみ NPCは受信する
+    my $attackCH = "ATTACKCHN"; # 送信のみ NPCは受信する
     my @chatArray = ( $chatname, $attackCH );
 
     my $delay_once->{$id} = 'true';
@@ -322,7 +322,7 @@ sub echo {
                    #   $timelinecoll->insert($jsonobj);
                    #   $timelinelog->insert($jsonobj); # hitnameパラメータを記録するのでtoはLOGから除外する。
                       my $jsontext = to_json($jsonobj);
-                      $redis->publish("$attackCH", $jsontext);
+                      $redis->publish( $attackCH , $jsontext);
                       undef $jsontext;
 
                       $self->app->log->info("DEBUG: $username execute Command write....");
