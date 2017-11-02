@@ -114,6 +114,7 @@ sub startup {
 
   $r->get('/valhara')->to('top#valhara');
 
+
   $r->get('/googleauth')->to('top#googleauth'); # login short url
 
   $r->any('/oauth2callback')->to(controller => 'Login', action => 'oauth2callback');
@@ -187,6 +188,8 @@ sub startup {
   $bridge->get('/walkworld/supervise')->to('walkworld#supervise');
 
   $r->get('/walkworld/overviewWW')->to('walkworld#overviewWW');
+
+  $bridge->get('/testpubsub')->to('webroom#testpubsub');  # test
 
 #  $r->any('/walkworld/rcvpush')->to(controller => 'Walkworld', action => 'rcvpush');
 

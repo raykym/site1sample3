@@ -1,0 +1,173 @@
+% layout 'mobidef2';
+% title 'Test pubsub';
+
+<script type="text/javascript">
+
+    var entry = { entry : "TESTPUBSUB"};
+
+    var username = "<%= $username %>";
+
+    var ws = null;
+    ws = new WebSocket('wss://<%= $url_host %>/wsocket/webpubsub');
+
+    var socket_wait = null;
+
+    ws.onopen = function(){
+        console.log('Connection opened');
+        socketReady = true;
+
+        ws.send(JSON.stringify(entry));  // entryまで自動で行う
+
+        setInterval( function(){ member(); }, 3000); // メンバーチェック
+
+      %# 他のメンバーへ画面のリロード指定
+        var reloadmember = {"type":"reloadmember"};
+        ws.send(JSON.stringify(reloadmember));
+        console.log("DEBUG: reloadmember: " + JSON.stringify(reloadmember) );
+
+    socket_wait = setInterval(function (){
+       var dummsg = {"dummy":"dummy"};
+       ws.send(JSON.stringify(dummsg));
+       console.log("socket wait sending!");
+        }, 50000);
+
+    };
+
+    ws.onclose = function(){
+        socketReady = false;
+        clearInterval(socket_wait); // 50sec dummy STOP
+        console.log("Close:" + socketReady);
+        alert("please Reload, Reconnect websocket! ADD MEMBER LIMIT BUT WEBRTC CONNECTION OK!");
+    };
+
+    ws.onerror = function(){
+       alert("please Reload, Reconnect websocket!");
+    };
+
+var memlist = new Array;
+
+    ws.onmessage = function(msg){
+                var evt = JSON.parse(msg.data);
+                console.log(JSON.stringify(evt));
+            %# dummyはserverでスポイルしている想定
+
+            $('#recevepage').text(msg.data);
+
+            if (evt.type === "reloadmember"){
+                %# 他のメンバーのstandbyを確認する リロードするとローカルストリームが切れるので再スタート
+                member();
+                return;
+            }
+
+           if (evt.type == 'reslist'){
+ 
+              memlist = evt.reslist;
+
+              var memlistjson = JSON.stringify(memlist);
+
+              console.log("DEBUG: memlist: " + memlistjson);
+ 
+              return;
+           }
+
+
+            if ( evt.Count > 100 ){
+
+               console.log("DEBUG: websocket Close!!!"); 
+               clearInterval(socket_wait);
+
+               var bye = { 'bye' : "dummy" };
+               var byejson = JSON.stringify(bye);
+ 
+               ws.send(byejson);
+
+               ws.close;
+
+               $('#timeend').text(Date.now());
+
+               return;
+
+            }
+
+       // from sendtoが前提
+
+            var tmp = new Object;
+             tmp.from = evt.from;
+             tmp.to = evt.sendto;
+
+            evt.Count++;
+            // 入れ替え
+            evt.from = tmp.to;
+            evt.sendto = tmp.from;
+
+            var evtjson = JSON.stringify(evt);
+
+            $('#sendpage').text(evtjson);
+
+            ws.send(evtjson);
+
+            console.log("DEBUG: send replay count Up!");
+
+    }; // onmessage
+
+
+var data = { testdata : "testdata1",
+             Count : 0 ,
+             text : "Dummy Data" ,
+             flag : 0
+           };
+
+
+function start() {
+
+    console.log("DEBUG: START !!!!!");
+
+    $('#timestart').text(Date.now());
+
+    for ( var i=0; i < memlist.length; i++){
+        if ( memlist[i].username != username ){
+
+            data.sendto = memlist[i].connid;
+            ws.send(JSON.stringify(data));
+
+        }
+    }
+
+    $('#sendpage').text(datajson);
+
+}
+
+function member(){
+   %# メンバーリストの更新
+    var getlist = {"getlist":"dummy"};
+    ws.send(JSON.stringify(getlist));
+    console.log("getlist:" + JSON.stringify(getlist));
+
+}
+
+
+</script>
+
+<div data-role="page" style="background: #80aa55">
+    <div data-role="header">
+    %#    <a href="#panel" data-icon="bars" data-iconpos="notext" class="ui-btn-left">panel</a>
+        <h3>TEST webroom </h3>
+    %#    <a href="#panel_r" data-icon="bars" data-iconpos="notext" class="ui-btn-right">panel_r</a>
+    </div>
+
+    <div>
+        <button type="button" class="ui-btn ui-btn-inline" onclick="start();">START</button>
+        <div id='sendpage'></div>
+    </div>
+    <div>
+        <div id='recevepage'></div>
+    </div>
+    <div>
+        <div id='timestart'></div>
+        <div id='timeend'></div>
+    </div>
+    <div data-role="footer" style="backgroud: #aac78d;">
+    </div>
+
+</div>
+

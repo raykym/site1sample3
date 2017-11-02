@@ -584,7 +584,7 @@ function wsCall(aCallback){
 // オンメッセージ処理 --------------------------------------------
     ws.onmessage = function(msg){
         var evt = JSON.parse(msg.data);
-     //       console.log("evt: msg: " + msg.data ); 
+            console.log("evt: msg: " + msg.data ); 
      //       console.log("evt: point: " + JSON.stringify(evt.pointlist));
      //       console.log("evt: chat: " + JSON.stringify(evt.chat));
 
@@ -686,6 +686,7 @@ function wsCall(aCallback){
 
         //walkchatを追加した結果、書く位置を変更
           if ( evt.to == user_stat.userid ) { return; } // 攻撃対象にユーザがなった場合、イベントをスルーする。
+          if ( evt.execute ) { return; } // 攻撃イベントをスルーする。
 
         console.log("DEBUG: makerobjects: " + makerobjects.length);
         // makerobjectsの初期化
@@ -697,11 +698,17 @@ function wsCall(aCallback){
 
         var plist = evt.pointlist;
 
+        if ( ! plist ){
+            console.log("DEBUG: plist is NULL!!!!");
+            return;
+        }
+
         // 自分を除外する。 ユーザーも除外する MAP上で他のユーザは表示しない
         var plist_nonself = plist.filter( function( element, index) {
                  // return element.userid != uid; 
                   return element.category != "USER";
                           });
+
 
         // サーバで重複排除したので、単純にコピーのみに表示用
         var plist_nd = plist_nonself.filter( function (element, index){
@@ -819,7 +826,11 @@ function wsCall(aCallback){
              var distobj = geo_dist_arrow.filter( function (element, index) {
                      return (element.distance == min_dist);
                  });
+
              var arrow_d;
+
+             if ( ! distobj[0].direction ) {
+
              var tmp_arrow = distobj[0].direction - N0r;
              if ( 0 > tmp_arrow ) {
                 arrow_d = N0r - tmp_arrow;
@@ -830,6 +841,8 @@ function wsCall(aCallback){
                  }
 
              $('#output_d').text(Math.ceil(distobj[0].distance));
+
+             }  // distobj[0].direction
 
              console.log("DEBUG: N0r:" + N0r );
              console.log("DEBUG: arrow:" + arrow_d );

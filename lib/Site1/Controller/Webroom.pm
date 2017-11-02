@@ -353,6 +353,13 @@ sub webpubsub {
                      return;  # スルーすると全体通信になってしまう。
                      } 
 
+                  if ($jsonobj->{bye}){
+                         # ClientからClose
+
+                         $clients->{$wsid}->finish;
+                  }
+
+
                   # グループ内通信
                      my $jsontext = to_json($jsonobj);
                      $redis->publish( $recvlist , $jsontext); #websocketで受信したら、redisに送信する
@@ -404,6 +411,10 @@ sub webpubsub {
 #    $self->render(); 
 }
 
+sub testpubsub {
+    my $self = shift;
 
+    $self->render();
+}
 
 1;
