@@ -1,0 +1,3 @@
+% layout 'mobidef2';
+% title 'websocket count';
+<h2><%= $wscount %></h2>

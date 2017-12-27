@@ -357,7 +357,24 @@ function keyInput(){
            });
 }
 
+// チャットからユーザの位置へmapを一時的に移す
+function centerMap(alat,alng) {
 
+            var opt2 = {
+                       zoom: 16,
+                       center: new google.maps.LatLng(alat, alng)
+                       };
+
+            mapobj.setOptions(opt2);
+
+            var latlng = new google.maps.LatLng(alat,alng);
+            console.log("DEBUG: LatLng: " + JSON.stringify(latlng));
+
+          //   mapobj.setCenter(new google.maps.LatLng(alat, alng));
+          //   mapobj.setCenter(latlng);
+             mapobj.panTo(latlng);
+             console.log("DEBUG: centerMap: " + alat + "|" + alng);
+}
 
 
 </script>

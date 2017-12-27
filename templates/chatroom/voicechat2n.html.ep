@@ -227,7 +227,7 @@ function startvoice() {
   %#  }
   %#  );
      %# promise rewrite!!
-    navigator.mediaDevices.getUserMedia({video: false, audio: {mandatory: {echoCancellation : false, googEchoCancellation: false}} })
+    navigator.mediaDevices.getUserMedia({video: false, audio: {mandatory: {echoCancellation : true, googEchoCancellation: true}} })
     .then( function (stream) { // success
       localStream = stream;
     })

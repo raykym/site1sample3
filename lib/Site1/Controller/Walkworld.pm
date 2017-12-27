@@ -26,6 +26,19 @@ sub view {
 
 my $clients = {};
 
+sub wscount {
+    my $self = shift;
+
+    my $wscount = keys(%$clients);
+
+    $self->stash( wscount => $wscount);
+
+    $self->render();
+   
+    undef $wscount;
+}
+
+
 # google pubsub TEST
 sub echo2 {
   my $self = shift;
@@ -83,6 +96,7 @@ my $delay_once = {};
 
 my $debugCount = 3;
 
+my $timelineredis = 0; # 1: redis map{$userid}  0: mongodb
 
 # WalkWorld websocket endpoint
 sub echo {
@@ -171,7 +185,7 @@ sub echo {
   $self->on(message => sub {
         my ($self,$msg) = @_;
 
-#           $self->app->log->info("DEBUG: $username ws msg: $msg");
+           $self->app->log->info("DEBUG: $username ws msg: $msg");
 
            my $jsonobj = from_json($msg);
 
@@ -274,7 +288,7 @@ sub echo {
                $self->app->log->info("DEBUG: $username hitname write");
 
                #WalkWorld.MemberTimeLineに残るデータを削除する。
-               $timelinecoll->delete_many({"userid" => "$jsonobj->{to}"}); # mognodb3.2
+               $timelinecoll->delete_many({"userid" => "$jsonobj->{to}"}) if $timelineredis == 0; # mognodb3.2
                $self->app->log->info("DEBUG: $username hit delete many execute.");
 
                # 履歴を読んでカウントアップする 
@@ -317,10 +331,7 @@ sub echo {
               $self->app->log->info("DEBUG: $username Attack send: $msg");
 
                       # TTLレコードを追加する。
-                  #    $jsonobj = { %$jsonobj,ttl => DateTime->now() };  
                       $jsonobj->{ttl} = DateTime->now();  
-                   #   $timelinecoll->insert($jsonobj);
-                   #   $timelinelog->insert($jsonobj); # hitnameパラメータを記録するのでtoはLOGから除外する。
                       my $jsontext = to_json($jsonobj);
                       $redis->publish( $attackCH , $jsontext);
                       undef $jsontext;
@@ -362,32 +373,51 @@ sub echo {
 
        # 以下、map系のメッセージ処理
            # TTLレコードを追加する。
-         #  $jsonobj = { %$jsonobj,ttl => DateTime->now() };  
            # 1週間の期限はDB固有になるのでイベントの種類を作るとcollectionを増やすべきか？
            $jsonobj->{ttl} = DateTime->now();  
 
            $self->app->log->debug("DEBUG: $username msg: $msg");
 
            # 負荷軽減になるのか？　MemberTimeLineを1個に限定出来るのか？　書き込み前に削除を加えてみる
-           $timelinecoll->delete_many({"userid" => "$jsonobj->{userid}"}); # mognodb3.2
+           $timelinecoll->delete_many({"userid" => "$jsonobj->{userid}"}) if $timelineredis == 0; # mognodb3.2
 
            # TTl DB
-           $timelinecoll->insert($jsonobj);
+           $timelinecoll->insert($jsonobj) if $timelineredis == 0;
+
+           if ( $timelineredis == 1 ){
+               $self->app->log->info("DEBUG: timelineredis ON!");
+               my $jsonobj_txt = to_json($jsonobj);
+               $redis->set("Maker$jsonobj->{userid}" => $jsonobj_txt);
+               $redis->expire("Maker$jsonobj->{userid}" => 32);
+           }
+
            # LOG用DB
            $timelinelog->insert($jsonobj);
 
-           # 攻撃を受けたか確認する　基本NPC用
-           my $attack_chk = $timelinecoll->find_one({ "to" => $userid });
-           my $jsonattackchk = to_json($attack_chk);
-              $self->app->log->debug("DEBUG: $username $jsonattackchk") if ($attack_chk); 
-              if ($attack_chk) {
-                                $clients->{$id}->send({ json => $attack_chk });
-                                return;  # この処理が入るとボットはダウンするので終了する。
-                               }
+           # 攻撃を受けたか確認する　基本NPC用   timelineredisに伴いコメントアウト
+     #      my $attack_chk;
+     #      if ( $timelineredis == 0 ) {
+     #         $attack_chk = $timelinecoll->find_one({ "to" => $userid });
+     #      } elsif ( $timelineredis == 1 ){
+     #         # redisはjsonなのでobjに代える
+     #         my $userkey_array = $redis->keys("Maker$userid");
+     #         my $userkey = pop(@$userkey_array);
+     #         $attack_chk = from_json($redis->get($userkey));
+     #      }
+
+     #      my $jsonattackchk = to_json($attack_chk);
+     #         $self->app->log->info("DEBUG: $username $jsonattackchk") if ($attack_chk); 
+     #         if ($attack_chk) {
+     #                           $clients->{$id}->send({ json => $attack_chk });
+     #                           return;  # この処理が入るとボットはダウンするので終了する。
+     #                          }
 
            # 現状の情報を送信 
            # mongo3.2用 3000m以内のデータを返す
-           my $geo_points_cursole = $timelinecoll->query({ geometry => { 
+           my $geo_points_cursole;
+           my @pointlist;
+           if ( $timelineredis == 0 ){
+              $geo_points_cursole = $timelinecoll->query({ geometry => { 
                                                            '$nearSphere' => {
                                                            '$geometry' => {
                                                             type => "point",
@@ -403,7 +433,7 @@ sub echo {
             #      $self->app->log->debug("DEBUG: Dumper: $ddump");
 
             #データから最新ポイントだけを抽出するには、降順で時刻をsortして、
-            my @all_points = $geo_points_cursole->all;
+            my @all_points = $geo_points_cursole->all;   # geo_points_cursolは空になるので
             
          #   my $datadebug = Dumper(@all_points);
          #   $self->app->log->debug("DEBUG: all_points: $datadebug");
@@ -411,17 +441,19 @@ sub echo {
             my @all_points_sort = sort { $b->{time} <=> $a->{time} } @all_points;
 
             # push時にgrepで重複を弾く 書き込み時に削除を行っているのでこの処理は保険
-            my @pointlist = ();
+               @pointlist = ();
                foreach my $po ( @all_points_sort){
                    push(@pointlist,$po) unless grep { $_->{userid} =~ /^\Q$po->{userid}\E$/ } @pointlist;
                    }
             undef @all_points;
             undef @all_points_sort;
 
-          #    $self->app->log->debug("DEBUG: GEO points send###################");
+           }  # timelineredis==1の場合、Makerと一緒に収集される
+
+            $self->app->log->info("DEBUG: GEO points send###################");
 
        #makerをredisから抽出して、距離を算出してリストに加える。
-
+       # timelineをredisにする場合、ここに集約される
              my $makerkeylist = $redis->keys("Maker*");
              my @makerlist = ();
 
@@ -445,7 +477,7 @@ sub echo {
                    my $listhash = { 'pointlist' => \@pointlist };
                    my $jsontext = to_json($listhash); 
                       $clients->{$id}->send($jsontext);
-                      $self->app->log->debug("DEBUG: $username geo_points: $jsontext");
+                      $self->app->log->info("DEBUG: $username geo_points: $jsontext");
           # map系終了
 
           # trapeventのヒット判定
@@ -708,7 +740,7 @@ sub overviewWW {
     $self->render(msg_w => '');
 }
 
-# supervise websocket
+# supervise websocket & overviewWW
 sub echo3 {
     my $self = shift;
 
@@ -717,6 +749,7 @@ sub echo3 {
        $clients->{$id} = $self->tx;
 
     my $userid = $self->stash('uid');
+    my $redis ||= Mojo::Redis2->new;
 
     my $wwdb = $self->app->mongoclient->get_database('WalkWorld');
     my $timelinecoll = $wwdb->get_collection('MemberTimeLine');
@@ -793,8 +826,10 @@ sub echo3 {
                  undef $listhash;
                  undef $jsontext;
               }
-
-           my $geo_points_cursole = $timelinecoll->query({ "geometry" => { 
+           my @pointlist;
+           my $geo_points_cursole;
+           if ( $timelineredis == 0 ){
+              $geo_points_cursole = $timelinecoll->query({ "geometry" => { 
                                            '$nearSphere' => [ $jsonobj->{loc}->{lng} , $jsonobj->{loc}->{lat} ], 
                                         #   '$maxDistance' => 1 
                                          }});
@@ -804,18 +839,32 @@ sub echo3 {
             my @all_points_sort = sort { $b->{time} <=> $a->{time} } @all_points;
 
             # push時にgrepで重複を弾く
-            my @pointlist = ();
+               @pointlist = ();
                foreach my $po ( @all_points_sort){
                    push(@pointlist,$po) unless grep { $_->{userid} =~ /^\Q$po->{userid}\E$/ } @pointlist;
                    }
             undef @all_points;
             undef @all_points_sort;
 
+           } # timelineredis==1の場合　Makerとして収集される
+
+             #makerをredisから抽出して、距離を算出してリストに加える。
+             my $makerkeylist = $redis->keys("Maker*");
+             my @makerlist = ();
+
+             foreach my $aline (@$makerkeylist) {
+                       my $makerpoint = from_json($redis->get($aline));
+                       push (@makerlist, $makerpoint );
+                   }
+
+               # makerとメンバーリストを結合する
+                 push @pointlist,@makerlist;
+
                 ####   my @pointlist = $geo_points_cursole->all;
                    my $listhash = { 'pointlist' => \@pointlist };
                    my $jsontext = to_json($listhash); 
                       $self->tx->send($jsontext);
-                      $self->app->log->debug("DEBUG: geo_points: $jsontext");
+                      $self->app->log->info("DEBUG: geo_points: $jsontext");
 
                    undef @pointlist;
                    undef $listhash;

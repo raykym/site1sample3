@@ -13,8 +13,8 @@ sub startup {
   $self->config(hypnotoad=>{
                        listen => ['http://*:3800'],
                        accepts => 100,
-                       clients => 10,
-                       workers => 5,
+                       clients => 3,
+                       workers => 20,
                        proxy => 1,
                        });
 
@@ -188,6 +188,8 @@ sub startup {
   $bridge->get('/walkworld/supervise')->to('walkworld#supervise');
 
   $r->get('/walkworld/overviewWW')->to('walkworld#overviewWW');
+
+  $r->get('/walkworld/wscount')->to('walkworld#wscount');
 
   $bridge->get('/testpubsub')->to('webroom#testpubsub');  # test
 

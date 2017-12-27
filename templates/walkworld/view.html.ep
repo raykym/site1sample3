@@ -698,10 +698,10 @@ function wsCall(aCallback){
 
         var plist = evt.pointlist;
 
-        if ( ! plist ){
-            console.log("DEBUG: plist is NULL!!!!");
-            return;
-        }
+    %#    if ( ! plist ){
+    %#        console.log("DEBUG: plist is NULL!!!!");
+    %#        return;
+    %#    }
 
         // 自分を除外する。 ユーザーも除外する MAP上で他のユーザは表示しない
         var plist_nonself = plist.filter( function( element, index) {
@@ -724,8 +724,20 @@ function wsCall(aCallback){
                   return element.category == "NPC";
                           });
 
-        // 自動エネミーセットチェック NPCが5以下なら追加で起動する
-        if ( plist_nonuser.length <= 5 ) {
+        // USERを抽出 
+        var plist_user = plist_nonself.filter( function( element, index) {
+                  return element.category == "USER"; 
+                          });
+        var unitcnt = plist_user.length + 1;
+
+        if ( plist_user.length < 5 ) {
+            unitcnt = 5;
+        } else if ( plist_user.length >= 5 ) {
+            unitcnt = 10;
+        }
+
+        // 自動エネミーセットチェック NPCがuserunit以下なら追加で起動する
+        if ( plist_nonuser.length <= unitcnt ) {
            setEnmyPos++;
            console.log("DEBUG: setEnmyPos:" + setEnmyPos);
            if ( setEnmyPos > 2 ){
@@ -829,7 +841,7 @@ function wsCall(aCallback){
 
              var arrow_d;
 
-             if ( ! distobj[0].direction ) {
+        %#     if ( ! distobj[0].direction ) {
 
              var tmp_arrow = distobj[0].direction - N0r;
              if ( 0 > tmp_arrow ) {
@@ -842,7 +854,7 @@ function wsCall(aCallback){
 
              $('#output_d').text(Math.ceil(distobj[0].distance));
 
-             }  // distobj[0].direction
+         %#    }  // distobj[0].direction
 
              console.log("DEBUG: N0r:" + N0r );
              console.log("DEBUG: arrow:" + arrow_d );
@@ -965,6 +977,7 @@ function setPointMaker(){
                                              },
                           name : "maker",
                           userid : "",
+                          category : "MAKER",
                           status : "Dummy",
                           time : timerecord,
                           icon_url : "/img/lighthouse3.png",
