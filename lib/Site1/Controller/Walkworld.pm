@@ -102,7 +102,7 @@ my $timelineredis = 0; # 1: redis map{$userid}  0: mongodb
 sub echo {
     my $self = shift;
 
-       $self->app->log->info(sprintf 'Client connected: %s', $self->tx);
+       $self->app->log->debug(sprintf 'Client connected: %s', $self->tx);
     my $id = sprintf "%s", $self->tx->connection;
        $clients->{$id} = $self->tx;
 
@@ -185,7 +185,7 @@ sub echo {
   $self->on(message => sub {
         my ($self,$msg) = @_;
 
-           $self->app->log->info("DEBUG: $username ws msg: $msg");
+           $self->app->log->debug("DEBUG: $username ws msg: $msg");
 
            my $jsonobj = from_json($msg);
 
@@ -285,11 +285,11 @@ sub echo {
            if ( defined $jsonobj->{hitname} ){
         
                $timelinelog->insert($jsonobj);
-               $self->app->log->info("DEBUG: $username hitname write");
+               $self->app->log->debug("DEBUG: $username hitname write");
 
                #WalkWorld.MemberTimeLineに残るデータを削除する。
                $timelinecoll->delete_many({"userid" => "$jsonobj->{to}"}) if $timelineredis == 0; # mognodb3.2
-               $self->app->log->info("DEBUG: $username hit delete many execute.");
+               $self->app->log->debug("DEBUG: $username hit delete many execute.");
 
                # 履歴を読んでカウントアップする 
                my $memcountobj = $membercount->find_one_and_delete({'userid'=>"$jsonobj->{execute}"});
@@ -302,7 +302,7 @@ sub echo {
                   delete $memcountobj->{_id};
 
             #   my $debug = to_json($memcountobj);
-            #      $self->app->log->info("DEBUG: count entry: $debug");
+            #      $self->app->log->debug("DEBUG: count entry: $debug");
                   $membercount->insert_one($memcountobj); 
             #   undef $debug;
 
@@ -328,7 +328,7 @@ sub echo {
 
       # 攻撃シグナルの送信 toにuserid
            if ( $jsonobj->{to} ) {
-              $self->app->log->info("DEBUG: $username Attack send: $msg");
+              $self->app->log->debug("DEBUG: $username Attack send: $msg");
 
                       # TTLレコードを追加する。
                       $jsonobj->{ttl} = DateTime->now();  
@@ -336,7 +336,7 @@ sub echo {
                       $redis->publish( $attackCH , $jsontext);
                       undef $jsontext;
 
-                      $self->app->log->info("DEBUG: $username execute Command write....");
+                      $self->app->log->debug("DEBUG: $username execute Command write....");
 
                       undef $jsonobj;
                       return;
@@ -385,7 +385,7 @@ sub echo {
            $timelinecoll->insert($jsonobj) if $timelineredis == 0;
 
            if ( $timelineredis == 1 ){
-               $self->app->log->info("DEBUG: timelineredis ON!");
+               $self->app->log->debug("DEBUG: timelineredis ON!");
                my $jsonobj_txt = to_json($jsonobj);
                $redis->set("Maker$jsonobj->{userid}" => $jsonobj_txt);
                $redis->expire("Maker$jsonobj->{userid}" => 32);
@@ -406,7 +406,7 @@ sub echo {
      #      }
 
      #      my $jsonattackchk = to_json($attack_chk);
-     #         $self->app->log->info("DEBUG: $username $jsonattackchk") if ($attack_chk); 
+     #         $self->app->log->debug("DEBUG: $username $jsonattackchk") if ($attack_chk); 
      #         if ($attack_chk) {
      #                           $clients->{$id}->send({ json => $attack_chk });
      #                           return;  # この処理が入るとボットはダウンするので終了する。
@@ -450,7 +450,7 @@ sub echo {
 
            }  # timelineredis==1の場合、Makerと一緒に収集される
 
-            $self->app->log->info("DEBUG: GEO points send###################");
+            $self->app->log->debug("DEBUG: GEO points send###################");
 
        #makerをredisから抽出して、距離を算出してリストに加える。
        # timelineをredisにする場合、ここに集約される
@@ -477,7 +477,7 @@ sub echo {
                    my $listhash = { 'pointlist' => \@pointlist };
                    my $jsontext = to_json($listhash); 
                       $clients->{$id}->send($jsontext);
-                      $self->app->log->info("DEBUG: $username geo_points: $jsontext");
+                      $self->app->log->debug("DEBUG: $username geo_points: $jsontext");
           # map系終了
 
           # trapeventのヒット判定
@@ -493,7 +493,7 @@ sub echo {
                my @trapevents = $trapmember_cursole->all;
 
            #    my $debug = to_json(@trapevents);
-           #    $self->app->log->info("DEBUG: trapevents: $debug");
+           #    $self->app->log->debug("DEBUG: trapevents: $debug");
            #    undef $debug;
 
                 # eventの分離
@@ -603,7 +603,7 @@ sub NESW { deg2rad($_[0]), deg2rad( 90 - $_[1]) }
 #redis receve
      $redis->on(message => sub {
                   my ($redis,$mess,$channel) = @_;
-                      $self->app->log->info("DEBUG: on channel:($channel) $username : $mess");
+                      $self->app->log->debug("DEBUG: on channel:($channel) $username : $mess");
 
                       if ( ! $channel eq $chatname ) { 
                                                      return; 
@@ -615,7 +615,7 @@ sub NESW { deg2rad($_[0]), deg2rad( 90 - $_[1]) }
 
                       #攻撃シグナルは優先で送信する。
                       if ( defined $messobj->{to} ) {
-                         $self->app->log->info("DEBUG: recive hitparam and send...");
+                         $self->app->log->debug("DEBUG: recive hitparam and send...");
                          $clients->{$id}->send($mess);
                          return;
                       }
@@ -679,7 +679,7 @@ sub pointget {
 #    my $pcnt = $self->redis->get("GHOSTGET$uid");
     my $pcnt = $self->redis->zscore('gscore',$email);
     my $emails = $self->redis->zrevrange("gscore", 0, 10); #配列だけど中はテキスト
-    ##   $self->app->log->info("DEBUG: redis gscore: $sids");
+    ##   $self->app->log->debug("DEBUG: redis gscore: $sids");
     if ( ! defined $pcnt ) { $pcnt = "Not collect" };
 
     my @emailARRAY; #値が空なら空白配列のまま
@@ -687,7 +687,7 @@ sub pointget {
 
     my @scoreARRAY = (); #emailsの順番でアカウント情報配列を取得
     foreach my $i (@emailARRAY){
-      #  $self->app->log->info("DEBUG: scoreARRAY: $i");
+      #  $self->app->log->debug("DEBUG: scoreARRAY: $i");
            $sth_sessionid->execute($i);
         my $get_value = $sth_sessionid->fetchrow_hashref();
         my $sid = $get_value->{sessionid}; 
@@ -864,7 +864,7 @@ sub echo3 {
                    my $listhash = { 'pointlist' => \@pointlist };
                    my $jsontext = to_json($listhash); 
                       $self->tx->send($jsontext);
-                      $self->app->log->info("DEBUG: geo_points: $jsontext");
+                      $self->app->log->debug("DEBUG: geo_points: $jsontext");
 
                    undef @pointlist;
                    undef $listhash;

@@ -118,14 +118,14 @@ sub usercheck {
     # 認証が必要な場合すべてこのパスを通過する
     # redisでキャッシュして応答速度を上げる
 
-       $self->app->log->info('Notice: Usercheck ON!');
+       $self->app->log->debug('Notice: Usercheck ON!');
 
 
     my $sid = $self->cookie('site1');
 
     # cookieが取れない->リダイレクト
     if ( ! defined $sid ){ 
-        $self->app->log->info('Notice: Not get Cookie!');
+        $self->app->log->debug('Notice: Not get Cookie!');
         $self->redirect_to('/');
         return;
       }
@@ -139,8 +139,8 @@ sub usercheck {
 
              my $userobj = from_json($userredis);
 
-             $self->app->log->info("DEBUG: redis: $userredis");
-             $self->app->log->info("DEBUG: redis: $userobj->{email}");
+             $self->app->log->debug("DEBUG: redis: $userredis");
+             $self->app->log->debug("DEBUG: redis: $userobj->{email}");
 
         # $iconを無くす方向で考えていたが、表示で利用していたので削除出来なかった。
             $self->stash( email => $userobj->{email} );
@@ -180,9 +180,9 @@ sub usercheck {
        $sth_user_chk->execute($email);
     my $get_uname = $sth_user_chk->fetchrow_hashref();
     my $username = $get_uname->{username};
-       $self->app->log->info("DEBUG: username(local): $username") if ( defined $username);
+       $self->app->log->debug("DEBUG: username(local): $username") if ( defined $username);
     my $uid = $get_uname->{uid};
-       $self->app->log->info("DEBUG: uid(local): $uid") if ( defined $uid);
+       $self->app->log->debug("DEBUG: uid(local): $uid") if ( defined $uid);
     my $icon = $get_uname->{icon};
     # $iconが空ならNow printingが設定される。
        if (! defined $icon ) { $icon = 'nowprint';}
@@ -201,7 +201,7 @@ sub usercheck {
                 )->res->json if (defined $atoken);
 
     my $text = to_json($value);
-       $self->app->log->info("DEBUG: value: $text");
+       $self->app->log->debug("DEBUG: value: $text");
 
     #結果がエラーならrefresh tokenでaccess tokenを取得
     if (! defined $value->{displayName}) {
@@ -213,7 +213,7 @@ sub usercheck {
                                   grant_type => "refresh_token",
                                            })->res->json;
                my $new_token = to_json($data);
-               $self->app->log->info("DEBUG: newtoken: $new_token");
+               $self->app->log->debug("DEBUG: newtoken: $new_token");
 
        if ( $data->{token_type} eq "Bearer" ) {
        #id_tokenでリトライ
@@ -222,7 +222,7 @@ sub usercheck {
                 )->res->json if (defined $atoken);
 
        $text = to_json($value);
-       $self->app->log->info("DEBUG: value 2: $text");
+       $self->app->log->debug("DEBUG: value 2: $text");
            } # if token_type
 
             # リフレッシュトークンの取得失敗
@@ -248,10 +248,10 @@ sub usercheck {
      $value = $ua->get(
                 "https://www.googleapis.com/plus/v1/people/me?access_token=$atoken"
                 )->res->json if ( defined $atoken );
-       $self->app->log->info("DEBUG: new atoken: $atoken");
+       $self->app->log->debug("DEBUG: new atoken: $atoken");
 
        $text = to_json($value);
-       $self->app->log->info("DEBUG: new value: $text"); 
+       $self->app->log->debug("DEBUG: new value: $text"); 
 
         } # defined displayName
 
@@ -265,11 +265,11 @@ sub usercheck {
     my $gpid = $value->{id};
 
        $uid = Sessionid->new($gpid)->guid unless $uid; #無ければ
-       $self->app->log->info("DEBUG: guid: $uid");
+       $self->app->log->debug("DEBUG: guid: $uid");
 
     # email,usernameが取得できない場合 ->リダイレクト
     if ( ! defined $email and ! defined $username ) {
-        $self->app->log->info('Notice: email or username not get Error!');
+        $self->app->log->debug('Notice: email or username not get Error!');
         $self->redirect_to('/');
         return;
        }
@@ -305,7 +305,7 @@ sub usercheck {
 
     my $jsonobj = { email => $email, username => $username, uid => $uid, icon => $icon, icon_url => $icon_url };
     my $jsontext = to_json($jsonobj);
-    $self->app->log->info("DEBUG: set redis: $jsontext ");
+    $self->app->log->debug("DEBUG: set redis: $jsontext ");
 
        $self->redis->set($userredisid => $jsontext);
        $self->redis->expire( $userredisid => $expireterm);
@@ -363,7 +363,7 @@ sub signinact {
         my $oldsid = $reshash->{sessionid};
 
            $self->app->redis->del("SID$oldsid");
-           $self->app->log->info("DELETE redis cache SID$oldsid   maybe error but ok.");
+           $self->app->log->debug("DELETE redis cache SID$oldsid   maybe error but ok.");
            undef $oldsid;
     }
 
@@ -532,9 +532,9 @@ sub oauth2callback {
 
                 return $self->redirect_to("/") unless $data;
 
-                $self->app->log->info("DEBUG: get_token err: $err ");
+                $self->app->log->debug("DEBUG: get_token err: $err ");
                 my $datajson = to_json($data);
-                $self->app->log->info("DEBUG: data: $datajson");
+                $self->app->log->debug("DEBUG: data: $datajson");
 
             my $ua = Mojo::UserAgent->new;
             my $value = $ua->get(

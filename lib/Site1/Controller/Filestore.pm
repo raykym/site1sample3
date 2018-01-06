@@ -192,7 +192,7 @@ sub imgload {
     my $sth_getimag = $self->app->dbconn->dbh->prepare($config->{sql_getimag});
     my $oid_url = $self->param('oid');
     my $oid = urlsafe_b64decode($oid_url);
-       $self->app->log->info("DEBUG: OID: $oid :: oid_url: $oid_url");
+       $self->app->log->debug("DEBUG: OID: $oid :: oid_url: $oid_url");
 
        $sth_getimag->execute($oid,$uid);
     my $res = $sth_getimag->fetchrow_hashref();
@@ -222,9 +222,9 @@ sub imgcomm {
     my $sth_getimagcomm = $self->app->dbconn->dbh->prepare($config->{sql_getimagcomm});
     my $oid_url = $self->param('oid');
     my $oid = urlsafe_b64decode($oid_url);
-       $self->app->log->info("DEBUG: $oid");
+       $self->app->log->debug("DEBUG: $oid");
     my $resize = $self->param('resize');
-       $self->app->log->info("DEBUG: $resize");
+       $self->app->log->debug("DEBUG: $resize");
 
        $sth_getimagcomm->execute($oid);
     my $res = $sth_getimagcomm->fetchrow_hashref();
@@ -387,7 +387,7 @@ sub putfileimg {
 
  #  my $redis ||= Mojo::Redis2->new;
     my $redis = $self->app->redis;
-      $self->app->log->info("DEBUG: putfileimg start...");
+      $self->app->log->debug("DEBUG: putfileimg start...");
 
    # postで受けるのでencodeは無し
    my $roomname = $self->param('room');
@@ -395,7 +395,7 @@ sub putfileimg {
        return $self->render( template => 'top/unknown');
       }
 
-      $self->app->log->info("DEBUG: roomname: $roomname");
+      $self->app->log->debug("DEBUG: roomname: $roomname");
 
 
    my $imgDB = $self->app->mongoclient->get_database($roomname);
@@ -451,7 +451,7 @@ sub putfileimg {
      $reloadimg = to_json($reloadimg);
 
    $redis->publish($roomname,$reloadimg);
-   $self->app->log->info("DEBUG: publish: reloadimg message...");
+   $self->app->log->debug("DEBUG: publish: reloadimg message...");
 
    undef $fileobj;
    undef $filename;
@@ -467,19 +467,19 @@ sub putfileimg {
 sub getfileimg {
    my $self = shift;
 
-   $self->app->log->info("DEBUG: getfileimg start...");
+   $self->app->log->debug("DEBUG: getfileimg start...");
 
    my $room = $self->param('room');
       $room = urlsafe_b64decode($room);
       $room = decode_utf8($room);
    if (! defined $room) {
-       $self->app->log->info("DEBUG: unknown page getfileimg");
+       $self->app->log->debug("DEBUG: unknown page getfileimg");
        return $self->render( template => 'top/unknown');
       }
 #   my $oid = $self->param('oid');
 #      $oid = urlsafe_b64decode($oid);
 
-      $self->app->log->info("DEBUG:  roomname: $room");
+      $self->app->log->debug("DEBUG:  roomname: $room");
 
    my $imgDB = $self->app->mongoclient->get_database($room);
    my $bucket = $imgDB->gfs;
@@ -490,8 +490,8 @@ sub getfileimg {
    my $mimetype = $res_all[$#res_all]->{metadata}->{'content-type'};
    my $filename = $res_all[$#res_all]->{filename};
 
-      $self->app->log->info("DEBUG: oid: $oid content-type: $mimetype");
-      $self->app->log->info("DEBUG: filename: $filename");
+      $self->app->log->debug("DEBUG: oid: $oid content-type: $mimetype");
+      $self->app->log->debug("DEBUG: filename: $filename");
 
    if ($mimetype =~ /pdf/) {
       # pdfだけはファイルに落としてから配信させる。
@@ -537,14 +537,14 @@ sub reloadimg {
     # getfileimgを受け取る画面を出す為のページ、タグの判別を行う
     my $self = shift;
 
-    $self->app->log->info("DEBUG: reloadimg start...");
+    $self->app->log->debug("DEBUG: reloadimg start...");
 
     my $roomname = $self->param('room');
        $roomname = urlsafe_b64decode($roomname);
        $roomname = decode_utf8($roomname);
 
     if (! defined $roomname) {
-        $self->app->log->info("DEBUG: unknown page reloadimg");
+        $self->app->log->debug("DEBUG: unknown page reloadimg");
         return $self->render( template => 'top/unknown');
        }
 

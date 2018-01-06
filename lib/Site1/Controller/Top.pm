@@ -35,7 +35,7 @@ sub mainmenu {
                     my $oldsid = $reshash->{sessionid};
 
                     $self->app->redis->del("SID$oldsid");
-                    $self->app->log->info("DELETE redis cache SID$oldsid   maybe error but ok.");
+                    $self->app->log->debug("DELETE redis cache SID$oldsid   maybe error but ok.");
                     undef $oldsid;
                  }
 
@@ -100,7 +100,7 @@ sub notifications {
     # sw.js
 
     my $endpoint = $self->param('endpoint');
-       $self->app->log->info("DEBUG: noti endpoint: $endpoint");
+       $self->app->log->debug("DEBUG: noti endpoint: $endpoint");
 
     my $icon = $self->stash('icon');
     my $icon_url = $self->stash('icon_url');
@@ -133,7 +133,7 @@ sub receive {
 
     my $hash = $self->req->json;
     my $debug = to_json($hash);
-       $self->app->log->info("DEBUG: rec hash: $debug");
+       $self->app->log->debug("DEBUG: rec hash: $debug");
 
     my $email = $self->stash('email');
     my $pushdb = $self->app->mongoclient->get_database('WEBPUSH');
@@ -162,7 +162,7 @@ sub delwebpush {
 
        $endpoints->delete_one({'email' => $email});
 
-       $self->app->log->info("DEBUG: delete webpush $email ");
+       $self->app->log->debug("DEBUG: delete webpush $email ");
 
        $self->res->headers->header("Access-Control-Allow-Origin" => 'https://westwind.backbone.site/' );
        $self->render( status => '200' );
@@ -178,13 +178,13 @@ sub sendwebpush {
 
     my $hash = $self->req->json;
     my $debug = to_json($hash);
-       $self->app->log->info("DEBUG: sendwebpush hash: $debug");
+       $self->app->log->debug("DEBUG: sendwebpush hash: $debug");
     my $pushdb = $self->app->mongoclient->get_database('WEBPUSH');
     my $endpoints = $pushdb->get_collection('endpoints');
     my $result;
 
     my $toEndpoint = $endpoints->find_one({email => $hash->{to} });
- #      $self->app->log->info("DEBUG: toEndpoint: $toEndpoint->{endpoint}");
+ #      $self->app->log->debug("DEBUG: toEndpoint: $toEndpoint->{endpoint}");
 
        if (! defined $toEndpoint) {
             $result = "Error Not send message!";
@@ -203,7 +203,7 @@ sub sendwebpush {
 
     my @ep = split(/\//,$toEndpoint->{endpoint});
     my $toep = $ep[$#ep];
-#       $self->app->log->info("DEBUG: ep: $toep ");
+#       $self->app->log->debug("DEBUG: ep: $toep ");
 
     my $ua = Mojo::UserAgent->new;
 
@@ -211,7 +211,7 @@ sub sendwebpush {
 
     my $res = $tx->result->body;
     my $resobj = from_json($res);
-#       $self->app->log->info("DEBUG: FMC res: $res");
+#       $self->app->log->debug("DEBUG: FMC res: $res");
 
        if ( $resobj->{success} eq 1 ) {
              $result = "Sending...";
