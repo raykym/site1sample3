@@ -106,8 +106,11 @@ sub echo {
     my $id = sprintf "%s", $self->tx->connection;
        $clients->{$id} = $self->tx;
 
+       $self->app->plugin('Config');
+    my $redisserver = $self->app->config->{redisserver};
+
     my $userid = $self->stash('uid');
-    my $redis ||= Mojo::Redis2->new;
+    my $redis ||= Mojo::Redis2->new(url => "redis://$redisserver:6379");
 
     # mongodb設定
     my $wwdb ||= $self->app->mongoclient->get_database('WalkWorld');
@@ -748,8 +751,11 @@ sub echo3 {
     my $id = sprintf "%s", $self->tx->connection;
        $clients->{$id} = $self->tx;
 
+       $self->app->plugin('Config');
+    my $redisserver = $self->app->config->{redisserver};
+
     my $userid = $self->stash('uid');
-    my $redis ||= Mojo::Redis2->new;
+    my $redis ||= Mojo::Redis2->new(url => "redis://$redisserver:6379");
 
     my $wwdb = $self->app->mongoclient->get_database('WalkWorld');
     my $timelinecoll = $wwdb->get_collection('MemberTimeLine');

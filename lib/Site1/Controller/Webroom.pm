@@ -253,8 +253,11 @@ sub webpubsub {
     my $icon_url = $self->stash('icon_url');
        $icon_url = "/imgcomm?oid=$icon" if (! defined $icon_url);
 
+       $self->app->plugin('Config');
+    my $redisserver = $self->app->config->{redisserver};
+
     #redisをチャットでは別で設定する。 Site1.pmで共有設定をするとセッション数が上がりすぎてダメになる
-    my $redis ||= Mojo::Redis2->new;
+    my $redis ||= Mojo::Redis2->new( url => "redis://$redisserver:6379");
 
     #websocket 確認
        my $wsid = $self->tx->connection;

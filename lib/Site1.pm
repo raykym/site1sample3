@@ -44,22 +44,26 @@ sub startup {
   #                            },
   #                   };
 
+  $self->plugin('Config');
+  my $mongoserver = $self->app->config->{mongoserver};
+  my $redisserver = $self->app->config->{redisserver};
+
    # $self->app->mongoclientでアクセス
    $self->app->helper(mongoclient =>
       ###  sub { state $mongoclient = MongoDB->connect('mongodb://104.155.205.100:27017');
-        sub { state $mongoclient = MongoDB->connect('mongodb://10.140.0.6:27017');
+        sub { state $mongoclient = MongoDB->connect("mongodb://$mongoserver:27017");
       #  sub { state $mongoclient = MongoDB->connect('mongodb://mongodb.backbone.site:27017',$mongooption);
             });
 
    # $self->app->mango mongodb3.0 need...
    $self->app->helper(mango =>
-        sub { state $mango = Mango->new('mongodb://192.168.0.5:27017');
+        sub { state $mango = Mango->new("mongodb://$mongoserver:27017");
             });
 
    # $self->app->redis
    $self->app->helper( redis =>
-        ###sub { shift->stash->{redis} ||= Mojo::Redis2->new(url => 'redis://10.140.0.6:6379');
-        sub { state $redis = Mojo::Redis2->new;
+        ###sub { shift->stash->{redis} ||= Mojo::Redis2->new(url => "redis://$redisserver:6379");
+        sub { state $redis = Mojo::Redis2->new(url => "redis://$redisserver:6379");
          });
 
 #OAuth2
