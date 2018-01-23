@@ -271,7 +271,7 @@ function startvoice() {
   }
 
   function isConnectPossible() {
-    var MAX_CONNECTION_COUNT = 10;
+    var MAX_CONNECTION_COUNT = 5;
     if (getConnectionCount() < MAX_CONNECTION_COUNT)
       return true;
     else
@@ -772,6 +772,7 @@ function autoentry(){
         </div>
         <div>
            <ul>
+             <li>5人まで同時に接続出来ます。</li>
              <li>音声は暗号化の影響でタイムラグが有ります。</li>
              <li>インジケーターは接続を確認できますが、切断されても認識出来ないので、あくまで目安程度です。</li>
              <li>端末の状態で接続出来ないケースがあります。Google play等でupdateが走ると処理が重くてつながらないケースがあります。</li1>

@@ -236,6 +236,7 @@ my @recvlist;
 
 
 my $stream_io = {};
+my $redis_pubsub = {};
 
 sub webpubsub {
     my $self = shift;
@@ -265,7 +266,8 @@ sub webpubsub {
        $clients->{$wsid} = $self->tx;
 
     my $recvlist = '';
-    my @recvArray = ( $wsid );
+    #   my @recvArray = ( $wsid );
+       $redis_pubsub->{$wsid} = [ $wsid ];  # @recvArrayの置き換え
 
     # WebSocket接続維持設定
           $stream_io->{$wsid} = Mojo::IOLoop->stream($self->tx->connection);
@@ -287,7 +289,8 @@ sub webpubsub {
 
                   if ( $jsonobj->{dummy} ) {
                        # dummy pass
-                      $redis->expire( \@recvArray => 300 );
+		       #  $redis->expire( \@recvArray => 300 );
+		      $redis->expire( $redis_pubsub->{$wsid} => 300 );
                       $redis->expire( "ENTRY$recvlist$wsid" => 300 );
                        return;
                       }
@@ -296,13 +299,17 @@ sub webpubsub {
                   if ( $jsonobj->{entry} ) {
 
                       $recvlist = $jsonobj->{entry};
-                      push (@recvArray, $recvlist);
-                      $redis->subscribe(\@recvArray, sub {
+		      #  push (@recvArray, $recvlist);
+                      push (@{$redis_pubsub->{$wsid}}, $recvlist);
+		      #$redis->subscribe(\@recvArray, sub {
+		      $redis->subscribe( $redis_pubsub->{$wsid}, sub {
                                  my ($redis, $err) = @_;
-                                     return $redis->incr(@recvArray);
+				     #return $redis->incr(@recvArray);
+                                     return $redis->incr(@$redis_pubsub->{$wsid});
                             });
 
-                      $redis->expire( \@recvArray => 300 );
+		    #$redis->expire( \@recvArray => 300 );
+                      $redis->expire( $redis_pubsub->{$wsid} => 300 );
 
                       my $entry = { connid => $wsid, username => $username, icon_url => $icon_url };
 
@@ -376,12 +383,14 @@ sub webpubsub {
                my ($self, $msg) = @_;
 
                    # redisのエントリーを削除
-                   $redis->unsubscribe(\@recvArray);
+		   #$redis->unsubscribe(\@recvArray);
+                   $redis->unsubscribe($redis_pubsub->{$wsid});
                    $redis->del("ENTRY$recvlist$wsid");
                    $redis->del("$wsid");
 
                    delete $stream_io->{$wsid};
                    delete $clients->{$wsid};
+		   delete $redis_pubsub->{$wsid};
 
          return;
         });  # onfinish...
@@ -398,11 +407,14 @@ sub webpubsub {
           });  # redis on message
 
         # redis受信用
-        $redis->subscribe(\@recvArray, sub {
+	#$redis->subscribe(\@recvArray, sub {
+        $redis->subscribe( $redis_pubsub->{$wsid}, sub {
                  my ($redis, $err) = @_;
-                       return $redis->incr(@recvArray);
+		       #return $redis->incr(@recvArray);
+                       return $redis->incr(@$redis_pubsub->{$wsid});
                  });
-        $redis->expire( \@recvArray => 300 );
+	 #$redis->expire( \@recvArray => 300 );
+        $redis->expire( $redis_pubsub->{$wsid} => 300 );
 
         #個別送信用
   #      $redis->subscribe($wsid, sub {

@@ -249,7 +249,7 @@ function startvoice() {
   }
 
   function isConnectPossible() {
-    var MAX_CONNECTION_COUNT = 25;
+    var MAX_CONNECTION_COUNT = 5;
     if (getConnectionCount() < MAX_CONNECTION_COUNT)
       return true;
     else
@@ -837,6 +837,7 @@ function reloadimgkey(){
         </div>
         <div>
            <ul>
+             <li>5人まで同時に接続出来ます。</li>
              <li>音声はタイムラグが有ります。</li>
              <li>インジケーターは接続を確認できますが、切断されても認識出来ないので、あくまで目安程度です。</li>
              <li>イコライザーアプリを追加して、音声用に低音、高音を落とした方が聞き取りやすいかもしれません</li>
