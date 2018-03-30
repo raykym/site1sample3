@@ -267,7 +267,7 @@ sub webpubsub {
 
     my $recvlist = '';
     #   my @recvArray = ( $wsid );
-       $redis_pubsub->{$wsid} = [ $wsid ];  # @recvArrayの置き換え
+       $redis_pubsub->{$wsid} ||= [ $wsid ];  # @recvArrayの置き換え
 
     # WebSocket接続維持設定
           $stream_io->{$wsid} = Mojo::IOLoop->stream($self->tx->connection);

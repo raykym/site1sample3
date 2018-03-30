@@ -271,7 +271,7 @@ function startvoice() {
   }
 
   function isConnectPossible() {
-    var MAX_CONNECTION_COUNT = 5;
+    var MAX_CONNECTION_COUNT = 10;
     if (getConnectionCount() < MAX_CONNECTION_COUNT)
       return true;
     else

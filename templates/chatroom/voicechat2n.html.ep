@@ -249,7 +249,7 @@ function startvoice() {
   }
 
   function isConnectPossible() {
-    var MAX_CONNECTION_COUNT = 5;
+    var MAX_CONNECTION_COUNT = 10;
     if (getConnectionCount() < MAX_CONNECTION_COUNT)
       return true;
     else
@@ -791,7 +791,7 @@ function reloadimgkey(){
          <!--  left panel -->
          <div data-role="panel" id="panel" data-display="overlay" style="background-color: #aac78d;">
             <div id="errormess"></div>
-            <p><input type="text" id="pushemail" placeholder="email" data-clear-btn="true"></p>
+            <p><input type="text" id="pushemail" autocomplete="email" placeholder="email" data-clear-btn="true"></p>
             <button type="button" onclick="pushcall();">呼び出しpush通知</button>
             <div id="qrcode"></div>
             <div> room名を打ち込むとQRcodeが表示され、スキャンすればチャットルームに入れます。</div>

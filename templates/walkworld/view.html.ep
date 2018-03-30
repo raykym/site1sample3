@@ -396,9 +396,9 @@ function respointget(data){
  //   console.log("DEBUG: countpoint: " + samp );
     $('#user_points').text(data.count);
 
-      var samp = JSON.stringify(data.gscore);
+ //     var samp = JSON.stringify(data.gscore);
       var gscore = data.gscore;
-      console.log("DEBUG: gscore: " + samp);
+ //     console.log("DEBUG: gscore: " + samp);
       $("#output_gscore").empty();
       for ( var i=0; i<gscore.length; i++ ){
             $('#output_gscore').append("<p><li>" + gscore[i].count + "<img src='" + gscore[i].icon_url + "' width='50' height='50'>" + gscore[i].username + "</li></p>");
@@ -421,8 +421,8 @@ function getPosition(aCallback){
 
     var geoOptions = {
         enableHighAccuracy: true,   //高精度要求
-        timeout: 6000,          //タイムアウト(ミリ秒)
-        maximumAge: 0       //キャッシュ有効期限(ミリ秒)
+        timeout: 9000,          //タイムアウト(ミリ秒)
+        maximumAge: 10000       //キャッシュ有効期限(ミリ秒)
     }
     var watchID =  navigator.geolocation.watchPosition(successCallback, errorCallback,geoOptions);
 

@@ -67,7 +67,7 @@ sub mainmenu2 {
 sub unknown {
     my $self = shift;
     # 未定義ページヘのアクセス
-    $self->render();
+    $self->render(text => 'unknown page!!!', status => '404');
 }
 
 sub valhara {
