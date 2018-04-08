@@ -829,12 +829,52 @@ sub voicechat2n {
     my $self = shift;
     # webroom.pmへの対応用ページ
 
+    # webpushで利用するリストを取得する
+    my $db = $self->app->mongoclient->get_database('WEBPUSH');
+    my $coll = $db->get_collection('elist');
+    my $uid = $self->stash('uid');
+
+    my $res = $coll->find_one({ userid => $uid });
+    my $list = $res->{elist};
+    my @acclist;
+
+    for my $i (@$list){   # emailのリスト
+        my $accobj = from_json($self->app->redis->get("CACHE$i"));
+        if ( ! defined $accobj ) {
+            next;
+	}
+        my $aline = [ $i , $accobj->{username} ];   # [ e-mail , username ]
+        push(@acclist,$aline);
+    }
+
+    $self->stash('acclist' => \@acclist ); 
+
     $self->render(msg_w => '');
 }
 
 sub videochat2n {
     my $self = shift;
     # webroom.pmへの対応用ページ
+
+    # webpushで利用するリストを取得する
+    my $db = $self->app->mongoclient->get_database('WEBPUSH');
+    my $coll = $db->get_collection('elist');
+    my $uid = $self->stash('uid');
+
+    my $res = $coll->find_one({ userid => $uid });
+    my $list = $res->{elist};
+    my @acclist;
+
+    for my $i (@$list){   # emailのリスト
+        my $accobj = from_json($self->app->redis->get("CACHE$i"));
+        if ( ! defined $accobj ) {
+            next;
+        }
+        my $aline = [ $i , $accobj->{username} ];   # [ e-mail , username ]
+        push(@acclist,$aline);
+    }
+
+    $self->stash('acclist' => \@acclist );
 
     $self->render(msg_w => '');
 }

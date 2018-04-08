@@ -1,0 +1,34 @@
+% layout 'mobidef2';
+% title 'webpush select';
+<script>
+    function submitChk() {
+        /* 確認ダイアログ表示 */
+        var flag = confirm ( "送信してもよろしいですか？\n\n送信したくない場合は[キャンセル]ボタンを押して下さい");
+        /* send_flg が TRUEなら送信、FALSEなら送信しない */
+        return flag;
+    }
+</script>
+
+<div data-role="page" style="background: #80aa55">
+    <div><h3>Webpush List</h3></div>
+    <ul>
+        <li>webpsuhの許可を取り消す相手を選んでください</li>
+    </ul>
+    <div style="color: #ff0000"><%= $msg %></div>
+          <form method="post" action="/menu/webpushdrop" data-ajax="false" onSubmit=" return submitChk() ">
+          <button type="submit" > Delete it! </button>
+ %            foreach my $i (@$webpushlist){ 
+      %# $i=[uid, icon_url, username] 
+            <label>
+            <input type="checkbox" name="uids" value="<%= $i->[0] %>">
+            <img src="<%= $i->[1] %> " width="100" height="100">
+            <%= $i->[2] %>
+            </label>
+ %          }
+          </form>
+    <div data-role="footer" style="backgroud: #aac78d;">
+    <a href="" data-rel="back" class="btn-inline">back</a>
+    <a href="/menu" class="btn-inline">メニュー</a>
+    </div>
+</div>
+

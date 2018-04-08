@@ -744,8 +744,13 @@ function autoentry(){
     </div>
          <div data-role="panel" id="panel" data-display="overlay" style="background-color: #aac78d;">
             <div id="errormess"></div>
-            <p><input type="text" id="pushemail" placeholder="email"></p>
+            <p><input type="text" id="pushemail" list="elist" placeholder="email"></p>
             <button type="button" onclick="pushcall();">呼び出しpush通知</button>
+            <datalist id="elist">
+          %  for my $i (@$acclist){
+             <option value="<%= $i->[0] %>" ><%= $i->[1] %></option>
+          %  }
+            </datalist>
          </div>
     <div style="color: #ff0000"><%= $msg_w %></div>
             <p>

@@ -176,12 +176,25 @@ sub sendwebpush {
     # 送信者からの情報を元にnotificationsで選択出来るように情報を書き込む。
     # 宛先のエンドポイントが登録されていない場合はメッセージを戻す
 
+    my $result;
+
+    my $SID = $self->cookie('site1');
+    my $WCNT = $self->app->redis->get("WCNT$SID");
+
+       if ($WCNT >= 5) {  # expireするまで送信させない
+            $result = "Send limit wait 5 minuit!";
+
+            my $messobj = { "mess" => $result };
+            $self->render( json => $messobj);
+
+            return;
+       }
+
     my $hash = $self->req->json;
     my $debug = to_json($hash);
        $self->app->log->debug("DEBUG: sendwebpush hash: $debug");
     my $pushdb = $self->app->mongoclient->get_database('WEBPUSH');
     my $endpoints = $pushdb->get_collection('endpoints');
-    my $result;
 
     my $toEndpoint = $endpoints->find_one({email => $hash->{to} });
  #      $self->app->log->debug("DEBUG: toEndpoint: $toEndpoint->{endpoint}");
@@ -223,6 +236,10 @@ sub sendwebpush {
 
     $self->res->headers->header("Access-Control-Allow-Origin" => 'https://westwind.backbone.site/' );
     $self->render( json => $messobj);
+
+    $WCNT++;
+    $self->app->redis->set( "WCNT$SID" => $WCNT );
+    $self->app->redis->expire( "WCNT$SID" => 300 );
 }
 
 sub googleauth {

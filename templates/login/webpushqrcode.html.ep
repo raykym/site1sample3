@@ -1,0 +1,50 @@
+% layout 'mobidef2';
+% title 'Webpush QRcode';
+<script>
+
+$(function () {
+    qrcodeset();
+});
+
+function qrcodeset(){
+
+   var qrurl = "https://<%= $url_host %>/menu/webpushallow?e=<%= $email %>";
+   var encurl = encodeURI(qrurl);
+   console.log("DEBUG: qrcode: " + encurl );
+   var param = "data=" + encurl;
+%#   var data = JSON.stringify(param);
+
+   return $.ajax({
+                type: "POST",
+                url: "https://<%= $url_host %>/qrcode",
+                dataType: "html",
+                cache: false,
+                data: param,
+                timeout: 3000,
+                async: true,
+                success: qrrespons
+           });
+
+  function qrrespons(html){
+       %#  console.log("HTML: " + html);
+         $('#qrcode').html(html);
+    }
+
+} // qrcodeset
+
+
+</script>
+<div data-role="page" style="background: #80aa55;">
+    <h3>Webpush　QRcode</h3>
+    <ul>
+        <li>Webpushを相手に許可します。</li>
+        <li style="color: #ff0000">e-mailアドレスを相手に開示しています。</li>
+        <li>QRcodeリーダーアプリで読み取って、Chromeでアクセスしてください。</li>
+    </ul>
+    <div id=qrcode align="center"></div>
+   <div data-role="footer" style="background: #aac78d;">
+       <a href="" data-rel="back">back</a>
+       <a href='/menu/webpushlist' data-rel='external'>webpush list</a>
+       <a href='/menu/webpushdropselect' data-rel='external'>webpush drop</a>
+   </div>
+</div>

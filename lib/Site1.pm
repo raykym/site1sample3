@@ -136,6 +136,12 @@ sub startup {
   $listbridge->any('/menu/settings/seticon')->to('filestore#seticon');
   $bridge->any('/menu/settings/seticonact')->to('filestore#seticonact');
 
+  $bridge->get('/menu/webpushallow')->to( controller => 'Login' , action => 'webpushallow');
+  $bridge->get('/menu/webpushqrcode')->to( 'login#webpushqrcode');
+  $bridge->get('/menu/webpushlist')->to( controller => 'Login' , action => 'webpushlist');
+  $bridge->post('/menu/webpushdrop')->to( controller => 'Login' , action => 'webpushdrop');
+  $bridge->get('/menu/webpushdropselect')->to( controller => 'Login' , action => 'webpushdropselect');
+
 #  $r->get('/menu/upload')->to('filestore#upload');
   $bridge->route('/menu/upload')->to('filestore#upload');
   $bridge->post('/menu/uploadact')->to('filestore#uploadact');
@@ -194,6 +200,7 @@ sub startup {
   $r->get('/walkworld/overviewWW')->to('walkworld#overviewWW');
 
   $r->get('/walkworld/wscount')->to('walkworld#wscount');
+
 
   $bridge->get('/testpubsub')->to('webroom#testpubsub');  # test
 

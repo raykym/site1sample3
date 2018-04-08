@@ -791,10 +791,16 @@ function reloadimgkey(){
          <!--  left panel -->
          <div data-role="panel" id="panel" data-display="overlay" style="background-color: #aac78d;">
             <div id="errormess"></div>
-            <p><input type="text" id="pushemail" autocomplete="email" placeholder="email" data-clear-btn="true"></p>
+                <p><input type="text" id="pushemail" data-type="search" list="elist" placeholder="email" data-clear-btn="true"></p>
+            <datalist id="elist">
+          %  for my $i (@$acclist){
+             <option value="<%= $i->[0] %>" ><%= $i->[1] %></option>
+          %  }
+            </datalist>
+            <p>5箇所まで送信出来ます。</p>
             <button type="button" onclick="pushcall();">呼び出しpush通知</button>
             <div id="qrcode"></div>
-            <div> room名を打ち込むとQRcodeが表示され、スキャンすればチャットルームに入れます。</div>
+            <div> room名を打ち込むとQRcodeが表示され、スキャンすればチャットルームに入れます。(事前に登録済の場合)</div>
          </div>
          <!-- right panel -->
          <div data-role="panel" id="panel_r" data-display="overlay" data-position="right" style="background-color: #aac78d;">

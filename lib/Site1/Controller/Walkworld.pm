@@ -179,7 +179,7 @@ sub echo {
            $delay_once->{$id} = 'false';
            } # delay block
 
-        )->wait if ($delay_once->{$id});
+      )->wait if ($delay_once->{$id});
 
       } # NPC bipass block
 

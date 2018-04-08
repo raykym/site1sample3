@@ -165,6 +165,7 @@ function sendSubscriptionToServerForDelete(subscrption) {
 %#        <p>room名を知っているメンバーだけで接続出来ます</p>
         <a href="/voicechat2n" class="ui-btn" data-transition="flip" rel="external">VoiceChat</a>
         <a href="/videochat2n" class="ui-btn" data-transition="flip" rel="external">VideoChat</a>
+        <a href="/menu/webpushqrcode" class="ui-btn" data-transition="flip" rel="external">Webpush QRcode</a>
         <div></div>
 %#        <a href="/menu/mirror" class="ui-btn" data-transition="flip" rel="external">ミラー(Video TEST)</a>
         <a href="/menu/upload" class="ui-btn" data-transition="flip" rel="external">ファイルアップロード</a>

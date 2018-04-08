@@ -310,6 +310,10 @@ sub usercheck {
        $self->redis->set($userredisid => $jsontext);
        $self->redis->expire( $userredisid => $expireterm);
 
+    my $emailredisid = "CACHE$email";
+       $self->redis->set($emailredisid => $jsontext);    # email引きのアカウントキャッシュ
+       $self->redis->expire( $emailredisid => $expireterm);
+
 
   # 変数の解放
   undef $config;
@@ -588,5 +592,146 @@ sub oauth2callback {
            $self->redirect_to("/menu");
          });
 }
+
+sub webpushallow {
+    my $self = shift;
+       # 引数eでメアドを受け取る
+
+    my $uid = $self->stash('uid');
+    my $email = $self->stash('email');
+
+    my $getemail = $self->param('e');
+       $getemail = encode_utf8($getemail);
+
+    my $db = $self->app->mongoclient->get_database('WEBPUSH');
+    my $coll = $db->get_collection('elist');
+        
+    my $res = $coll->find_one_and_delete( { userid => $uid } );
+    my $list = [];
+
+       if (( $res ne 'null' ) || ( defined $res )) {
+            $list = $res->{elist};
+       } 
+
+       # 重複していたら、スルーする。
+       for my $i (@$list){
+            if ( $i eq $getemail ) {
+                my $followdata = { userid => $uid, elist => $list, email => $email };
+                   $coll->insert_one($followdata); 
+                $self->redirect_to("/menu"); 
+	        return;
+	    } 
+       }
+
+       push(@$list,$getemail);
+
+     my $followdata = { userid => $uid, elist => $list, email => $email };   # emailは削除時に穴ウントキーとして利用する
+
+       $coll->insert_one($followdata); 
+
+       undef $getemail;
+
+       #  $self->render( text => "update it!", status => 200 );
+       $self->redirect_to("/menu");
+
+}
+
+sub webpushqrcode {
+    my $self = shift;
+
+    $self->render();
+}
+
+sub webpushlist {
+    my $self = shift;
+
+    my $uid = $self->stash('uid');
+    my $db = $self->app->mongoclient->get_database('WEBPUSH');
+    my $coll = $db->get_collection('elist');
+    my $reslist = $coll->find_one({userid => $uid});
+    my $elist = $reslist->{elist};
+    my @followlist;
+
+    for my $i (@$elist){  # emailのリスト
+        my $res = from_json($self->app->redis->get("CACHE$i")); 
+        if (( $res eq 'null' ) || ( ! defined $res )){
+            next;   # cacheに無かったらパス
+        } # if
+
+        my $acc = [ $res->{username}, $res->{icon}, $res->{icon_url} ];
+
+        push(@followlist, $acc);
+
+    }  # for
+
+    $self->stash('followlist' => \@followlist);
+
+    $self->render(msg => '');
+
+    undef @followlist;
+    undef $db;
+    undef $coll;
+    undef $reslist;
+    undef $elist;
+}	
+
+sub webpushdrop {
+    my $self = shift;
+
+    my $params = $self->every_param('uids');   # checkboxで配列が返る想定
+    my @uids = @$params;
+ #      @uids = map { $_ = urlsafe_b64decode($_); $_ } @uids; 
+    my $email = $self->stash('email');
+    my $db = $self->app->mongoclient->get_database('WEBPUSH');
+    my $coll = $db->get_collection('elist');
+
+    my $text = to_json(@uids);
+    $self->app->log->info("DEBUG: $text");
+
+    for my $i (@uids){
+	   $self->app->log->info("DEBUG: i: $i ");
+        my $reselist = $coll->find_one_and_delete({'userid'=>$i});
+
+        my $text = to_json($reselist);
+	$self->app->log->info("DEBUG: $text");
+
+	my $tmp = $reselist->{elist};
+	my @elist = @$tmp;
+	for ( my $j=0; $j<=$#elist; $j++){
+            if ( $elist[$j] =~ /^$email$/ ) {
+                delete($elist[$j]);
+            }
+        }
+        delete($reselist->{_id});
+	$reselist->{elist} = \@elist;
+	$coll->insert_one($reselist);
+        undef $reselist;
+    }
+
+    $self->redirect_to('/menu/webpushdropselect');
+}	
+
+sub webpushdropselect {
+    my $self = shift;
+
+    my $email = $self->stash('email');
+
+    my $db = $self->app->mongoclient->get_database('WEBPUSH');
+    my $coll = $db->get_collection('elist');
+    my $resobj = $coll->find({ elist => { '$all' => [ $email ] } }); # elistフィールドに$emailを含む全てのドキュメント
+    my @reslist = $resobj->all;
+    my @webpushallowlist;
+
+    for my $i (@reslist){    # WEBPUSH elistのエントリー内容
+        my $acc = from_json($self->app->redis->get("CACHE$i->{email}")); 
+        my $aline = [ $acc->{uid}, $acc->{icon_url}, $acc->{username} ];
+	push(@webpushallowlist, $aline);
+    }	    
+
+    $self->stash('webpushlist' => \@webpushallowlist );
+
+    $self->render(msg => "");
+}
+
 
 1;
