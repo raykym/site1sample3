@@ -812,7 +812,7 @@ function reloadimgkey(){
                 <button type="botton" onclick="imgupload();">upload</button>
             </form>
                <div>
-               <iframe src="/img/Now.jpeg" id="imgchat" name="ajaxPostImage" width="100%" hight="80%"></iframe>
+               <iframe src="" id="imgchat" name="ajaxPostImage" width="100%" hight="80%"></iframe>
                </div>
                <ul>
                    <li>room内で1個のファイルを共有表示します。後書きが優先で残るので同時アップロードしないようにして下さい。</li>

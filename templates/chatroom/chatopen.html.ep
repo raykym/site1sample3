@@ -6,6 +6,8 @@
 $(document).on('pageshow',function () {
   $('#msg').focus();
 
+  var tz = jstz.determine();   
+
   var ws = null;
 
 function wsopen() {
@@ -49,7 +51,7 @@ function wsopen() {
   $('#msg').keydown(function (e) {
     if (e.keyCode == 13 && $('#msg').val()) {
 
-        var mess = {"text":$('#msg').val()};
+        var mess = {"text":$('#msg').val(), "timezone" : tz.name()};
         var messjson = JSON.stringify(mess);    
         ws.send(messjson);
         $('#msg').val('');
@@ -61,7 +63,7 @@ function wsopen() {
 recognition.addEventListener('result', function(event){
     var text = event.results.item(0).item(0).transcript;
     $("#msg").val(text);
-        var mess = {"text":$('#msg').val()};
+        var mess = {"text":$('#msg').val(), "timezone" : tz.name()};
         var messjson = JSON.stringify(mess);
         ws.send(messjson);
         $('#msg').val('');

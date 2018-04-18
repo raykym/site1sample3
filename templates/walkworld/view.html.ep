@@ -48,6 +48,8 @@
            }
  email = "<%= $email %>";
 
+ var tz = jstz.determine();
+
 // main?
 $(function(){
    //SenceToggleID = window.setInterval(Senceronoff,SencerInterval);
@@ -421,8 +423,8 @@ function getPosition(aCallback){
 
     var geoOptions = {
         enableHighAccuracy: true,   //高精度要求
-        timeout: 9000,          //タイムアウト(ミリ秒)
-        maximumAge: 10000       //キャッシュ有効期限(ミリ秒)
+        timeout: 6000,          //タイムアウト(ミリ秒)
+        maximumAge: 0       //キャッシュ有効期限(ミリ秒)
     }
     var watchID =  navigator.geolocation.watchPosition(successCallback, errorCallback,geoOptions);
 
@@ -457,6 +459,7 @@ function getPosition(aCallback){
                        name : username,
                        userid : uid,
                        status : "dummy",
+                       category : "USER",
                        time : timerecord,
                        icon_url : iconurl,
                        category : "USER",
@@ -615,6 +618,7 @@ function wsCall(aCallback){
                                  loc : { lat : lat ,
                                          lng : lng
                                         },
+                                 timezone : tz.name() ,
                                };
 
                      chatmsg = JSON.stringify(chatmsg);
@@ -638,6 +642,7 @@ function wsCall(aCallback){
           %#                       loc : { lat : lat ,
           %#                               lng : lng
           %#                              },
+          %#                      timezone : tz.name() ,
           %#                    };
           %#
           %#           chatmsg = JSON.stringify(chatmsg);
@@ -730,7 +735,7 @@ function wsCall(aCallback){
                           });
         var unitcnt = plist_user.length + 1;
 
-        if ( plist_user.length < 5 ) {
+        if ( plist_user.length < 4 ) { 
             unitcnt = 5;
         } else if ( plist_user.length >= 5 ) {
             unitcnt = 10;

@@ -724,7 +724,7 @@ sub echopubsub {
     my $recvlist = "chatopenpubsub";
 
     # connect message write
-    #日付設定
+    #日付設定  初回はtimezoneの情報が届いていない
     my $dt = DateTime->now( time_zone => 'Asia/Tokyo');
 
        my $resmsg = { icon_url => $icon_url, 
@@ -767,7 +767,8 @@ sub echopubsub {
                       }
 
                   #日付設定 重複記述あり
-                  my $dt = DateTime->now( time_zone => 'Asia/Tokyo');
+                  my $dt = DateTime->now( time_zone => $chkmsg->{timezone});
+                     $dt = DateTime->now( time_zone => 'Asia/Tokyo') if ( ! defined $dt);
 
                   my $resmsg = { icon_url => $icon_url, 
                                        username => $username, 

@@ -154,14 +154,14 @@ sub echo {
           sub {
               my ($delay, @args) = @_;
 
-                  # mongo3.2用 チャットの文を3000ｍ以内に限る
+                  # mongo3.2用 チャットの文を1000ｍ以内に限る
                     my $walkchat_cursole = $walkchatcoll->query({ geometry => {
                                                         '$nearSphere' => {
                                                         '$geometry' => {
                                                          type => "point",
                                                              "coordinates" => [ $userobj->{loc}->{lng} , $userobj->{loc}->{lat} ]},
                                                         '$minDistance' => 0,
-                                                        '$maxDistance' => 3000
+                                                        '$maxDistance' => 1000
                                       }},
                                   })->sort({_id => -1});
           
@@ -229,7 +229,8 @@ sub echo {
                      $drpMSG = decode_utf8($drpMSG);
 
                   #日付設定 重複記述あり
-                  my $dt = DateTime->now( time_zone => 'Asia/Tokyo');
+                  my $dt = DateTime->now( time_zone => $chatevt->{timezone});
+                     $dt = DateTime->now( time_zone => 'Asia/Tokyo') if ( ! defined $dt);
                   # TTLレコードを追加する。
                   my $ttl = DateTime->now();
 
@@ -256,7 +257,8 @@ sub echo {
 
                   # DROPメッセージで無い場合の処理
                   #日付設定 重複記述あり
-                  my $dt = DateTime->now( time_zone => 'Asia/Tokyo');
+                  my $dt = DateTime->now( time_zone => $chatevt->{timezone});
+                     $dt = DateTime->now( time_zone => 'Asia/Tokyo') if ( ! defined $dt);
                   # TTLレコードを追加する。
                   my $ttl = DateTime->now();
 
@@ -416,7 +418,7 @@ sub echo {
      #                          }
 
            # 現状の情報を送信 
-           # mongo3.2用 3000m以内のデータを返す
+           # mongo3.2用 1000m以内のデータを返す
            my $geo_points_cursole;
            my @pointlist;
            if ( $timelineredis == 0 ){
@@ -426,7 +428,7 @@ sub echo {
                                                             type => "point",
                                                                 "coordinates" => [ $jsonobj->{loc}->{lng} , $jsonobj->{loc}->{lat} ]}, 
                                                            '$minDistance' => 0,
-                                                           '$maxDistance' => 3000 
+                                                           '$maxDistance' => 1000 
                                      }}});
 
             # DEBUG not work cursole clear becose non DATAs
@@ -468,7 +470,7 @@ sub echo {
                       my @t_p = NESW($makerpoint->{loc}->{lng}, $makerpoint->{loc}->{lat});
                       my $t_dist = great_circle_distance(@s_p,@t_p,6378140);
                        
-                      if ( $t_dist < 3000) {
+                      if ( $t_dist < 1000) {
                        push (@makerlist, $makerpoint );
                        }
                    }
@@ -631,7 +633,7 @@ sub NESW { deg2rad($_[0]), deg2rad( 90 - $_[1]) }
                       my @t_p = NESW($messobj->{loc}->{lng}, $messobj->{loc}->{lat});
                       my $t_dist = great_circle_distance(@s_p,@t_p,6378140);
 
-                      if ( $t_dist < 3000 ){
+                      if ( $t_dist < 1000 ){
                         if ( defined $clients->{$id} ){ 
                            $clients->{$id}->send($mess);
                            $self->app->log->debug("DEBUG: send websocket:($username) $mess");
@@ -723,11 +725,11 @@ sub supervise {
 
    my $uid = $self->stash('uid');
 
-   if ( $uid ne 'YlnGejjoHus7vXWPgwUHMw' ) {
+#   if ( $uid ne 'YlnGejjoHus7vXWPgwUHMw' ) {
      # test1@test.com以外はリダイレクトする
-     $self->redirect_to('/menu');
-     return;
-   }
+#     $self->redirect_to('/menu');
+#     return;
+#   }
 
    $self->render(msg_w => '');
 }

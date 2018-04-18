@@ -15,9 +15,12 @@
  makerobj = new google.maps.Marker();
  makerobjects = [];
 
+ timerarray = [];
+
  gpssetID = null;
  gpsInterval = 60000; // 60secで１回GPSをチェックする。
 
+ var plist_user = [];
 
  // checkuserのstashでサーバから送られる _はNPC用
 %# username = "<%= $username %>"; 
@@ -76,7 +79,16 @@ function dumCall(){
 
 // loopスタート
 function loopstart(){
-        gpssetID = window.setInterval(keyInput,gpsInterval); // loop set
+
+        timerarray.push(window.setInterval(keyInput,gpsInterval)); // loop set
+        timerarray.push(window.setInterval(centerPointsWP,10000));
+
+        // timer objectを繰り返し実行する
+        maintimerID = window.setInterval( function() { 
+            var fn = timerarray.shift();
+                fn;
+                timerarray.push(fn);  // 再度戻す
+        },0);
 }
 
 // エネミー初期化  無効化中
@@ -142,6 +154,7 @@ function getPosition(aCallback){
                        name : username,
                        userid : uid,
                        status : "dummy",
+                       category : "USER",
                        time : timerecord,
                        icon_url : iconurl,
                       };
@@ -195,6 +208,25 @@ function getPosition(aCallback){
 
 }  //getPosition
 
+function centerPoints(plist_user){
+    // websocketからpointlistを受け取った後に、MAPのcenterを移動させる
+
+    console.log("DEBUG: centerPoints on !!!!");
+    if (! plist_user) {
+        console.log("DEBUG: centerPoints PASS !!");
+        return;
+    }
+
+    var ind = Math.floor(Math.random() * plist_user.length );
+
+    centerMap(plist_user[ind].loc.lat, plist_user[ind].loc.lng); 
+}
+
+// setIntervalの為のワッパー
+function centerPointsWP(){
+    centerPoints(plist_user);
+}
+
 
 // WebSocket
 function wsCall(aCallback){
@@ -245,7 +277,7 @@ function wsCall(aCallback){
         var plist = evt.pointlist;
         var plist_nd;  // if文で括ったので外出し
 
-  // 個体追跡用処理の分岐 通常はevt.pointlistの処理
+  // 個体追跡用処理の分岐 通常はevt.pointlistの処理  supervise処理
         if ( evt.upointlist ) {
             // 便宜上plist_ndにリストを渡してしまう。
             plist_nd = evt.upointlist;
@@ -256,6 +288,13 @@ function wsCall(aCallback){
         var plist_nonself = plist.filter( function( element, index) {
                   return element.userid != uid; 
                           });
+        // USERを抽出
+            plist_user = plist.filter( function( element, index) {
+                  return element.category == "USER"; 
+                          });
+
+          centerPoints(plist_user);   // center 移動処理
+
 
           // 60秒前の時刻を取得して
   //        var leaptime = Date.now();
