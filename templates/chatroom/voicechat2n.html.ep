@@ -4,13 +4,31 @@
 
 %#if ((! navigator.webkitGetUserMedia)||(! navigator.mediaDevices.getUserMedia)) {  alert("Not Supported!!!"); }
 
+
+    var timerarray = [];
+    var maintimerID = null;
+
+    $( function(){
+          loopstart();
+    });
+
+function loopstart(){
+        // timer objectを繰り返し実行する
+        maintimerID = window.setInterval( function() {
+            var fn = timerarray.shift();
+                fn;
+                timerarray.push(fn);  // 再度戻す
+        },0);
+}
+
+
     // websocket
     var socketReady = false;
 
+    var socket_wait = null;
+
     var ws = null;
     ws = new WebSocket('wss://<%= $url_host %>/wsocket/webpubsub');
-
-    var socket_wait = null;
 
     ws.onopen = function(){
         console.log('Connection opened');
@@ -20,7 +38,14 @@
        var dummsg = {"dummy":"dummy"};
        ws.send(JSON.stringify(dummsg)); 
        console.log("socket wait sending!");
-        }, 50000);
+        }, 50000)
+
+    timerarray.push(socket_wait);
+
+    timerarray.push( setInterval(function(){
+          iceStat();
+       }, 10000)
+       );
 
        autoentry();
 
@@ -117,8 +142,11 @@
                    for ( var i=0 ; i < oldlist.length ; i++){
                        var delline = oldlist[i];
                            delline = JSON.parse(delline);
-
-                    $("#userlist").remove("<li><button><img src='" + delline.icon_url + "' width='50' height='50'>[" + delline.username + "]<audio id=" + delline.connid +" autoplay controls></audio></button></li>");
+       
+                      selid = "#opt" + delline.connid;
+                      $(selid).remove();
+            // 上記に置き換え
+            %#        $('#userlist').remove("<li><button id=opt" + delline.connid + "><img src='" + delline.icon_url + "' width='50' height='50'>[" + delline.username + "]<audio id=" + delline.connid +" autoplay controls></audio></button></li>");
                       } // for
                    } //if length
                    } //if defined
@@ -136,7 +164,7 @@
          %#           console.log("connid:" + resline.connid);
          %#           console.log("gpslocation:" + resline.gpslocation);
 
-                    $("#userlist").append("<li><button><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<audio id=" + resline.connid +" autoplay controls></audio></button></li>");
+                    $("#userlist").append("<li><button id=opt" + resline.connid + "><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<audio id=" + resline.connid +" autoplay controls></audio></button></li>");
                     
                 } // for
 
@@ -766,6 +794,22 @@ function imgupload(){
     });
 %#   adumCall();  仕様変更
 }
+
+function iceStat(){
+    for (var id in connections) {
+      var conn = connections[id];
+        conntext = conn.peerconnection.iceConnectionState; 
+        console.log("DEBUG: conntext:" + conntext );
+        if ( conntext == 'failed' ){
+            delete connections[id];
+
+            selid = "#opt" + id;
+        %#    console.log("DEBUG: selid: " + selid );
+            $(selid).remove();  // 消してから。。。
+            member();
+        }  // if conntext
+    }  // for
+}  // iceStat
 
 %# 仕様変更未利用
 function reloadimgsend(){

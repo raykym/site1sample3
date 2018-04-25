@@ -17,10 +17,11 @@
 
  timerarray = [];
 
- gpssetID = null;
+ gpssetID = null;  //未使用
  gpsInterval = 60000; // 60secで１回GPSをチェックする。
 
  var plist_user = [];
+ var maintimerID = null;
 
  // checkuserのstashでサーバから送られる _はNPC用
 %# username = "<%= $username %>"; 
@@ -106,7 +107,7 @@ function enmset(){
 function gpsset(aCallback){
     if ( ws.readyState != 1) { wsCall(dumCall); } // 接続がなければ接続する。
     getPosition(aCallback);
- //   if (! gpssetID) { loopstart(); }  // idがなければ起動
+    if (! maintimerID) { loopstart(); }  // idがなければ起動
     }
 
 
@@ -154,7 +155,7 @@ function getPosition(aCallback){
                        name : username,
                        userid : uid,
                        status : "dummy",
-                       category : "USER",
+                       category : "DUMMY",
                        time : timerecord,
                        icon_url : iconurl,
                       };
@@ -207,6 +208,43 @@ function getPosition(aCallback){
      }
 
 }  //getPosition
+
+function dumGpsset() {
+
+    var timerecord = Date.now();
+
+   // USER_STAT
+          user_stat = {   
+                       geometry: {
+                                  type : "Point",
+                                  coordinates : [ 0 , 0]
+                                  },
+                       loc : { lat : 0 ,
+                               lng : 0
+                             },
+                       name : username,
+                       userid : uid,
+                       status : "dummy",
+                       category : "DUMMY",
+                       time : timerecord,
+                       icon_url : iconurl,
+                      };
+
+          // successCallback事前接続のはず
+          ws.send(JSON.stringify(user_stat));
+
+     // Marker Set
+         console.log("Marker SET");
+
+                  makerobj.setMap(null);
+
+                  makerobj = new google.maps.Marker({
+                               position: new google.maps.LatLng(0, 0),
+                               map: mapobj,
+                               title: "mySelf"
+                          });
+
+}  // dumGpsset
 
 function centerPoints(plist_user){
     // websocketからpointlistを受け取った後に、MAPのcenterを移動させる
@@ -384,16 +422,24 @@ function wsCall(aCallback){
 function keyInput(){
 
            console.log("DEBUG: keyInput call. push or Interval");
+
+           if (navigator.online == false ) {
+               setTimeout("wsCall(dumCall)" , 1000);
+           }  // 再接続
+
            if (ws.readyState == 1) {
                 $('#output').text("接続中");
                } else {
                 $('#output').text("切断中");
            }
-       var fetchgps = new Promise(function(resolv){
-               gpsset(resolv);
-            });
-           fetchgps.then(function(){
-           });
+
+               dumGpsset();    // overviewWW
+
+   %#    var fetchgps = new Promise(function(resolv){
+   %#            gpsset(resolv);
+   %#         });
+   %#        fetchgps.then(function(){
+   %#        });
 }
 
 // チャットからユーザの位置へmapを一時的に移す

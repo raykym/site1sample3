@@ -735,8 +735,14 @@ function wsCall(aCallback){
                           });
         var unitcnt = plist_user.length + 1;
 
-        if ( plist_user.length < 4 ) { 
+        if ( plist_user.length < 1 ) { 
             unitcnt = 5;
+        } else if ( plist_user.length == 2 ) {
+            unitcnt = 6;
+        } else if ( plist_user.length == 3 ) {
+            unitcnt = 7;
+        } else if ( plist_user.length == 4 ) {
+            unitcnt = 8;
         } else if ( plist_user.length >= 5 ) {
             unitcnt = 10;
         }
