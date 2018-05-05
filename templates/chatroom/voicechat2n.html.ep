@@ -28,6 +28,7 @@ function loopstart(){
     var socket_wait = null;
 
     var ws = null;
+
     ws = new WebSocket('wss://<%= $url_host %>/wsocket/webpubsub');
 
     ws.onopen = function(){
@@ -44,7 +45,7 @@ function loopstart(){
 
     timerarray.push( setInterval(function(){
           iceStat();
-       }, 10000)
+       }, 30000)
        );
 
        autoentry();
@@ -899,7 +900,7 @@ function reloadimgkey(){
          <div page-role="panel" id="r_panel" data-display="overlay">
          </div>
     <div data-role="footer" style="backgroud: #aac78d;">
-    <a href="" data-rel="back" class="btn-inline">back</a>
-    <a href="/menu" class="btn-inline">メニュー</a>
+    <a href="" data-rel="back" class="btn-inline" rel='external'>back</a>
+    <a href="/menu" class="btn-inline" rel='external'>メニュー</a>
     </div>
 </div>

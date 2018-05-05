@@ -527,7 +527,9 @@ sub echo {
 
                        #Chat表示 トラップ発動時に表示する
                        #日付設定 重複記述あり
-                       my $dt = DateTime->now( time_zone => 'Asia/Tokyo');
+		       #    my $dt = DateTime->now( time_zone => 'Asia/Tokyo');
+                       my $dt = DateTime->now( time_zone => $jsonobj->{timezone});
+                          $dt = DateTime->now( time_zone => 'Asia/Tokyo') if ( ! defined $dt);
                        # TTLレコードを追加する。
                        my $ttl = DateTime->now();
 
@@ -822,18 +824,25 @@ sub echo3 {
 
            if ( defined($jsonobj->{trapevent})) {
 
-              my $trapevent = $trapmemberlist->find({ "name" => $jsonobj->{trapevent} });
-              my @trappointlist = $trapevent->all;
-              my $listhash = { 'upointlist' => \@trappointlist };
-              my $jsontext = to_json($listhash);
-                 $self->tx->send($jsontext);
-                 $self->app->log->debug("DEBUG: trap_point_list: $jsontext");
+	      Mojo::IOLoop::Deray->new->steps(	   
+                  sub {
+	              my $delay = shift;
 
-                 undef $trapevent;
-                 undef @trappointlist;
-                 undef $listhash;
-                 undef $jsontext;
-              }
+                      my $trapevent = $trapmemberlist->find({ "name" => $jsonobj->{trapevent} });
+                      my @trappointlist = $trapevent->all;
+                      my $listhash = { 'upointlist' => \@trappointlist };
+                      my $jsontext = to_json($listhash);
+                      $self->tx->send($jsontext);
+                      $self->app->log->debug("DEBUG: trap_point_list: $jsontext");
+
+                      undef $trapevent;
+                      undef @trappointlist;
+                      undef $listhash;
+                      undef $jsontext;
+	         }
+              )->wait;
+
+              } # if trapevent
            my @pointlist;
            my $geo_points_cursole;
            if ( $timelineredis == 0 ){
@@ -887,6 +896,9 @@ sub echo3 {
         $self->app->log->debug("DEBUG: On finish!!");
 
         $self->redis->unsubscribe(@chatArray);
+
+        delete $clients->{$id};
+        delete $stream_io->{$id};
     });
 
 #redis receve
@@ -919,8 +931,8 @@ sub echo3 {
                       $self->app->log->debug("DEBUG: $userid redis error: $err");
                    });
 
-  my $stream = Mojo::IOLoop->stream($self->tx->connection);
-        $stream->timeout(0);  # no timeout!
+     $stream_io->{$id} = Mojo::IOLoop->stream($self->tx->connection);
+        $stream_io->{$id}->timeout(0);  # no timeout!
         $self->inactivity_timeout(70000); # 70sec
 
 }

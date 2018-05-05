@@ -16,7 +16,7 @@
  makerobjects = [];
 
  gpssetID = null;
- gpsInterval = 1000; // 10secで１回GPSをチェックする。
+ gpsInterval = 6000; // 60sec
 
 
  // checkuserのstashでサーバから送られる _はNPC用
@@ -70,7 +70,14 @@ function dumCall(){
 
 // loopスタート
 function loopstart(){
-        gpssetID = window.setInterval(keyInput,gpsInterval); // loop set
+     //   gpssetID = window.setInterval(keyInput,gpsInterval); // loop set
+        gpssetID = window.setInterval(dummSend,gpsInterval); // 接続維持のダミー送信 
+}
+
+function dummSend() {
+       var dummsg = {"dummy":"dummy"};
+       ws.send(JSON.stringify(dummsg)); 
+       console.log("socket wait sending!"); 
 }
 
 // エネミー初期化  無効化中

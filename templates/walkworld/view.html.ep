@@ -1126,8 +1126,8 @@ function setEventMess(){
 </div> <!-- tabs -->
 
     <div data-role="footer" style="backgroud: #aac78d;">
-    <a href="/" class="ui-btn ui-btn-inline" onClick="clearInterval(gpssetID)">top</a>
-    <a href="/menu" class="ui-btn ui-btn-inline" onClick="clearInterval(gpssetID)">menu</a>
+    <a href="/" class="ui-btn ui-btn-inline" rel='external'>top</a>
+    <a href="/menu" class="ui-btn ui-btn-inline" rel='external'>menu</a>
     </div>
 </div>
 

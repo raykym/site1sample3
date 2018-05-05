@@ -2,12 +2,13 @@
 % title 'mainmenu';
 
 %# webpushをtopページに追加、ドメイン単位になるので、topに設定するのがセオリー？
-<script src="https://www.gstatic.com/firebasejs/3.8.0/firebase.js"></script>
+%#<script src="https://www.gstatic.com/firebasejs/3.8.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
 <script>
   // Initialize Firebase
   var config = {
- %#   apiKey: "AIzaSyCCRkQOD14bt5HJMZ4XkMMyf0hKcc0QzEI",
-    apiKey: "AIzaSyDo_dpAVHrv-yWJcWdzKpauZ2X8VztSMGw",
+ %#   apiKey: "AIzaSyDo_dpAVHrv-yWJcWdzKpauZ2X8VztSMGw",
+    apiKey: "AAAAyJtliZU:APA91bFy4CbCSTFQVLcKaanxPjBR_taMRJDzqgtYFAYYCN-rMbsqOd5NLFXn6J8WiQzrG180Yyy6B2L0AqnG1YPTCy7KsVCUbht-5Ng5yQJt7UpqRO_ZlFOpI7JzlxWDYcR_6R5iVBHX",
     authDomain: "velvety-decoder-677.firebaseapp.com",
     databaseURL: "https://velvety-decoder-677.firebaseio.com",
     projectId: "velvety-decoder-677",
@@ -16,7 +17,8 @@
   };
   firebase.initializeApp(config);
 </script>
-<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
+%#<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-app.js"></script>
 %#<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-auth.js"></script>
 %#<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
 %#<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-messaging.js"></script>

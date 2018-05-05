@@ -271,8 +271,8 @@ sub webpubsub {
 
     # WebSocket接続維持設定
           $stream_io->{$wsid} = Mojo::IOLoop->stream($self->tx->connection);
-          $stream_io->{$wsid}->timeout(0);
-          $self->inactivity_timeout(60000); #60sec
+          $stream_io->{$wsid}->timeout(70);   # 70sec timeout  ページ遷移してもセッションが残らないように
+          $self->inactivity_timeout(60000); #60sec   50secでdummyが送信される
 
     # on message・・・・・・・
        $self->on(message => sub {

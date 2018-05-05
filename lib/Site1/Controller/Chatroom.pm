@@ -840,12 +840,15 @@ sub voicechat2n {
     my @acclist;
 
     for my $i (@$list){   # emailのリスト
-        my $accobj = from_json($self->app->redis->get("CACHE$i"));
+        my $cache = $self->app->redis->get("CACHE$i");
+	if ( ! defined $cache ) {  next; }
+        my $accobj = from_json($cache);
         if ( ! defined $accobj ) {
             next;
 	}
         my $aline = [ $i , $accobj->{username} ];   # [ e-mail , username ]
         push(@acclist,$aline);
+        undef $cache;
     }
 
     $self->stash('acclist' => \@acclist ); 
@@ -867,12 +870,15 @@ sub videochat2n {
     my @acclist;
 
     for my $i (@$list){   # emailのリスト
-        my $accobj = from_json($self->app->redis->get("CACHE$i"));
+        my $cache = $self->app->redis->get("CACHE$i");
+	if ( ! defined $cache ) {  next; }
+        my $accobj = from_json($cache);
         if ( ! defined $accobj ) {
             next;
         }
         my $aline = [ $i , $accobj->{username} ];   # [ e-mail , username ]
         push(@acclist,$aline);
+        undef $cache;
     }
 
     $self->stash('acclist' => \@acclist );
