@@ -25,6 +25,8 @@ sub view {
 }
 
 my $clients = {};
+my $stream_io = {};
+my $delay_once = {};
 
 sub wscount {
     my $self = shift;
@@ -42,7 +44,7 @@ sub wscount {
 # google pubsub TEST
 sub echo2 {
   my $self = shift;
-     $self->app->log->debug(sprintf 'Client connected: %s', $self->tx);
+     $self->app->log->info(sprintf 'Client connected: %s', $self->tx);
   my $id = sprintf "%s", $self->tx->connection;
      $clients->{$id} = $self->tx;
 
@@ -53,20 +55,27 @@ sub echo2 {
 
            my $jsonobj = from_json($msg);
 
+	   $clients->{$id}->send($msg);   # そのまま返す
+
          });  # on message
 
       $self->on(finish => sub {
            my ($self,$msg) = @_;
 
-              $self->app->log->debug("DEBUG: On finish!!");
+              $self->app->log->info("DEBUG: On finish!!");
          }); # on finish
 
-  my $stream = Mojo::IOLoop->stream($self->tx->connection);
-        $stream->timeout(0);  # no timeout!
-        $self->inactivity_timeout(1000);
+  my $stream_io->{$id} = Mojo::IOLoop->stream($self->tx->connection);
+        $stream_io->{$id}->timeout(70);  # timeout 70sec
+        $self->inactivity_timeout(60000); # 60sec timeout
 
 } # echo2
 
+sub testpage {
+    my $self = shift;
+
+    $self->render();
+}	
 
 
 # Cloud Pubsub receve 
@@ -91,8 +100,6 @@ sub rcvpush {
        $self->render( text => '', status => '204');
 }
 
-my $stream_io = {};
-my $delay_once = {};
 
 my $debugCount = 3;
 
@@ -824,8 +831,6 @@ sub echo3 {
 
            if ( defined($jsonobj->{trapevent})) {
 
-	      Mojo::IOLoop::Deray->new->steps(	   
-                  sub {
 	              my $delay = shift;
 
                       my $trapevent = $trapmemberlist->find({ "name" => $jsonobj->{trapevent} });
@@ -839,8 +844,6 @@ sub echo3 {
                       undef @trappointlist;
                       undef $listhash;
                       undef $jsontext;
-	         }
-              )->wait;
 
               } # if trapevent
            my @pointlist;

@@ -272,7 +272,7 @@ function wsCall(aCallback){
       console.log("DEBUG: ws Connect!!");
       $('#output').text("接続中");
       aCallback();
-  } 
+//  }  // onmessage末尾に移動:
 
     ws.onopen = function(){
         console.log('Connection opened');
@@ -285,7 +285,7 @@ function wsCall(aCallback){
     }
 
     ws.onerror = function(){
-    %#   alert("please Reload, Reconnect websocket!");
+       alert("please Reload, Reconnect websocket!");
     }
 
 // オンメッセージ処理 --------------------------------------------
@@ -417,6 +417,8 @@ function wsCall(aCallback){
     });
 
    } // ws.onmessage -----------------------------------------------------------------
+
+} // wsCall
 
 // key input
 function keyInput(){

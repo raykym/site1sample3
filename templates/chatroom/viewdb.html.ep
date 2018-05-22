@@ -1,5 +1,5 @@
 % layout 'mobidef2';
-% title 'chatroom';
+% title 'message board';
 
 <script type="text/javascript">
 
@@ -8,7 +8,8 @@ $(document).on('pageshow',function () {
 
   var ws;
   function wsCall(){
-     ws = new WebSocket('wss://westwind.iobb.net/menu/chatroom/echodb');
+     ws = new WebSocket('wss://<%= $url_host %>/menu/chatroom/echodb');
+     return ws;
   }
   
    wsCall();
@@ -70,9 +71,9 @@ function hangUp(){
 
 <div id="chatroom" data-role="page" style="background: #80aa55">
         <div data-role="header">
-        <h3>simple chat Room</h3>
-        <a href="/menu" class="btn-inline">メニューへ戻る</a>
-        <button type="button" class="ui-btn " onclick="hangUp();" style="background-color: #ff1111; color: #ffff00">Reload</button>
+        <h3>message board</h3>
+  %#      <a href="/menu" class="btn-inline">メニューへ戻る</a>
+  %#      <button type="button" class="ui-btn " onclick="hangUp();" style="background-color: #ff1111; color: #ffff00">Reload</button>
         </div>
     <div>
         <p>ブラウザを閉じるか、別のページヘ移動すれば切断されます。確実に切るにはブラウザを閉じましょう！</p>
@@ -85,8 +86,8 @@ function hangUp(){
         <ul id="output" data-role="listview" data-inset="true"></ul>
         </div>
     <div data-role="footer" style="backgroud: #aac78d;">
-    <a href="" data-rel="back" class="btn-inline">back</a>
-    <a href="/menu" class="btn-inline">メニュー</a>
+    <a href="" data-rel="back" class="btn-inline" rel='external'>back</a>
+    <a href="/menu" class="btn-inline" rel='external'>メニュー</a>
     </div>
 </div>
 

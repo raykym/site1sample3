@@ -29,7 +29,13 @@ function loopstart(){
 
     var ws = null;
 
+    wsCall();
+
+function wsCall(){
     ws = new WebSocket('wss://<%= $url_host %>/wsocket/webpubsub');
+    console.log(" Websocket connect...");
+    return ws;
+}
 
     ws.onopen = function(){
         console.log('Connection opened');
@@ -39,7 +45,7 @@ function loopstart(){
        var dummsg = {"dummy":"dummy"};
        ws.send(JSON.stringify(dummsg)); 
        console.log("socket wait sending!");
-        }, 50000)
+        }, 10000)
 
     timerarray.push(socket_wait);
 
@@ -56,10 +62,12 @@ function loopstart(){
     };
 
     ws.onclose = function(){
-        socketReady = false;
-        clearInterval(socket_wait); // 50sec dummy STOP
-        console.log("Close:" + socketReady);
-        alert("please Reload, Reconnect websocket! ADD MEMBER LIMIT BUT WEBRTC CONNECTION OK!"); 
+        console.log("WS Connection close... reconnect...");
+   //     socketReady = false;
+   //     clearInterval(socket_wait); // 50sec dummy STOP
+   //     console.log("Close:" + socketReady);
+   //     alert("please Reload, Reconnect websocket! ADD MEMBER LIMIT BUT WEBRTC CONNECTION OK!"); 
+          wsCall();
     };
 
     ws.onerror = function(){
@@ -85,6 +93,11 @@ function loopstart(){
                 var memlist = evt.reslist;
 
                 console.log("memlist:" + memlist);
+
+           %# dummyが来たらパス
+           if ( evt.dummy ){
+               return;
+           }
 
                 %# リスト表示用処理
            if (evt.type === 'reslist'){
@@ -241,6 +254,8 @@ function loopstart(){
            }
      } //onmessage
 
+%# } //wsCall  returnで置き換えてみた
+
 // start local audio
 function startvoice() {
     console.log('Start local Media');
@@ -278,7 +293,7 @@ function startvoice() {
   }
 
   function isConnectPossible() {
-    var MAX_CONNECTION_COUNT = 10;
+    var MAX_CONNECTION_COUNT = 20;
     if (getConnectionCount() < MAX_CONNECTION_COUNT)
       return true;
     else
@@ -888,9 +903,9 @@ function reloadimgkey(){
         </div>
         <div>
            <ul>
-             <li>5人まで同時に接続出来ます。</li>
+             <li>5人まで同時接続出来ます。個別に参加可能です。</li>
              <li>音声はタイムラグが有ります。</li>
-             <li>インジケーターは接続を確認できますが、切断されても認識出来ないので、あくまで目安程度です。</li>
+             <li>通信が切断されると30秒ほどでアイコンが消えます。相手が再接続すればそのままつながります。。</li>
              <li>イコライザーアプリを追加して、音声用に低音、高音を落とした方が聞き取りやすいかもしれません</li>
               <li>Webpushで通知が送れます。room名を入力してチャット待機状態にしてから、左上のバーボタンを開いて、相手のemailを指定して通知が出来ます。
 </li>

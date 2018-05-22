@@ -25,6 +25,7 @@ sub view {
 }
 
 my $clients = {};
+my $stream_io = {};
 
 # websocket
 sub echo {
@@ -90,7 +91,7 @@ sub echo {
 sub viewdb {
     my $self = shift;
 
-    $self->render(msg_w => '1時間でコメントは消えていきます。。。');
+    $self->render(msg_w => 'コメントはずっと残ります そのつもりで書いてください');
 }
 
 # websocket mongodb経由タイプ
@@ -146,8 +147,8 @@ sub echodb {
 
        # デフォルトは数秒で切れる 300秒で切れる
        # 環境変数 MOJO_INECTIVITY_TIMEOUTを設定では出来なかった。。。
-       my $stream = Mojo::IOLoop->stream($self->tx->connection);
-       #   $stream->timeout(10);
+       my $stream_io->{$id} = Mojo::IOLoop->stream($self->tx->connection);
+          $stream_io->{$id}->timeout(60);
           $self->inactivity_timeout(30000);
 
  #      Mojo::IOLoop->recurring(
@@ -236,6 +237,7 @@ sub echodb {
          $self->on(finish => sub{
                  $self->app->log->debug('Client disconnected');
                  delete $clients->{$id};
+		 delete $stream_io->{$id};
 
                #日付設定 重複記述あり
           #      my $dt = DateTime->now( time_zone => 'Asia/Tokyo');
@@ -718,8 +720,9 @@ sub echopubsub {
        $clients->{$id} = $self->tx;
 
     # 接続時間延長 最大90sec
-       my $stream = Mojo::IOLoop->stream($self->tx->connection);
-          $stream->timeout(40);
+       my $stream_io->{$id} = Mojo::IOLoop->stream($self->tx->connection);
+          $stream_io->{$id}->timeout(40);
+          $self->inactivity_timeout(60000);   # 60sec
 
     my $recvlist = "chatopenpubsub";
 
@@ -785,6 +788,7 @@ sub echopubsub {
          $self->on(finish => sub{
                  $self->app->log->debug('Client disconnected');
                  delete $clients->{$id};
+		 delete $stream_io->{$id};
 
                #日付設定 重複記述あり
                 my $dt = DateTime->now( time_zone => 'Asia/Tokyo');

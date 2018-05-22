@@ -4,19 +4,69 @@
 
 %# if (! navigator.webkitGetUserMedia) {  alert("Not Supported!!!"); }
 
-   %# カメラ切り替えボタンをクリックイベント
-    function changecam() {
-        console.log("clieck button-----------------");
-        switchcam();
-     }
+var cameraSwitch = 0;
+var deviceIDs;
+
+var timerarray = [];
+var maintimerID = null;
+
+$( function(){
+      loopstart();
+  });
+
+function loopstart(){
+        // timer objectを繰り返し実行する
+        maintimerID = window.setInterval( function() {
+            var fn = timerarray.shift();
+                fn;
+                timerarray.push(fn);  // 再度戻す
+        },0);
+}
+
+%# pageshow で呼びだされてカメラデバイスを取得する:
+function gotDevices(deviceInfos) {
+      for (var i = 0; i !== deviceInfos.length; ++i) {
+            console.log("DEBUG: deviceid: " + deviceInfos[i].deviceId + " kind: " + deviceInfos[i].kind );
+      }
+      deviceIDs = deviceInfos.filter( function (e,i){
+                if ( e.kind == "videoinput" ) {
+                    return e;
+                }
+            });
+      return deviceIDs;
+}
+
+function handleError(error) {
+  console.log('navigator.getUserMedia error: ', error);
+}
+
+
+
+%# カメラ切り替えボタンをクリックイベント
+function changecam() {
+    if ( cameraSwitch == 0 ) {
+        cameraSwitch = 1;
+    console.log("clieck button change " + cameraSwitch);
+        startvoice(deviceIDs,cameraSwitch);
+    } else {
+        cameraSwitch = 0;
+    console.log("clieck button change " + cameraSwitch);
+        startvoice(deviceIDs,cameraSwitch);
+    }
+ %#   member();
+ %#   var reloadmember = {"type":"reloadmember"};
+ %#       ws.send(JSON.stringify(reloadmember));
+}
 
     // websocket
     var socketReady = false;
-
     var ws = null;
-    ws = new WebSocket('wss://<%= $url_host %>/wsocket/webpubsub');
-
     var socket_wait = null;
+
+wsCall();
+
+function wsCall(){
+    ws = new WebSocket('wss://<%= $url_host %>/wsocket/webpubsub');
 
     ws.onopen = function(){
         console.log('Connection opened');
@@ -28,6 +78,13 @@
        console.log("socket wait sending!");
         }, 50000);
 
+    timerarray.push(socket_wait);
+
+    timerarray.push( setInterval(function(){
+          iceStat();
+       }, 30000)
+       );
+
     autoentry();
 
     };
@@ -36,12 +93,16 @@
         socketReady = false;
         clearInterval(socket_wait); // 50sec dummy STOP
         console.log("Close:" + socketReady);
-        alert("please Reload, Reconnect websocket!"); 
+     //   alert("please Reload, Reconnect websocket!"); 
+        wsCall();
     };
 
     ws.onerror = function(){
        alert("please Reload, Reconnect websocket!"); 
     };
+
+    return ws;
+    } // wsCall
 
     var connid = null;
 
@@ -139,7 +200,10 @@
                        var delline = oldlist[i];
                            delline = JSON.parse(delline);
 
-                    $("#userlist").remove("<li><button><img src='" + delline.icon_url + "' width='50' height='50'>[" + delline.username + "]<video id=" + delline.connid +" autoplay controls width='350' hight='350'></video></button></li>");
+                      selid = "#opt" + delline.connid;
+                      $(selid).remove();
+                %# 上記に置き換え
+                %#    $("#userlist").remove("<li><button id=opt" + delline.connid + " type='button' onclick='changecam();' ><img src='" + delline.icon_url + "' width='50' height='50'>[" + delline.username + "]<video id=" + delline.connid +" autoplay controls width='350' hight='350'></video></button></li>");
                       } // for
                    } //if length
                    } //if defined
@@ -153,7 +217,7 @@
          %#           console.log("sessionid:" + resline.sessionid);
          %#           console.log("connid:" + resline.connid);
 
-                    $("#userlist").append("<li><button><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<video id=" + resline.connid +" autoplay controls width='350' hight='350'></video></button></li>");
+                    $("#userlist").append("<li><button id=opt" + resline.connid + " type='button' onclick='changecam();' ><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<video id=" + resline.connid +" autoplay controls width='350' hight='350'></video></button></li>");
 
                 } // for
 
@@ -161,7 +225,7 @@
        if ( startflg === null){
             startflg = "started";
         %# ユーザリストからvideoエレメントを取得する
-            startvoice();
+            startvoice(deviceIDs,cameraSwitch);
            }
          }  // type reslist
 
@@ -172,7 +236,7 @@
         if ( startflg === null){
             startflg = "started";
         %# ユーザリストからvideoエレメントを取得する
-            startvoice();
+            startvoice(deviceIDs,cameraSwitch);
            }
 
               return;
@@ -181,7 +245,7 @@
           if (evt.type === "reloadmember"){
               %# 他のメンバーのstandbyを確認する リロードするとローカルストリームが切れるので再スタート
               member();
-              startvoice();
+              startvoice(deviceIDs,cameraSwitch);
           }
 
     // SDP,ICE処理 
@@ -230,8 +294,14 @@
 // start local video
 
 
-function startvoice() {
+function startvoice(deviceIDs, cameraSwitch) {
     console.log('Start local Media');
+
+        if (localstream) {
+            localstream.getTracks().forEach(function(track) {
+                track.stop();
+            });
+        }
 
  %#   navigator.webkitGetUserMedia({video: true, audio: true},
  %#   navigator.webkitGetUserMedia({video: true, audio: {mandatory: {echoCancellation : false, googEchoCancellation: false}}  },
@@ -248,7 +318,7 @@ function startvoice() {
 %#    );
     %# rewrite promise
  %#   navigator.mediaDevices.getUserMedia({video: true, audio: {mandatory: {echoCancellation : false, googEchoCancellation: false}}  })
-    navigator.mediaDevices.getUserMedia({video: true, audio: {mandatory: {echoCancellation : false}} })   // for safari
+    navigator.mediaDevices.getUserMedia({video: { deviceId : deviceIDs[cameraSwitch].deviceId }, audio: {mandatory: {echoCancellation : false}} })   // for safari
     .then( function (stream) { // success
       localstream = stream;
     %#  document.getElementById(connid).src = window.URL.createObjectURL(stream);
@@ -464,6 +534,9 @@ $(document).on('pageshow',function () {
             ws.send(JSON.stringify(reloadmember));
             }
        });
+    %# カメラデバイスの検出:
+      navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+
 }); // pageshow
 
 function standby(){
@@ -480,7 +553,7 @@ function standby(){
     ws.send(JSON.stringify(reloadmember));
     }
 
-    var localstream = null;
+        localstream = null;
     var peerConnection = null;
     var mediaConstraints = {'mandatory': {'OfferToReceiveAudio':true, 'OfferToReceiveVideo':true }};
 
@@ -735,6 +808,22 @@ function autoentry(){
     }
 };
 
+function iceStat(){
+    for (var id in connections) {
+      var conn = connections[id];
+        conntext = conn.peerconnection.iceConnectionState;
+        console.log("DEBUG: conntext:" + conntext );
+        if ( conntext == 'failed' ){
+            delete connections[id];
+
+            selid = "#opt" + id;
+        %#    console.log("DEBUG: selid: " + selid );
+            $(selid).remove();  // 消してから。。。
+            member();
+        }  // if conntext
+    }  // for
+}  // iceStat
+
 </script>
 
 <div data-role="page" style="background: #80aa55">
@@ -786,7 +875,7 @@ function autoentry(){
            </ul>
         </div>
     <div data-role="footer" style="backgroud: #aac78d;">
-    <a href="" data-rel="back" class="btn-inline">back</a>
-    <a href="/menu" class="btn-inline">メニュー</a>
+    <a href="" data-rel="back" class="btn-inline" rel='external'>back</a>
+    <a href="/menu" class="btn-inline" rel='external'>メニュー</a>
     </div>
 </div>

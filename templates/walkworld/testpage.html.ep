@@ -1,0 +1,100 @@
+% layout 'mobidef2';
+% title 'testpage';
+
+%# dateを送ってただ受け取るだけ。:websocketの接続を確認するだけ。
+
+<script type="text/javascript">
+
+ var tz = jstz.determine();
+ var ws;
+ var maintimerID ;
+ var interval = 10000; // 10sec
+
+ var cnt = 0;
+ var dateobj;
+
+// main?
+$(function(){
+   //SenceToggleID = window.setInterval(Senceronoff,SencerInterval);
+   loopstart();
+  });
+
+
+// loopスタート
+function loopstart(){
+        wsCall();
+        maintimerID = window.setInterval(sendMessage,interval); // loop set
+}
+
+
+
+// WebSocket
+function wsCall(){
+      ws = new WebSocket('wss://westwind.backbone.site/wstest');
+      console.log("DEBUG: ws Connect!!");
+   //   aCallback();
+
+    ws.onopen = function(){
+        console.log('Connection opened');
+    }
+
+    ws.onclose = function(){
+        console.log("Close: WebSocket Close");
+        ws = null;
+        console.log("Try reconnect...");
+        wsCall();
+    }
+
+    ws.onerror = function(){
+       alert("please Reload, Reconnect websocket!");
+    }
+
+// オンメッセージ処理 --------------------------------------------
+    ws.onmessage = function(msg){
+        var evt = JSON.parse(msg.data);
+            console.log("evt: msg: " + msg.data ); 
+
+            if ( evt == ""){ return; }
+
+            if ( evt.date ) {
+
+                $('#output').text(evt.date);
+
+            }
+
+    } // onmessage
+
+  } // wsCall 
+
+function sendMessage() {
+    dateobj = Date(Date.now());
+    mess = { date : dateobj };
+    messjson = JSON.stringify(mess);
+    ws.send(messjson);
+    console.log("DEBUG: Message send " + messjson );
+}
+
+</script>
+
+<div data-role="page" style="background-color: #aac78d;">
+    <div data-role="header">
+        <a href="#panel" data-icon="bars" data-iconpos="notext" class="ui-btn-left">panel</a>
+        <h1>testpage</h1>
+        <a href="#r_panel" data-icon="info" data-iconpos="notext" class="ui-btn-right">Attack</a>
+    </div>
+
+<!-- panel left -->
+  <div data-role="panel" id="panel" data-display="overlay" style="background-color: #aac78d;">
+  </div>
+<!-- panel right -->
+  <div data-role="panel" id="r_panel" data-display="overlay" data-position="right" style="background-color: #aac78d;">
+  </div>
+
+    <text id="output"></text>
+
+    <div data-role="footer" style="backgroud: #aac78d;">
+    <a href="/" class="ui-btn ui-btn-inline" rel='external'>top</a>
+    <a href="/menu" class="ui-btn ui-btn-inline" rel='external'>menu</a>
+    </div>
+</div>
+

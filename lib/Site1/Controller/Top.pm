@@ -11,7 +11,7 @@ sub top {
 
      # 認証を通ら通らない場合はstashを指定する必要がある
      $self->stash(url_orig => $self->url_for->to_abs);
-  $self->render(msg => 'Welcome to this site!');
+  $self->render(msg => '関係者以外　立ち入り禁止');
 }
 
 sub mainmenu {

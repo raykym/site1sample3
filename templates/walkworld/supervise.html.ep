@@ -200,7 +200,7 @@ function wsCall(aCallback){
       console.log("DEBUG: ws Connect!!");
       $('#output').text("接続中");
       aCallback();
-  } 
+//  }   // 移動:
 
     ws.onopen = function(){
         console.log('Connection opened');
@@ -351,6 +351,8 @@ function wsCall(aCallback){
     });
 
    } // ws.onmessage -----------------------------------------------------------------
+
+} // wsCall
 
 // key input
 function keyInput(){

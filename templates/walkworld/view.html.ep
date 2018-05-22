@@ -12,6 +12,8 @@
  acc_shl = 10;    // shake renge wide
  dist_shl = 20; // 距離判定20m
 
+ buzzreng = 30; // ブザー警告: 30m
+
  N0r = 0; // 方角
 
  SencerInterval = 1000;  // シナリオループの間隔
@@ -22,6 +24,7 @@
  makerobj = new google.maps.Marker();
  makerobjects = [];
  MakerToggle = false;
+ BuzzToggle = true;
 
  geo_dist = []; //UIDと距離のリスト
  tar_get = [];
@@ -54,10 +57,11 @@
 $(function(){
    //SenceToggleID = window.setInterval(Senceronoff,SencerInterval);
    // 常時起動ならタイマーは不要
-   AccelSence();
-   JairoSence();
-   calibration();
+//   AccelSence();
+//   JairoSence();
+//   calibration();
    $("#tMaker_btn").text("Maker ON!");
+   $("#tBuzz_btn").text("Buzzer OFF!");
    loopstart();   // gps auto start.....
   });
     wsCall(dumCall);
@@ -70,13 +74,23 @@ function Senceronoff() {
 
 // map toggle
 function Mtoggle(){
-
     if (MakerToggle) {
         MakerToggle = false;
         $("#tMaker_btn").text("Maker ON!");
     } else {
         MakerToggle = true;
         $("#tMaker_btn").text("Maker OFF!");
+    }
+}
+
+// buzzer toggle
+function Btoggle(){
+    if (BuzzToggle) {
+        BuzzToggle = false;
+        $("#tBuzz_btn").text("Buzzer ON!");
+    } else {
+        BuzzToggle = true;
+        $("#tBuzz_btn").text("Buzzer OFF!");
     }
 }
 
@@ -111,7 +125,7 @@ function hitEmure(){
                  });
 
                 if (navigator.online == false ) {
-                                 setTimeout("wsCall(dumCall)" , 1000);
+                                 wsCall(dumCall);
                               }  // 再接続用
                 hit_tar.filter( function(element, index){
                    console.log("DEBUG: HIT " + element.userid );
@@ -224,7 +238,7 @@ function devicemotionHandler(event) {
                  });
 
                 if (navigator.online == false ) { 
-                                 setTimeout("wsCall(dumCall)" , 1000);
+                                 wsCall(dumCall);
                               }  // 再接続用
                 hit_tar.filter( function(element, index){
                    console.log("DEBUG: HIT " + element.userid );
@@ -411,7 +425,7 @@ function respointget(data){
 
   // GPS get  aCallback is dummy callback for Promise
 function gpsset(aCallback){
-    if (navigator.online == false ) {  setTimeout("wsCall(dumCall)" , 1000); }  // ブラウザがスリープするとws_statが判断しないので、
+    if (navigator.online == false ) {  wsCall(dumCall); }  // ブラウザがスリープするとws_statが判断しないので、
     getPosition(aCallback);
     direct_distance();
     if (! gpssetID) { loopstart(); }  // idがなければ起動
@@ -469,7 +483,7 @@ function getPosition(aCallback){
       //    console.log("Send user_stat#######");
 
           if (navigator.online == false ) {
-                               setTimeout("wsCall(dumCall)" , 1000); 
+                               wsCall(dumCall); 
                        }  // 再接続用
           ws.send(JSON.stringify(user_stat));
 
@@ -567,7 +581,8 @@ function wsCall(aCallback){
       console.log("DEBUG: ws Connect!!");
       $('#output').text("online");
       aCallback();
-  } 
+      return ws;
+  }    
 
     ws.onopen = function(){
         console.log('Connection opened');
@@ -576,7 +591,7 @@ function wsCall(aCallback){
     ws.onclose = function(){
         console.log("Close: WebSocket Close");
         $('#output').text("reConnect");
-        setTimeout("wsCall(dumCall)" , 1000);
+        wsCall(dumCall);
     }
 
     ws.onerror = function(){
@@ -608,7 +623,7 @@ function wsCall(aCallback){
 
              $('#msg').keydown(function (e) {
                  if (e.keyCode == 13 && $('#msg').val()) {
-                 if (navigator.online == false) { setTimeout("wsCall(dumCall)" , 1000);}
+                 if (navigator.online == false) { wsCall(dumCall);}
                  var chatmsg = { 
                                  chat : $('#msg').val(),
                                  geometry: {
@@ -632,7 +647,7 @@ function wsCall(aCallback){
           %#      recognition.addEventListener('result', function(event){
           %#      var text = event.results.item(0).item(0).transcript;
           %#      $("#msg").val(text);
-          %#      if (ws.readyState != 1) { setTimeout("wsCall(dumCall)" , 1000);} //remain readyState
+          %#      if (ws.readyState != 1) { wsCall(dumCall);} //remain readyState
           %#      var chatmsg = { 
           %#                      chat : $('#msg').val(),
           %#                      geometry: {
@@ -829,18 +844,15 @@ function wsCall(aCallback){
               var debugtext = JSON.stringify(geo_dist_arrow);
               console.log("DEBUG: geo_dist_arrow:" + debugtext );
 
-        // 警告バイブレーション　100m以下
+        // 警告バイブレーション　30m以下
              var tar_buz = geo_dist_arrow.filter ( function ( element, index ){
-                 return element.distance < 100; 
+                 return element.distance < buzzreng; 
                  });
 
             if ( tar_buz.length != 0 ){
-                navigator.vibrate([300, 100]);
-          %#      // SencerToggle
-          %#      if ( ! SencerToggle){ Stoggle();}
-          %#     } else {
-          %#          // tar_buz.length=0
-          %#          if ( SencerToggle ) { Stoggle();}
+                if (BuzzToggle) {
+                    navigator.vibrate([300, 100]);
+                }
                }
 
           // 近距離の方角を抽出
@@ -852,7 +864,7 @@ function wsCall(aCallback){
 
              var arrow_d;
 
-        %#     if ( ! distobj[0].direction ) {
+             if ( distobj.length >= 0 ) {
 
              var tmp_arrow = distobj[0].direction - N0r;
              if ( 0 > tmp_arrow ) {
@@ -865,7 +877,7 @@ function wsCall(aCallback){
 
              $('#output_d').text(Math.ceil(distobj[0].distance));
 
-         %#    }  // distobj[0].direction
+             }  // distobj[0].direction
 
              console.log("DEBUG: N0r:" + N0r );
              console.log("DEBUG: arrow:" + arrow_d );
@@ -920,13 +932,15 @@ function wsCall(aCallback){
 
    } // ws.onmessage -----------------------------------------------------------------
 
+%# }  // wsCall
+
 // key input
 function keyInput(){
 
            pointget();  
       //     AccelSence();  // on/offが切り替わる
       //     JairoSence();
-           calibration();
+      //     calibration();
 
            // Accelarator Check
            if (( a == undefined )||( a.x == null )){
@@ -948,7 +962,7 @@ function keyInput(){
        var fetchgps = new Promise(function(resolv){
 
            if ( navigator.online == false ) {
-               setTimeout("wsCall(resolv)" , 1000); 
+                   wsCall(resolv); 
               } else { resolv(); }
 
             });
@@ -1062,8 +1076,10 @@ function setEventMess(){
 <div data-role="tabs" id="tabs">
     <div data-role="navbar">
         <ul>
-           <li><a href=#map data-ajax="false">MAP</a></li>
-           <li><a href=#voice data-ajax="false">Voice in Chat</a></li>
+       %#    <li><a href=#map data-ajax="false">MAP</a></li>
+       %#    <li><a href=#voice data-ajax="false">Voice in Chat</a></li>
+           <li><a href=#map >MAP</a></li>
+           <li><a href=#voice >Voice in Chat</a></li>
         </ul>
     </div> <!-- navbar -->
     <div id="map">
@@ -1074,6 +1090,7 @@ function setEventMess(){
 %#    <button type="button" class="ui-btn " onClick="setPointMaker();">PUT Tower</button>
 %#    <button type="button" class="ui-btn " onClick="setEventTrap();">PUT EventTrap</button>
     <button type="button" class="ui-btn " onclick="Mtoggle();" id="tMaker_btn"></button>
+    <button type="button" class="ui-btn " onclick="Btoggle();" id="tBuzz_btn"></button>
     <button type="button" class="ui-btn " onclick="hangUp();" style="background-color: #ff1111; color: #ffff00">Restart</button>
    <!-- chatScreen -->
     <div style="overflow: scroll; width: 250px; height: 400px; border: 1px solid">
@@ -1118,7 +1135,7 @@ function setEventMess(){
   <div style="border: 1px solid; background-color: #bbd89e;"><text id="textarea"></text></div>
 
   </div> <!-- #map -->
-  <div id="voice">
+  <div id="voice" rel='external'>
     <object type="text/html" data="https://<%= $url_host %>/voicechat2n" style="width : 100%; height : 360px;" alt="objectに対応していない場合はこれが表示される">
   %#  <object type="text/html" data="https://<%= $url_host %>/menu/chatopen" style="width : 100%; height : 360px;" alt="objectに対応していない場合はこれが表示される">
     </object>

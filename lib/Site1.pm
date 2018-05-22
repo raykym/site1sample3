@@ -13,8 +13,8 @@ sub startup {
   $self->config(hypnotoad=>{
                        listen => ['http://*:3800'],
                        accepts => 1000,
-                       clients => 10,
-                       workers => 10,
+                       clients => 5,
+                       workers => 20,
                        proxy => 1,
                        });
 
@@ -104,6 +104,7 @@ sub startup {
 #  $bridge->websocket('/menu/maptimeline/echo')->to(controller => 'Timeline',action => 'echo');
   $bridge->websocket('/walkworld')->to(controller => 'Walkworld',action => 'echo');
   $r->websocket('/walkworldsupv')->to(controller => 'Walkworld',action => 'echo3');
+  $bridge->websocket('/wstest')->to(controller => 'Walkworld',action => 'echo2');
 
 
   # Normal route to controller
@@ -117,6 +118,7 @@ sub startup {
   $r->post('/qrcode')->to('top#qrcode'); # QRCode 
 
   $r->get('/valhara')->to('top#valhara');
+  $bridge->get('/wstestpage')->to( controller => 'walkworld' , action => 'testpage');
 
 
   $r->get('/googleauth')->to('top#googleauth'); # login short url
@@ -141,6 +143,7 @@ sub startup {
   $bridge->get('/menu/webpushlist')->to( controller => 'Login' , action => 'webpushlist');
   $bridge->post('/menu/webpushdrop')->to( controller => 'Login' , action => 'webpushdrop');
   $bridge->get('/menu/webpushdropselect')->to( controller => 'Login' , action => 'webpushdropselect');
+
 
 #  $r->get('/menu/upload')->to('filestore#upload');
   $bridge->route('/menu/upload')->to('filestore#upload');

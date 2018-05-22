@@ -109,8 +109,8 @@ function record()
         <ul id="output" data-role="listview" data-inset="true"></ul>
         </div>
     <div data-role="footer" style="backgroud: #aac78d;">
-    <a href="" data-rel="back" class="btn-inline">back</a>
-    <a href="/menu" class="btn-inline">メニュー</a>
+    <a href="" data-rel="back" class="btn-inline" rel='external'>back</a>
+    <a href="/menu" class="btn-inline" rel='external'>メニュー</a>
     </div>
 </div>
 
