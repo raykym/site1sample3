@@ -1,4 +1,4 @@
-% layout 'mobidef2';
+% layout 'mobidef2-c';
 % title 'imgview';
 <script     >
 %# scriptがあればココに

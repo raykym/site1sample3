@@ -10,11 +10,20 @@ var deviceIDs;
 var timerarray = [];
 var maintimerID = null;
 
-$( function(){
-      loopstart();
-  });
+%# $( function(){
+%#      loopstart();   // pageshow へ移動
+%#  });
 
-function loopstart(){
+window.addEventListener ('load', function () {
+        maintimerID = window.setInterval( function() {
+            var fn = timerarray.shift();
+                fn;
+                timerarray.push(fn);  // 再度戻す
+        },0);
+
+}, false);
+
+function loopstart(){       // addEventListenerに移行
         // timer objectを繰り返し実行する
         maintimerID = window.setInterval( function() {
             var fn = timerarray.shift();
@@ -55,7 +64,7 @@ function changecam() {
     }
  %#   member();
  %#   var reloadmember = {"type":"reloadmember"};
- %#       ws.send(JSON.stringify(reloadmember));
+ %#   ws.send(JSON.stringify(reloadmember));
 }
 
     // websocket
@@ -80,10 +89,11 @@ function wsCall(){
 
     timerarray.push(socket_wait);
 
-    timerarray.push( setInterval(function(){
+    icestat_wait = setInterval(function(){
           iceStat();
-       }, 30000)
-       );
+       }, 30000);
+
+    timerarray.push(icestat_wait);
 
     autoentry();
 
@@ -92,6 +102,7 @@ function wsCall(){
     ws.onclose = function(){
         socketReady = false;
         clearInterval(socket_wait); // 50sec dummy STOP
+        clearInterval(icesta_wait); // ついでに解除しておく
         console.log("Close:" + socketReady);
      //   alert("please Reload, Reconnect websocket!"); 
         wsCall();
@@ -217,7 +228,8 @@ function wsCall(){
          %#           console.log("sessionid:" + resline.sessionid);
          %#           console.log("connid:" + resline.connid);
 
-                    $("#userlist").append("<li><button id=opt" + resline.connid + " type='button' onclick='changecam();' ><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<video id=" + resline.connid +" autoplay controls width='350' hight='350'></video></button></li>");
+                %#    $("#userlist").append("<li><button id=opt" + resline.connid + " type='button' onclick='changecam();' ><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<video id=" + resline.connid +" autoplay controls width='350' hight='350'></video></button></li>");
+                    $("#userlist").append("<li id=opt" + resline.connid + "><div><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<video id=" + resline.connid +" autoplay controls width='350' hight='350'></video></div></li>");
 
                 } // for
 
@@ -396,8 +408,10 @@ function startvoice(deviceIDs, cameraSwitch) {
  %#   var pc_config = {"iceServers":[{"url":"turn:instance-1.backbone.site:5349","username":"debiansv","credential":"debiansvpass"}]};
 
       var pc_config = {"iceServers":[
-                              { urls: "stun:instance-1.backbone.site:5349"},
-                              { urls: "turn:instance-1.backbone.site:5349", username: "debiansv", credential: "0xb7b9c73f9cba1d0f51454edec4fac01a"},
+                            %#  { urls: "stun:stun.backbone.site:5349"},
+                                { urls: "stun:stun.backbone.site:3478"},
+                            %#  { urls: "turn:stun.backbone.site:5349", username: "debiansv", credential: "0xb7b9c73f9cba1d0f51454edec4fac01a"},
+                                { urls: "turn:stun.backbone.site:3478", username: "debiansv", credential: "debiansvpass"},
                       ]};
 
     var peer = null;
@@ -519,6 +533,11 @@ function startvoice(deviceIDs, cameraSwitch) {
  %# room名入力を受けるための処理
 $(document).on('pageshow',function () {
 
+    %# カメラデバイスの検出:
+      navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+
+    %#   loopstart();    // addEventlistenerに変更
+
       $('#roomname').focus();
 
       $('#roomname').keydown(function (e) {
@@ -534,8 +553,6 @@ $(document).on('pageshow',function () {
             ws.send(JSON.stringify(reloadmember));
             }
        });
-    %# カメラデバイスの検出:
-      navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
 }); // pageshow
 
@@ -848,27 +865,28 @@ function iceStat(){
                   <h4>使い方</h4>
                      <ul data-role="listview">
                         <li style="color: #0000ff">１．共通のroom名を入力してエンター押してください。</li>
-                        <li style="color: #0000ff">２．相手のアイコンが表示されたら、connectボタンを押して通話状態を確認して下さい。</li>
-                        <li style="color: #ff0000">３．hungUpで終了して下さい。</li>
+                        <li style="color: #0000ff">２．画像をタッチするとカメラを切り替えできます</li>
+                        <li style="color: #0000ff">３．相手のアイコンが表示されたら、connectボタンを押して通話状態を確認して下さい。</li>
+                        <li style="color: #ff0000">４．hungUpで終了して下さい。</li>
                      </ul>
                  </div>
                </div>
             </p>
- %#   <div><button id="chgcam" type="button" onclick="changecam();">Change Camera</button></div>
         <div style="border: 1px solid">
             <p>room名はわかりやすく短いものを使いましょう。</p>
             <ul id="userlist" data-role="listview" data-inset="true"></ul>
             <p><input type="text" id="roomname" placeholder="room..."></p>
   %#          <button type="button" onclick="member();">Memberlist Reload</button>
   %#          <button type="button" class="ui-btn ui-btn-inline" onclick="standby();">Standby</button>
+         <div><button id="chgcam" type="button" onclick="changecam();">Change Camera before connect</button></div>
             <button type="button" class="ui-btn ui-btn-inline" onclick="call();">Connect</button>
             <button type="button" class="ui-btn ui-btn-inline" style="color: #ff0000" onclick="hangUp();">Hang Up</button>
         </div>
         <div>
            <ul>
-             <li>5人まで同時に接続出来ます。</li>
+             <li>5人まで同時に接続出来ます。端末のスペックに影響されます</li>
              <li>音声は暗号化の影響でタイムラグが有ります。</li>
-             <li>インジケーターは接続を確認できますが、切断されても認識出来ないので、あくまで目安程度です。</li>
+             <li>インジケーターは、切断されると30秒ほどで削除されます。</li>
              <li>端末の状態で接続出来ないケースがあります。Google play等でupdateが走ると処理が重くてつながらないケースがあります。</li1>
              <li>Webpushで通知が送れます。room名を入力してチャット待機状態にしてから、左上のバーボタンを開いて、相手のemailを指定して通知が出来ます。
 </li>

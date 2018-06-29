@@ -668,7 +668,7 @@ sub NESW { deg2rad($_[0]), deg2rad( 90 - $_[1]) }
 
       # 複数クライアントに対応している為 websocket毎に stream_ioはあまり意味がないのか？送信するわけでも無いから
          $stream_io->{$id} = Mojo::IOLoop->stream($id);
-         $stream_io->{$id}->timeout(30);  # nontimeout
+         $stream_io->{$id}->timeout(12);  # nontimeout
          $self->inactivity_timeout(12000); # 12sec 
 
 } # echo

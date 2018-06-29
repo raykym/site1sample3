@@ -4,15 +4,26 @@
 
 %#if ((! navigator.webkitGetUserMedia)||(! navigator.mediaDevices.getUserMedia)) {  alert("Not Supported!!!"); }
 
-
+var roomname;
     var timerarray = [];
     var maintimerID = null;
 
-    $( function(){
-          loopstart();
-    });
+$( function(){ 
+    %# 右クリックを無効  不安定必ずしも消せない。。。
+    $('#imgchat').bind ('contextmenu',function(){});
+});
 
-function loopstart(){
+
+window.addEventListener ('load', function () {
+        maintimerID = window.setInterval( function() {
+            var fn = timerarray.shift();
+                fn;
+                timerarray.push(fn);  // 再度戻す
+        },0);
+
+}, false);
+
+function loopstart(){    // addEventlistenerに移行
         // timer objectを繰り返し実行する
         maintimerID = window.setInterval( function() {
             var fn = timerarray.shift();
@@ -49,22 +60,24 @@ function wsCall(){
 
     timerarray.push(socket_wait);
 
-    timerarray.push( setInterval(function(){
+    icestat_wait = setInterval(function(){
           iceStat();
-       }, 30000)
-       );
+       }, 30000);
+
+    timerarray.push(icestat_wait);
 
        autoentry();
 
        %# imgchat
        fetchupload = Promise.resolve();
 
-    };
+    };   // onopen
 
     ws.onclose = function(){
         console.log("WS Connection close... reconnect...");
    //     socketReady = false;
-   //     clearInterval(socket_wait); // 50sec dummy STOP
+        clearInterval(socket_wait); // 50sec dummy STOP
+        clearInterval(icestat_wait); // 
    //     console.log("Close:" + socketReady);
    //     alert("please Reload, Reconnect websocket! ADD MEMBER LIMIT BUT WEBRTC CONNECTION OK!"); 
           wsCall();
@@ -178,7 +191,8 @@ function wsCall(){
          %#           console.log("connid:" + resline.connid);
          %#           console.log("gpslocation:" + resline.gpslocation);
 
-                    $("#userlist").append("<li><button id=opt" + resline.connid + "><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<audio id=" + resline.connid +" autoplay controls></audio></button></li>");
+                %#    $("#userlist").append("<li><button id=opt" + resline.connid + "><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<audio id=" + resline.connid +" autoplay controls></audio></button></li>");
+                    $("#userlist").append("<li id=opt" + resline.connid + "><div style='background: #ffffff'><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<audio id=" + resline.connid +" autoplay controls></audio></div></li>");
                     
                 } // for
 
@@ -346,8 +360,10 @@ function startvoice() {
 %#    var pc_config = {"iceServers":[{"url":"turn:instance-1.backbone.site:5349","username":"debiansv","credential":"0xb7b9c73f9cba1d0f51454edec4fac01a"}]};
 
       var pc_config = {"iceServers":[
-                              { urls: "stun:instance-1.backbone.site:5349"},
-                              { urls: "turn:instance-1.backbone.site:5349", username: "debiansv", credential: "0xb7b9c73f9cba1d0f51454edec4fac01a"},
+                           %#   { urls: "stun:stun.backbone.site:5349"},
+                              { urls: "stun:stun.backbone.site:3478"},
+                           %#   { urls: "turn:stun.backbone.site:5349", username: "debiansv", credential: "debiansvpass"},
+                              { urls: "turn:stun.backbone.site:3478", username: "debiansv", credential: "debiansvpass"},
                       ]};
 
 
@@ -466,15 +482,41 @@ function startvoice() {
     console.log("addConnection:" + id);
   }
 
+var postForm = function(url, data) {
+        var $form = $('<form/>', {'action': url, 'method': 'post', 'target': 'blank'});
+        for(var key in data) {
+                $form.append($('<input/>', {'type': 'hidden', 'name': key, 'value': data[key]}));
+        }
+        $form.appendTo(document.body);
+        $form.submit();
+};
+
+function setMapShare(roomname){
+  %#  $('#mapshare').attr("href", "<%= $url_host %>/mapshare?room=" + roomname);
+  %#  console.log("DEBUG: set mapshare: <%= $url_host %>/mapshare?" + roomname ); 
+
+   if (! roomname ) { return ; }  //roomnameがomnameが無ければスルー
+
+   // postに書き換え
+   console.log("DEBUG: room: " + roomname );
+   window.open("",'blank');
+   var param = {'room' : roomname };
+   postForm("https://<%= $url_host %>/mapshare",param);
+
+} // setmapshare
+
 
  %# room名入力を受けるための処理
 $(document).on('pageshow',function () {
+
+   %#   loopstart();   // addEventlistener
 
       $('#roomname').focus();
 
       $('#roomname').keydown(function (e) {
         if (e.keyCode == 13 && $('#roomname').val()) {
             var chars = $('#roomname').val();
+            roomname = chars;
             var entryevt = {'entry' : chars };
             ws.send(JSON.stringify(entryevt));
             console.log("key Down echo");
@@ -775,6 +817,7 @@ function qrcodeset(){
 function autoentry(){
     //通知の場合の自動エントリー
     var rname = getRoomName();
+    roomname = rname;
     $('#roomname').val(rname);
     console.log("DEBUG: roomname: " + rname );
     if ( typeof rname != 'undefined'){
@@ -803,7 +846,7 @@ function imgupload(){
     {
         // submitされた時点で、loadイベントをbind
         $iframe.unbind().bind('load', function() {
-            var response = $iframe.contents();
+        var response = $iframe.contents();
             // responseを調べて、送信後の処理を完結させる
             console.log(response);
         });
@@ -872,23 +915,23 @@ function reloadimgkey(){
                 <button type="botton" onclick="imgupload();">upload</button>
             </form>
                <div>
-               <iframe src="" id="imgchat" name="ajaxPostImage" width="100%" hight="80%"></iframe>
+            %#   <iframe src="" id="imgchat" name="ajaxPostImage" width="100%" hight="80%"></iframe>
+                   <ul>
+                       <li>room内で1個のファイルを共有表示します。後書きが優先で残るので同時アップロードしないようにして下さい。</li>
+                       <li>・表示可能なファイルは画像(jpeg gif png)、音楽(mp3 m4a)、動画(3gp)です。</li>
+                   </ul>
                </div>
-               <ul>
-                   <li>room内で1個のファイルを共有表示します。後書きが優先で残るので同時アップロードしないようにして下さい。</li>
-                   <li>・表示可能なファイルは画像(jpeg gif png)、音楽(mp3 m4a)、動画(3gp)です。</li>
-               </il>
-         </div>
+          </div>
     <div style="color: #ff0000"><%= $msg_w %></div>
         <div style="border: 1px solid">
             <p>
                <div data-role="collapsibleset">
                 <div data-role="collapsible">
                   <h4>使い方</h4>
-                     <ul data-role="listview">
-                        <li style="color: #0000ff">１．共通のroom名を入力してエンター押してください。</li>
-                        <li style="color: #0000ff">２. 相手のアイコンが表示されたら、connectボタンを押して通話状態を確認して下さい。</li>
-                        <li style="color: #ff0000">３．hungUpで終了して下さい。</li>
+                     <ul style="color: #0000ff;" data-role="listview">
+                        <li style="color: #0000ff;">１．共通のroom名を入力してエンター押してください。</li>
+                        <li style="color: #0000ff;">２. 相手のアイコンが表示されたら、connectボタンを押して通話状態を確認して下さい。</li>
+                        <li style="color: #ff0000;">３．hungUpで終了して下さい。</li>
                      </ul>
                  </div>
                </div>
@@ -897,7 +940,7 @@ function reloadimgkey(){
             <ul id="userlist" data-role="listview" data-inset="true"></ul>
             <p><input type="text" id="roomname" placeholder="room..."></p>
     %#        <button type="button" onclick="member();">Memberlist Reload</button>
-    %#        <button type="button" class="ui-btn ui-btn-inline" onclick="standby();">Standby</button>
+            <button id='mapshare' type="button" class="ui-btn ui-btn-inline" onclick="setMapShare(roomname)" target="_blank" rel='external'>MapShare</button>
             <button type="button" class="ui-btn ui-btn-inline" onclick="call();">Connect</button>
             <button type="button" class="ui-btn ui-btn-inline" style="color: #ff0000" onclick="hangUp();">Hang Up</button>
         </div>
@@ -910,8 +953,10 @@ function reloadimgkey(){
               <li>Webpushで通知が送れます。room名を入力してチャット待機状態にしてから、左上のバーボタンを開いて、相手のemailを指定して通知が出来ます。
 </li>
            </ul>
+            %#   <div id='lockdiv'>
+                   <iframe src="/img/giphy.gif" id="imgchat" name="ajaxPostImage" width='100%' hight='100%' ></iframe>
+            %#   </div>
         </div>
-
          <div page-role="panel" id="r_panel" data-display="overlay">
          </div>
     <div data-role="footer" style="backgroud: #aac78d;">

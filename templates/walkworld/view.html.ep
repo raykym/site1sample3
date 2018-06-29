@@ -16,8 +16,6 @@
 
  N0r = 0; // 方角
 
- SencerInterval = 1000;  // シナリオループの間隔
-
  map = null ;
  mapoptions = null;
  mapobj = null;
@@ -31,9 +29,9 @@
  geo_dist_arrow = []; //arrow用
 
  gpssetID = null;
- gpsInterval = 10000; // 10secで１回GPSをチェックする。
+ gpsInterval = 10000; // 10secで１回GPSをチェックする。 #################################
 
- JSencerToggle = true; // Stoggle()を利用しない方向で常時true
+ JSencerToggle = false;  // 未使用:
  ASencerToggle = false; 
 
  setEnmyPos = 0; // enemy set counter
@@ -55,22 +53,15 @@
 
 // main?
 $(function(){
-   //SenceToggleID = window.setInterval(Senceronoff,SencerInterval);
    // 常時起動ならタイマーは不要
-//   AccelSence();
-//   JairoSence();
+   AccelSence();
+ //  JairoSence();
 //   calibration();
    $("#tMaker_btn").text("Maker ON!");
    $("#tBuzz_btn").text("Buzzer OFF!");
-   loopstart();   // gps auto start.....
+//   loopstart();   // gps auto start.....
   });
     wsCall(dumCall);
-
-function Senceronoff() {
-    AccelSence();
-    JairoSence();
-}
-
 
 // map toggle
 function Mtoggle(){
@@ -92,16 +83,6 @@ function Btoggle(){
         BuzzToggle = true;
         $("#tBuzz_btn").text("Buzzer OFF!");
     }
-}
-
-// Sencer toggle
-function Stoggle(){
-    if (SencerToggle) {
-        SencerToggle = false;
-    } else {
-        SencerToggle = true;
-    }
-    console.log("DEBUG: SencerToggle: " + SencerToggle );
 }
 
   // リセット
@@ -129,7 +110,7 @@ function hitEmure(){
                               }  // 再接続用
                 hit_tar.filter( function(element, index){
                    console.log("DEBUG: HIT " + element.userid );
-                   var hit_param = { to : element.userid, execute : uid, execemail : email };
+                   var hit_param = { to : element.userid, target : element.name, execute : uid, execemail : email };
                    ws.send( JSON.stringify(hit_param));
                    console.log("DEBUG: SEND hit_param " + JSON.stringify(hit_param));
                    delete hit_param;
@@ -200,8 +181,10 @@ function geoDistance(lat1, lng1, lat2, lng2, precision) {
 // 加速度センサー
 function AccelSence(){
     if (ASencerToggle) {    window.addEventListener("devicemotion", devicemotionHandler, true);
+         console.log("DEBUG: AccelSencer ON!");
           } else {
-                           window.removeEventListener("devicemotion", devicemotionHandler);
+                           window.removeEventListener("devicemotion", devicemotionHandler, true);
+                           console.log("DEBUG: AccelSencer OFF....");
           }
 }
 
@@ -242,7 +225,7 @@ function devicemotionHandler(event) {
                               }  // 再接続用
                 hit_tar.filter( function(element, index){
                    console.log("DEBUG: HIT " + element.userid );
-                   var hit_param = { to : element.userid, execute : uid, execemail : email };
+                   var hit_param = { to : element.userid, target : element.name, execute : uid, execemail : email };
                    ws.send( JSON.stringify(hit_param));
                    console.log("DEBUG: SEND hit_param " + JSON.stringify(hit_param));
                    delete hit_param;
@@ -271,7 +254,7 @@ function calibration() {
 function JairoSence(){
      if (JSencerToggle) {   window.addEventListener("deviceorientation", deviceorientationHandler, true);
            } else {
-                           window.removeEventListener("deviceorientation", deviceorientationHandler);
+                           window.removeEventListener("deviceorientation", deviceorientationHandler, true);
            }
 }
 
@@ -282,12 +265,12 @@ var ABSO;
 
 function deviceorientationHandler(event) {
 
-   //   console.log("DEBUG: JAIRO START!!");
+      console.log("DEBUG: JAIRO START!!");
 
-   //   console.log("DEBUG: alpha: " + event.alpha);
-   //   console.log("DEBUG: beta: " + event.beta);
-   //   console.log("DEBUG: gamma: " + event.gamma);
-   //   console.log("DEBUG: absolute: " + event.absolute);
+      console.log("DEBUG: alpha: " + event.alpha);
+      console.log("DEBUG: beta: " + event.beta);
+      console.log("DEBUG: gamma: " + event.gamma);
+      console.log("DEBUG: absolute: " + event.absolute);
 
   // X軸
     $('#event_x').text(event.beta);
@@ -374,14 +357,21 @@ function direct_distance(){
 
 }
 
+// timerをイベントリスナーに
+window.addEventListener('load', function() {
+        gpssetID = window.setInterval(keyInput,gpsInterval); // loop set
+} , false);
+
+
 // loopスタート
 function loopstart(){
-        gpssetID = window.setInterval(keyInput,gpsInterval); // loop set
+        gpssetID = window.setInterval(keyInput,gpsInterval); // loop set  イベントリスナーに移行
 }
 
 // エネミー初期化
 function enmset(){
-        var enm_url = "https://westwind.backbone.site/ghostman/gaccput" ;
+      %#  var enm_url = "https://westwind.backbone.site/ghostman/gaccput" ;
+        var enm_url = "https://westwind.backbone.site/ghostman/gaccputminion" ;
         // キックするだけ
         $.ajax({
           type : 'post',
@@ -428,7 +418,7 @@ function gpsset(aCallback){
     if (navigator.online == false ) {  wsCall(dumCall); }  // ブラウザがスリープするとws_statが判断しないので、
     getPosition(aCallback);
     direct_distance();
-    if (! gpssetID) { loopstart(); }  // idがなければ起動
+//    if (! gpssetID) { loopstart(); }  // idがなければ起動
     }
 
 
@@ -437,12 +427,16 @@ function getPosition(aCallback){
 
     var geoOptions = {
         enableHighAccuracy: true,   //高精度要求
-        timeout: 6000,          //タイムアウト(ミリ秒)
+        timeout: 3000,          //タイムアウト(ミリ秒)
         maximumAge: 0       //キャッシュ有効期限(ミリ秒)
     }
     var watchID =  navigator.geolocation.watchPosition(successCallback, errorCallback,geoOptions);
 
     function successCallback(position) {
+
+      // 前回の価:
+      var o_lat = lat;
+      var o_lng = lng;
 
           // MAP表示センター指定
           lat = position.coords.latitude;
@@ -457,7 +451,9 @@ function getPosition(aCallback){
                                           "speed": position.coords.speed
                                         }};
 
-         // console.log("GPS:" + JSON.stringify(gpslocal_pos) );
+     //     console.log("GPS:" + JSON.stringify(gpslocal_pos) );
+
+    var rundir = parseInt( geoDirection(o_lat, o_lng, lat, lng));
 
     var timerecord = Date.now();
 
@@ -477,6 +473,7 @@ function getPosition(aCallback){
                        time : timerecord,
                        icon_url : iconurl,
                        category : "USER",
+                       rundirect : rundir,
                       };
 
       //    console.log("user_stat:" + JSON.stringify(user_stat) );
@@ -517,8 +514,11 @@ function getPosition(aCallback){
                                map: mapobj,
                                title: "mySelf",
                           });
+
       
                if (typeof hit_tar[0] !== 'undefined'){
+                  ASencerToggle = true; // target iconでセンサーが入る: 
+
                   image = 'https://<%= $url_host %>/img/target_icon.png';  
                   makerobj.setMap(null);
                   makerobj = new google.maps.Marker({
@@ -527,6 +527,8 @@ function getPosition(aCallback){
                                title: "mySelf",
                                icon : image
                           });
+                  } else {
+                      ASencerToggle = false; 
                   } 
 
                    console.log("Marker:" + position.coords.latitude + "|" + position.coords.longitude);
@@ -751,15 +753,15 @@ function wsCall(aCallback){
         var unitcnt = plist_user.length + 1;
 
         if ( plist_user.length < 1 ) { 
-            unitcnt = 5;
+            unitcnt = 3;
         } else if ( plist_user.length == 2 ) {
-            unitcnt = 6;
+            unitcnt = 4;
         } else if ( plist_user.length == 3 ) {
-            unitcnt = 7;
+            unitcnt = 5;
         } else if ( plist_user.length == 4 ) {
-            unitcnt = 8;
+            unitcnt = 6;
         } else if ( plist_user.length >= 5 ) {
-            unitcnt = 10;
+            unitcnt = 7;
         }
 
         // 自動エネミーセットチェック NPCがuserunit以下なら追加で起動する
@@ -879,13 +881,13 @@ function wsCall(aCallback){
 
              }  // distobj[0].direction
 
-             console.log("DEBUG: N0r:" + N0r );
-             console.log("DEBUG: arrow:" + arrow_d );
-             console.log("-------------------------");
-             console.log("DEBUG: alpha: " + ALPHA );
-             console.log("DEBUG: beta: " + BETA );
-             console.log("DEBUG: gammma: " + GAMMA );
-             console.log("DEBUG: absolute: " + ABSO );
+          %#   console.log("DEBUG: N0r:" + N0r );
+          %#   console.log("DEBUG: arrow:" + arrow_d );
+          %#   console.log("-------------------------");
+          %#   console.log("DEBUG: alpha: " + ALPHA );
+          %#   console.log("DEBUG: beta: " + BETA );
+          %#   console.log("DEBUG: gammma: " + GAMMA );
+          %#   console.log("DEBUG: absolute: " + ABSO );
              
           %#   console.log("DEBUG: userid:" + distobj[0].userid );
           %#   console.log("DEBUG: distance:" + distobj[0].distance );
@@ -937,8 +939,10 @@ function wsCall(aCallback){
 // key input
 function keyInput(){
 
+           console.log("DEBUG: AccelSencer: " + ASencerToggle );
+
            pointget();  
-      //     AccelSence();  // on/offが切り替わる
+           AccelSence(); 
       //     JairoSence();
       //     calibration();
 

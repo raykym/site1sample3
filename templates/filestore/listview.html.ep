@@ -1,4 +1,4 @@
-% layout 'mobidef2';
+% layout 'mobidef2-c';
 % title 'upload list view';
 %#<script     >
 %# scriptがあればココに

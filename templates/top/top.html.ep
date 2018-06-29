@@ -32,7 +32,7 @@
         <div>
 %#        <h5 style="color: #000000;">このサイトはMojoliciousとJQuery mobileで作成しています。</h5>
         <h5 style="color: #550000;">このサイトの参照はGoogle Chromeでお願いします。</h5>
-        <h5 style="color: #550000;">Android 4.2以上  推奨は5.0以上 64bit環境です:</h5>
+%#        <h5 style="color: #550000;">Android 4.2以上  推奨は5.0以上 64bit環境です:</h5>
         </div>
     </div><!-- /footer -->
 </div><!-- /page -->

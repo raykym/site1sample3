@@ -36,7 +36,7 @@ function wsopen() {
 
   ws.onmessage = function (msg) {
     var res = JSON.parse(msg.data);
-   $("#output").prepend("<li><button><img src='" + res.icon_url + "' width='50' height='50'>[" + res.username + "] " + "[" + res.hms + "] " + res.text + "</button></li>");
+   $("#output").prepend("<li><div style='background: #ffffff'><img src='" + res.icon_url + "' width='50' height='50'>[" + res.username + "] " + "[" + res.hms + "] " + res.text + "</div></li>");
 
  %#      console.log("msg:" + res);
        console.log("icon_url:" + res.icon_url);

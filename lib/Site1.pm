@@ -13,8 +13,8 @@ sub startup {
   $self->config(hypnotoad=>{
                        listen => ['http://*:3800'],
                        accepts => 1000,
-                       clients => 5,
-                       workers => 20,
+                       clients => 2,
+                       workers => 50,
                        proxy => 1,
                        });
 
@@ -65,6 +65,7 @@ sub startup {
         ###sub { shift->stash->{redis} ||= Mojo::Redis2->new(url => "redis://$redisserver:6379");
         sub { state $redis = Mojo::Redis2->new(url => "redis://$redisserver:6379");
          });
+
 
 #OAuth2
    $self->plugin('OAuth2' => {
@@ -181,6 +182,7 @@ sub startup {
   $bridge->get('/videochat2')->to('chatroom#videochat2');
   $bridge->get('/videochat2n')->to('chatroom#videochat2n');
   $bridge->get('/menu/chatopen')->to('chatroom#chatopen');
+  $bridge->any('/mapshare')->to('chatroom#mapshare');
 #  $bridge->get('/voicechatspot')->to('chatroom#voicechatspot'); # 未完
 #  $bridge->get('/videochat2pc')->to('chatroom#videochat2pc');
 

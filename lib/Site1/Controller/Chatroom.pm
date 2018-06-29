@@ -839,6 +839,7 @@ sub voicechat2n {
     my $coll = $db->get_collection('elist');
     my $uid = $self->stash('uid');
 
+    # webpushの入力補助リスト
     my $res = $coll->find_one({ userid => $uid });
     my $list = $res->{elist};
     my @acclist;
@@ -888,6 +889,15 @@ sub videochat2n {
     $self->stash('acclist' => \@acclist );
 
     $self->render(msg_w => '');
+}
+
+sub mapshare {
+    my $self = shift;
+
+    my $room = $self->param('room');
+    $self->stash('room' => $room );
+
+    $self->render();
 }
 
 1;
