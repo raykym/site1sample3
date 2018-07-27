@@ -1,0 +1,325 @@
+% layout 'mobidef2';
+% title 'memoshare';
+
+<link rel="stylesheet" href="/js/jquery.cleditor.css" />
+%# <script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.cleditor.min.js"></script>
+
+<script itype="text/javascript">
+
+
+%# editor読み込み
+%#   $(document).ready(function () {$("#input").cleditor(); });
+
+var email = "<%= $email %>";
+var username = "<%= $username %>";
+var icon_url = "<%= $icon_url %>&resize=1";
+
+var tz = jstz.determine();
+
+var memberlist = new Array;
+var memlist_diff = new Array;
+
+window.onerror = function (msg, file, line, column, err) {
+    /*
+    msg: error message
+    file: file path
+    line: row number
+    column: column number
+    err: error object
+    */ 
+    alert(msg + file + ':' + line);
+};
+
+var ws = null;
+    ws = wsCall();
+
+function wsCall(){
+    ws = new WebSocket('wss://<%= $url_host %>/wsocket/webpubsubmemo');
+    console.log(" Websocket connect...");
+    return ws;
+}
+
+    ws.onopen = function(){
+        console.log('Connection opened');
+        socketReady = true;
+
+    socket_wait = setInterval(function (){
+       var dummsg = {"dummy":"dummy"};
+       ws.send(JSON.stringify(dummsg));
+       console.log("socket wait sending!");
+        }, 10000);
+
+       autoentry();
+
+    };   // onopen
+
+    ws.onclose = function(){
+        console.log("WS Connection close... reconnect...");
+          wsCall();
+    };
+
+    ws.onerror = function(){
+       alert("please Reload, Reconnect websocket!");
+    };
+
+    ws.onmessage = function(msg){
+                var evt = JSON.parse(msg.data);
+                console.log("recv: " + JSON.stringify(evt));
+
+                %# 表示用リスト
+                var memlist = evt.reslist;
+                if ( memlist ) {
+                    console.log("memlist:" + memlist);
+                }
+
+                %# dummyが来たらパス
+                if ( evt.dummy ){
+                    return;
+                }
+
+            %#    if ( evt.text ) {
+            %#        %# echo responce
+            %#        evttext = evt.text;                    
+            %#        res = evttext.join("\n");
+            %#        $("#input").text(res);
+            %#        return;
+            %#    }
+
+                if ( evt.resmemo ) {
+                    %# getmemoのreplay
+                    $('#input').empty();
+                    res = evt.resmemo;
+                //    $("#display").text(res);
+                    $('#input').text(res);
+                    console.log("DEBUG: resmemo: " + res + "done...");
+                    $('#input').focus();
+                    return;
+                }
+
+                if ( evt.reloadtext ) {
+                    getmemo();
+                    console.log("DEBUG: reloadtext done");
+                    return;
+                }
+
+                if ( evt.editmemo ) {
+                    %# text edit change              
+               //     $('#input').focus();
+                    editreload();
+                    return;
+                }
+
+
+                %# リスト表示用処理
+           if (evt.type === 'reslist'){
+
+                %# memberlistは差分を追加していく
+                if ( memberlist.length == 0) {
+                                         memberlist = JSON.parse(JSON.stringify(memlist));
+                                         memlist_diff = JSON.parse(JSON.stringify(memlist)); // 初回は全部が差分
+                    } else {
+                        %# memlistからmemberlistとの重複を除外した差分リストを作成
+
+                           memlist_diff = []; // 差分リストの初期化
+
+                           var tmplist = JSON.parse(JSON.stringify(memberlist)); //copy
+                        %# memberlistとmemlistをマージしたtmplistを作成
+                               memlist.filter(function(e, i){
+                                       tmplist.push(e);
+                                    });
+
+                               console.log("DEBUG: tmplist: " + JSON.stringify(tmplist) );
+
+                         %# 重複を判定しているが、判定されないものだけを差分としてpushで取得している。
+                                tmplist.filter(function(e, i, self) {
+                                          if (self.indexOf(e) !== self.lastIndexOf(e)) return;
+                                          memlist_diff.push(e);  // returnをすり抜けたらpush
+                                    });
+                           memlist_diff_cp = JSON.parse(JSON.stringify(memlist_diff)); //copy
+                        var oldlist = new Array;
+
+                         %# 再接続の場合、リストに２重登録が起きるので、memlist_diffからmemberlist内を除外する
+                                memberlist.filter( function(e,i){
+                                 oldlist = memlist_diff_cp.filter( function( e2, i2 ){
+                                           if ( e === e2 ) {
+                                                  memlist_diff.splice(i2,1);  // memlist_diffの重複したindexを除外
+                                                  return e;
+                                                  }
+                                        });
+                                });
+
+                        console.log("DEBUG: memlist_diff: " + JSON.stringify(memlist_diff) );
+
+                        %# memberlistにdiffを追加する
+                           memlist_diff.filter(function( element, index ){
+                                    memberlist.push(element);
+                                  });
+                   } // if memberlist.length
+
+                  connid = evt.from;   // global定義
+        %#        console.log("view connid:" + connid);
+        %#        console.log("memlist.length:" + memlist.length);
+                %# oldlistを削除する。
+                  if (typeof oldlist !== 'undefined') {
+                   if ( oldlist.length != 0 ){
+                   for ( var i=0 ; i < oldlist.length ; i++){
+                       var delline = oldlist[i];
+                           delline = JSON.parse(delline);
+
+                      selid = "#opt" + delline.connid;
+                      $(selid).remove();
+                      } // for
+                   } //if length
+                   } //if defined
+
+                %# 差分だけ画面に追加する
+                for (var i=0 ; i< memlist_diff.length; i++ ){
+
+                    var resline = memlist_diff[i];
+                        resline = JSON.parse(resline);
+                    $("#userlist").append("<li id=opt" + resline.connid + "><div style='background: #ffffff'><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]</div></li>");
+
+                } // for
+
+             }  // type reslist
+
+          if (evt.type === "reloadmember"){
+              member();
+              return;
+          }
+
+     } //onmessage
+
+
+$(function() { 
+
+   //   $('#input').focus();
+
+      $('#input').keydown(function (e) {
+        if (e.keyCode == 13 && $('#input').val()) {
+            var entryevt = {'text' : $('#input').val() };
+            ws.send(JSON.stringify(entryevt));
+            console.log("send text" + JSON.stringify(entryevt));
+                entryevt = null;  // #inputの開放
+            }
+       });
+
+});
+
+
+ %# room名入力を受けるための処理
+$(document).on("pageshow", function () {
+
+      $('#roomname').focus();
+
+      $('#roomname').keydown(function (e) {
+        if (e.keyCode == 13 && $('#roomname').val()) {
+            var chars = $('#roomname').val();
+            var entryevt = {'entry' : chars };
+            ws.send(JSON.stringify(entryevt));
+            console.log("key Down echo");
+            member();
+      %# 他のメンバーへ画面のリロード指定
+            var reloadmember = {"type":"reloadmember"};
+            ws.send(JSON.stringify(reloadmember));
+            console.log("DEBUG: reloadmember: " + JSON.stringify(reloadmember) );
+            }
+       });
+
+}); // pageshow
+
+function getRoomName() { // たとえば、 URLに  ?XXXXXX  とする
+    var url = document.location.href;
+    var args = url.split('?');
+    if (args.length > 1) {
+      var room = args[1];
+      if (room != "") {
+        var encroom = decodeURI(room);
+        return encroom;
+      }
+    }
+    return ;
+  }
+
+function autoentry(){
+    //通知の場合の自動エントリー
+    var rname = "<%= $room %>";   // postではserverから受け取る
+    if ( rname == "" ) {
+        // editreloadでgetで受け取る
+        rname = getRoomName();
+    }
+    $('#roomname').val(rname);
+    console.log("DEBUG: roomname: " + rname );
+    if ( typeof rname != 'undefined'){
+            var entryevt = {'entry' : rname };
+            ws.send(JSON.stringify(entryevt));
+    }
+};
+
+function member(){
+   %# メンバーリストの更新
+    var getlist = {"getlist":"dummy"};
+    ws.send(JSON.stringify(getlist));
+    console.log("getlist:" + JSON.stringify(getlist));
+
+}
+
+function getmemo() {
+    var getmemo = {"getmemo":"dummy"};
+    ws.send(JSON.stringify(getmemo));
+    console.log("getmemo:" + JSON.stringify(getmemo));
+}
+
+function editreload() {
+    // editmemoを受信した場合の動作
+    rname = $("#roomname").val();
+    window.location.replace('https://<%= $url_host %>/memoshare?' + rname );
+}
+
+function edit() {
+    // edit可能にするために、メンバーにリロードを要求する
+    var editmemo = {"editmemo":"dummy"};
+    ws.send(JSON.stringify(editmemo));
+    console.log("editmemo:" + JSON.stringify(editmemo));
+}
+
+function writememo(){
+    var memodata = { 'writememo' : $('#input').val() , "timezone" : tz.name() };
+    ws.send(JSON.stringify(memodata));
+    console.log("DEBUG: writememo: " + JSON.stringify(memodata) );
+}
+
+</script>
+
+<div data-role="page" style="background: #80aa55">
+    <div data-role="header">
+        <a href="#panel" data-icon="bars" data-iconpos="notext">panel</a>
+        <h1>memoshare</h1>
+    </div>
+    <div style="border: 1px solid">
+        <p>room名は大文字小文字、全角半角を区別します。重複しない程度の長さで利用して下さい。</p>
+        <p><input type="text" id="roomname" placeholder="room..."></p>
+    </div>
+        <ul>
+            <li>ルーム単位でメモを共有出来ます。</li>
+            <li>基本的には一人が書き込み、エンターを押すごとに全員の画面が更新されます。</li>
+            <li>編集者が交代する場合は、edit memoを押すと全員の画面がリロードされます。</li>
+        </ul>
+   %#     <p>input
+            <textarea id="input" name="input" style="width:100% hight:100px;"></textarea>
+   %#     </p>
+   %#     <p>display
+   %#     <textarea id="display" name="display" style="width:100% hight:100px;"></textarea>
+   %#     </p>
+    <div>
+        <button type="button" class="ui-btn btn-inline" onclick="edit();">edit memo</button>
+        <button type="button" class="ui-btn btn-inline" onclick="writememo();">write memo</button>
+    </div>
+        <ul id="userlist" data-role="listview" data-inset="true"></ul>
+    <div data-role="footer" style="backgroud: #aac78d;">
+    <a href="" data-rel="back" class="btn-inline" rel='external'>back</a>
+    <a href="/menu" class="btn-inline" rel='external'>メニュー</a>
+    </div>
+</div>
+

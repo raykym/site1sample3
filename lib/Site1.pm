@@ -63,7 +63,7 @@ sub startup {
    # $self->app->redis
    $self->app->helper( redis =>
         ###sub { shift->stash->{redis} ||= Mojo::Redis2->new(url => "redis://$redisserver:6379");
-        sub { state $redis = Mojo::Redis2->new(url => "redis://$redisserver:6379");
+        sub { state $redis ||= Mojo::Redis2->new(url => "redis://$redisserver:6379");
          });
 
 
@@ -98,6 +98,7 @@ sub startup {
   $bridge->websocket('/roomentrylist')->to(controller => 'Chatroom', action => 'roomentrylist');
   $bridge->websocket('/wsocket/signaling')->to(controller => 'Webroom', action => 'signaling');
   $bridge->websocket('/wsocket/webpubsub')->to(controller => 'Webroom', action => 'webpubsub');
+  $bridge->websocket('/wsocket/webpubsubmemo')->to(controller => 'Webroom', action => 'webpubsubmemo');
   $bridge->websocket('/echopubsub')->to(controller => 'Chatroom', action => 'echopubsub');
 #  $bridge->websocket('/webnotice')->to(controller => 'Webnotice', action => 'webnotice');
 #  $bridge->websocket('/menu/rec-timeline/record')->to(controller => 'Timeline',action => 'record');
@@ -183,6 +184,7 @@ sub startup {
   $bridge->get('/videochat2n')->to('chatroom#videochat2n');
   $bridge->get('/menu/chatopen')->to('chatroom#chatopen');
   $bridge->any('/mapshare')->to('chatroom#mapshare');
+  $bridge->any('/memoshare')->to('chatroom#memoshare');
 #  $bridge->get('/voicechatspot')->to('chatroom#voicechatspot'); # 未完
 #  $bridge->get('/videochat2pc')->to('chatroom#videochat2pc');
 

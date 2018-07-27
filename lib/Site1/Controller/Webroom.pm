@@ -7,6 +7,8 @@ use Mojo::JSON qw(encode_json decode_json from_json to_json);
 use Mojo::Util qw(dumper encode decode url_escape url_unescape md5_sum sha1_sum);
 use Mojo::Redis2;
 
+use DateTime;
+
 use Data::Dumper;
 
 #my $tablename;
@@ -430,6 +432,268 @@ sub testpubsub {
     my $self = shift;
 
     $self->render();
+}
+
+sub webpubsubmemo {
+    my $self = shift;
+    # webpubsubからコピーして、memoshare用の処理を追加したもの
+
+    #cookieからsid取得 認証を経由している前提
+    my $sid = $self->cookie('site1');
+       $self->app->log->debug("DEBUG: SID: $sid");
+    my $uid = $self->stash("uid");
+    my $username = $self->stash('username');
+    my $icon = $self->stash('icon');
+    my $icon_url = $self->stash('icon_url');
+       $icon_url = "/imgcomm?oid=$icon" if (! defined $icon_url);
+
+    my $once = 1;
+
+       $self->app->plugin('Config');
+    my $redisserver = $self->app->config->{redisserver};
+
+    #redisをチャットでは別で設定する。 Site1.pmで共有設定をするとセッション数が上がりすぎてダメになる
+    my $redis ||= Mojo::Redis2->new( url => "redis://$redisserver:6379");
+
+    my $redis_memo = $self->app->redis;
+
+    #websocket 確認
+       my $wsid = $self->tx->connection;
+       $self->app->log->debug(sprintf 'Client connected: %s', $self->tx->connection);
+       $clients->{$wsid} = $self->tx;
+
+    my $recvlist = '';
+    #   my @recvArray = ( $wsid );
+       $redis_pubsub->{$wsid} ||= [ $wsid ];  # @recvArrayの置き換え
+
+    # mongodb setup   
+    my $msdb = $self->app->mongoclient->get_database('MemoShare');
+    my $mscoll;
+
+    # WebSocket接続維持設定
+          $stream_io->{$wsid} = Mojo::IOLoop->stream($self->tx->connection);
+          $stream_io->{$wsid}->timeout(70);   # 70sec timeout  ページ遷移してもセッションが残らないように
+          $self->inactivity_timeout(60000); #60sec   50secでdummyが送信される
+
+
+
+
+    # on message・・・・・・・
+       $self->on(message => sub {
+                  my ($self, $msg) = @_;
+                   # on messageはブラウザからのみ 他のユーザからはredis経由になる
+
+                   $self->app->log->debug("DEBUG: $username ws message: $msg ");
+
+                   # $msgはJSONキャラを想定
+                   my $jsonobj = from_json($msg);
+
+                  # fromとしてwsidを付加
+                      $jsonobj->{from} = $wsid;
+
+                  if ( $jsonobj->{dummy} ) {
+                       # dummy pass
+		       #  $redis->expire( \@recvArray => 300 );
+		      $redis->expire( $redis_pubsub->{$wsid} => 300 );
+                      $redis->expire( "ENTRY$recvlist$wsid" => 300 );
+                       return;
+                      }
+ 
+                  # entry pubsubの設定
+                  if ( $jsonobj->{entry} ) {
+
+                      $recvlist = $jsonobj->{entry};
+		      #  push (@recvArray, $recvlist);
+                      push (@{$redis_pubsub->{$wsid}}, $recvlist);
+		      #$redis->subscribe(\@recvArray, sub {
+		      $redis->subscribe( $redis_pubsub->{$wsid}, sub {
+                                 my ($redis, $err) = @_;
+				     #return $redis->incr(@recvArray);
+                                     return $redis->incr(@$redis_pubsub->{$wsid});
+                            });
+
+		    #$redis->expire( \@recvArray => 300 );
+                      $redis->expire( $redis_pubsub->{$wsid} => 300 );
+
+                      my $entry = { connid => $wsid, username => $username, icon_url => $icon_url };
+
+                      my $entry_json = to_json($entry);
+
+                      #list用キーの設定
+                      $redis->set("ENTRY$recvlist$wsid" => $entry_json);
+                      $redis->expire( "ENTRY$recvlist$wsid" => 300 );
+
+		      $mscoll = $msdb->get_collection("$recvlist");
+                      if ( defined $mscoll ){
+                          $self->app->log->info("DEBUG: set mscoll $recvlist");
+                      }
+
+                      $self->app->log->info("DEBUG: $username entry finish.");
+
+                        # 初回だけmemoをチェックする
+                        if ( $once == 1 ) {	  
+			      my $jsonmemo = "";
+			         $jsonmemo = $redis_memo->get("MEMO$recvlist");
+
+                              my $memojson = to_json({'resmemo' => $jsonmemo});
+			      $self->app->log->info("DEBUG: resmemo: $memojson");
+		              $clients->{$wsid}->send($memojson) if ( $jsonmemo ne "");  # 自分に送る
+
+                              $once = 0;
+                        }
+
+                     return; 
+                     }
+
+                   #エントリーメンバーを送信コマンドの受信 自分宛て
+                   if ($jsonobj->{getlist}){
+ 
+                      my $altmemberlist = [];
+
+                      my $roomkeylist = $redis->keys("ENTRY$recvlist*");
+                      my $roomkeylistdump = to_json($roomkeylist);
+                         $self->app->log->debug("DEBUG: roomkeylist: $roomkeylistdump");
+
+                      foreach my $aline (@$roomkeylist) {
+                             push (@$altmemberlist, $redis->get($aline) );
+                         }
+
+                      my $altmemberlistdump = to_json($altmemberlist);
+                         $self->app->log->debug("DEBUG: altmemberlist: $altmemberlistdump"); 
+
+                      # 配列で１ページ分を送る。
+                      my $memberlist_json = to_json( { from => $wsid, type => "reslist", reslist => $altmemberlist } );   
+ 
+                         $self->app->log->debug("DEBUG: memberlist: $memberlist_json ");
+
+                         $clients->{$wsid}->send($memberlist_json);
+
+                         return;
+                        } 
+
+                  # sendtoが含まれる場合
+                  if ($jsonobj->{sendto}){
+                     #個別送信が含まれる場合、単独送信
+
+                     my $jsontxt = to_json($jsonobj);
+                     
+                     $redis->publish( $jsonobj->{sendto} , $jsontxt);
+                  #   $redis->expire( $jsonobj->{sendto} => 300 );
+                     $self->app->log->debug("DEBUG: sendto: $jsonobj->{sendto} ");
+  
+                     return;  # スルーすると全体通信になってしまう。
+                     } 
+
+                  if ($jsonobj->{bye}){
+                         # ClientからClose
+
+                         $clients->{$wsid}->finish;
+			 return;
+                  }
+
+
+		  if ( $jsonobj->{text} ){
+			  $self->app->log->info("DEBUG: recv: $jsonobj->{text} ");
+			  # 書き込んだ人が共有領域に書き込む
+			  
+                          my $memoname = "MEMO$recvlist";
+
+		          $redis_memo->set("$memoname" => "$jsonobj->{text}");  
+			  $redis_memo->expire("$memoname" => 3600 ); # とりあえず１時間
+			  my $relmem = { 'reloadtext' => 'dummy' };
+                          my $relmemjson = to_json($relmem);
+                             $redis->publish( $recvlist , $relmemjson); # 他のメンバーに送信する
+		      return;
+	          }
+
+		  if ( $jsonobj->{getmemo} ) {
+                      # 途中参加の場合、現状のメモを送信する
+
+			  my $jsonmemo = $redis_memo->get("MEMO$recvlist");
+
+		      	  my $memojson = to_json({'resmemo' => $jsonmemo});
+			  $self->app->log->info("DEBUG: resmemo: $memojson");
+		          $clients->{$wsid}->send($memojson);  # 自分に送る
+		      return;
+                  }
+
+		  if ( $jsonobj->{editmemo} ) {
+                      # editmemoがpubsubされる  各ユーザー画面リロード
+		      delete $jsonobj->{from};
+                      my $editmemo = to_json($jsonobj);
+                      $redis->publish( $recvlist, $editmemo );
+
+                      return;
+		  }
+
+		  if ( $jsonobj->{writememo} ) {
+                      my $dt = DateTime->now( time_zone => $jsonobj->{timezone} );
+                      my $memoname = "$recvlist$dt";
+                      my $data = { "name" => $memoname , "memo" => $jsonobj->{writememo} };
+		      my $datajson = to_json($data);
+
+		         $mscoll->insert_one($data);
+
+			 $self->app->log->info("DEBUG: writememo done. $datajson");
+
+			 undef $memoname;
+			 undef $data;
+			 undef $dt;
+
+                      return;
+		  }
+
+                  # グループ内通信
+                     my $jsontext = to_json($jsonobj);
+                     $redis->publish( $recvlist , $jsontext); #websocketで受信したら、redisに送信する
+                  #   $redis->expire( $recvlist => 300 );
+                     $self->app->log->debug("DEBUG: publish: $username :  $recvlist : $jsontext");
+
+                }); # onmessageのはず。。。
+
+    # on finish・・・・・・・
+         $self->on(finish => sub{
+               my ($self, $msg) = @_;
+
+                   # redisのエントリーを削除
+		   #$redis->unsubscribe(\@recvArray);
+                   $redis->unsubscribe($redis_pubsub->{$wsid});
+                   $redis->del("ENTRY$recvlist$wsid");
+                   $redis->del("$wsid");
+
+                   delete $stream_io->{$wsid};
+                   delete $clients->{$wsid};
+		   delete $redis_pubsub->{$wsid};
+
+		   undef $mscoll;  # コレクションを解除
+
+		   $once = 1;  # 初期化
+
+         return;
+        });  # onfinish...
+
+    #redis receve
+         $redis->on(message => sub {
+                my ($redis,$mess,$channel) = @_;
+
+                   if (( $channel eq $recvlist ) || ( $channel eq $wsid )) {
+                        $self->app->log->debug("DEBUG: $username redis on message: $channel | $mess ");
+                        $clients->{$wsid}->send($mess); # redisは受信したらwebsocketで送信
+                      }
+
+          });  # redis on message
+
+        # redis受信用
+	#$redis->subscribe(\@recvArray, sub {
+        $redis->subscribe( $redis_pubsub->{$wsid}, sub {
+                 my ($redis, $err) = @_;
+		       #return $redis->incr(@recvArray);
+                       return $redis->incr(@$redis_pubsub->{$wsid});
+                 });
+	 #$redis->expire( \@recvArray => 300 );
+        $redis->expire( $redis_pubsub->{$wsid} => 300 );
+
+
 }
 
 1;

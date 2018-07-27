@@ -900,4 +900,13 @@ sub mapshare {
     $self->render();
 }
 
+sub memoshare {
+    my $self = shift;
+
+    my $room = $self->param('room');
+    $self->stash('room' => $room );
+
+    $self->render();
+}
+
 1;

@@ -1,5 +1,16 @@
 % layout 'mobidef2';
 % title 'Voice Chat';
+
+<style>
+%# 画像表示をfooterと被らないように少し下げる
+iframe{
+    position:absolute;
+    padding-top:50px;
+    width:100%;
+    height:100%;
+}
+</style>
+
 <script type="text/javascript">
 
 %#if ((! navigator.webkitGetUserMedia)||(! navigator.mediaDevices.getUserMedia)) {  alert("Not Supported!!!"); }
@@ -14,16 +25,16 @@ $( function(){
 });
 
 
-window.addEventListener ('load', function () {
-        maintimerID = window.setInterval( function() {
-            var fn = timerarray.shift();
-                fn;
-                timerarray.push(fn);  // 再度戻す
-        },0);
+%#window.addEventListener ('load', function () {
+%#        maintimerID = window.setInterval( function() {
+%#            var fn = timerarray.shift();
+%#                fn;
+%#                timerarray.push(fn);  // 再度戻す
+%#        },0);
+%#
+%#}, false);
 
-}, false);
-
-function loopstart(){    // addEventlistenerに移行
+function loopstart(){ 
         // timer objectを繰り返し実行する
         maintimerID = window.setInterval( function() {
             var fn = timerarray.shift();
@@ -497,26 +508,41 @@ function setMapShare(roomname){
 
    if (! roomname ) { return ; }  //roomnameがomnameが無ければスルー
 
+   // room名にmap_を添付する
    // postに書き換え
-   console.log("DEBUG: room: " + roomname );
+   console.log("DEBUG: room: map_" + roomname );
    window.open("",'blank');
-   var param = {'room' : roomname };
+   var tmp_name = "map_" + roomname;
+   var param = {'room' : tmp_name };
    postForm("https://<%= $url_host %>/mapshare",param);
 
 } // setmapshare
 
+function setMemoShare(roomname){
+
+   if (! roomname ) { return ; }  //roomnameがomnameが無ければスルー
+
+   // room名にmemo_を添付する
+   // postに書き換え
+   console.log("DEBUG: room: memo_" + roomname );
+   window.open("",'blank');
+   var tmp_name = "memo_" + roomname;
+   var param = {'room' : tmp_name };
+   postForm("https://<%= $url_host %>/memoshare",param);
+
+} // setMemoShare
 
  %# room名入力を受けるための処理
 $(document).on('pageshow',function () {
 
-   %#   loopstart();   // addEventlistener
+      loopstart(); 
 
       $('#roomname').focus();
 
       $('#roomname').keydown(function (e) {
         if (e.keyCode == 13 && $('#roomname').val()) {
             var chars = $('#roomname').val();
-            roomname = chars;
+            roomname = chars;   // setMapShare()に渡るように
             var entryevt = {'entry' : chars };
             ws.send(JSON.stringify(entryevt));
             console.log("key Down echo");
@@ -817,7 +843,7 @@ function qrcodeset(){
 function autoentry(){
     //通知の場合の自動エントリー
     var rname = getRoomName();
-    roomname = rname;
+    roomname = rname;   // setMapShareに渡るように
     $('#roomname').val(rname);
     console.log("DEBUG: roomname: " + rname );
     if ( typeof rname != 'undefined'){
@@ -921,6 +947,8 @@ function reloadimgkey(){
                        <li>・表示可能なファイルは画像(jpeg gif png)、音楽(mp3 m4a)、動画(3gp)です。</li>
                    </ul>
                </div>
+            <button id='mapshare' type="button" class="ui-btn ui-btn-inline" onclick="setMapShare(roomname)" target="_blank" rel='external'>MapShare</button>
+            <button id='mapshare' type="button" class="ui-btn ui-btn-inline" onclick="setMemoShare(roomname)" target="_blank" rel='external'>MemoShare</button>
           </div>
     <div style="color: #ff0000"><%= $msg_w %></div>
         <div style="border: 1px solid">
@@ -940,7 +968,6 @@ function reloadimgkey(){
             <ul id="userlist" data-role="listview" data-inset="true"></ul>
             <p><input type="text" id="roomname" placeholder="room..."></p>
     %#        <button type="button" onclick="member();">Memberlist Reload</button>
-            <button id='mapshare' type="button" class="ui-btn ui-btn-inline" onclick="setMapShare(roomname)" target="_blank" rel='external'>MapShare</button>
             <button type="button" class="ui-btn ui-btn-inline" onclick="call();">Connect</button>
             <button type="button" class="ui-btn ui-btn-inline" style="color: #ff0000" onclick="hangUp();">Hang Up</button>
         </div>
@@ -950,17 +977,17 @@ function reloadimgkey(){
              <li>音声はタイムラグが有ります。</li>
              <li>通信が切断されると30秒ほどでアイコンが消えます。相手が再接続すればそのままつながります。。</li>
              <li>イコライザーアプリを追加して、音声用に低音、高音を落とした方が聞き取りやすいかもしれません</li>
-              <li>Webpushで通知が送れます。room名を入力してチャット待機状態にしてから、左上のバーボタンを開いて、相手のemailを指定して通知が出来ます。
+             <li>Webpushで通知が送れます。room名を入力してチャット待機状態にしてから、左上のバーボタンを開いて、相手のemailを指定して通知が出来ます。
 </li>
            </ul>
-            %#   <div id='lockdiv'>
-                   <iframe src="/img/giphy.gif" id="imgchat" name="ajaxPostImage" width='100%' hight='100%' ></iframe>
-            %#   </div>
+            <div data-role='none' class='iframe'>
+                   <iframe src="/img/giphy.gif" id="imgchat" name="ajaxPostImage" width=100% hight=100% >未対応の場合この文字列が出ます</iframe>
+            </div>
         </div>
-         <div page-role="panel" id="r_panel" data-display="overlay">
-         </div>
+   %#      <div page-role="panel" id="r_panel" data-display="overlay">
+   %#      </div>
     <div data-role="footer" style="backgroud: #aac78d;">
-    <a href="" data-rel="back" class="btn-inline" rel='external'>back</a>
-    <a href="/menu" class="btn-inline" rel='external'>メニュー</a>
+        <a href="" data-rel="back" class="btn-inline" rel='external'>back</a>
+        <a href="/menu" class="btn-inline" rel='external'>メニュー</a>
     </div>
 </div>
