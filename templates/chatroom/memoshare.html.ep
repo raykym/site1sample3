@@ -307,7 +307,7 @@ function writememo(){
             <li>編集者が交代する場合は、edit memoを押すと全員の画面がリロードされます。</li>
         </ul>
    %#     <p>input
-            <textarea id="input" name="input" style="width:100% hight:100px;"></textarea>
+            <textarea id="input" name="input" style="width:100% hight:100px; resize: both"></textarea>
    %#     </p>
    %#     <p>display
    %#     <textarea id="display" name="display" style="width:100% hight:100px;"></textarea>

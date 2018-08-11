@@ -543,6 +543,7 @@ $(document).on('pageshow',function () {
       $('#roomname').keydown(function (e) {
         if (e.keyCode == 13 && $('#roomname').val()) {
             var chars = $('#roomname').val();
+            roomname = chars;   // setMemoShare()に渡るよう
             var entryevt = {'entry' : chars };
             ws.send(JSON.stringify(entryevt));
       %#      console.log("key Down echo");
@@ -815,6 +816,8 @@ function pushcall(){
 function autoentry(){
     //通知の場合の自動エントリー
     var rname = getRoomName();
+    roomname = rname;   // setMapShareに渡るように
+    $('#roomname').val(rname);
     console.log("DEBUG: roomname: " + rname );
     if ( typeof rname != 'undefined'){
             var entryevt = {'entry' : rname };
@@ -840,6 +843,29 @@ function iceStat(){
         }  // if conntext
     }  // for
 }  // iceStat
+
+var postForm = function(url, data) {
+        var $form = $('<form/>', {'action': url, 'method': 'post', 'target': 'blank'});
+        for(var key in data) {
+                $form.append($('<input/>', {'type': 'hidden', 'name': key, 'value': data[key]}));
+        }
+        $form.appendTo(document.body);
+        $form.submit();
+};
+
+function setMemoShare(roomname){
+
+   if (! roomname ) { return ; }  //roomnameがomnameが無ければスルー
+
+   // room名にmemo_を添付する
+   // postに書き換え
+   console.log("DEBUG: room: memo_" + roomname );
+   window.open("",'blank');
+   var tmp_name = "memo_" + roomname;
+   var param = {'room' : tmp_name };
+   postForm("https://<%= $url_host %>/memoshare",param);
+
+} // setMemoShare
 
 </script>
 
@@ -882,6 +908,7 @@ function iceStat(){
             <button type="button" class="ui-btn ui-btn-inline" onclick="call();">Connect</button>
             <button type="button" class="ui-btn ui-btn-inline" style="color: #ff0000" onclick="hangUp();">Hang Up</button>
         </div>
+            <button id='mapshare' type="button" class="ui-btn ui-btn-inline" onclick="setMemoShare(roomname)" target="_blank" rel='external'>MemoShare</button>
         <div>
            <ul>
              <li>5人まで同時に接続出来ます。端末のスペックに影響されます</li>

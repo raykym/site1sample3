@@ -16,8 +16,8 @@ iframe{
 %#if ((! navigator.webkitGetUserMedia)||(! navigator.mediaDevices.getUserMedia)) {  alert("Not Supported!!!"); }
 
 var roomname;
-    var timerarray = [];
-    var maintimerID = null;
+var timerarray = [];
+var maintimerID = null;
 
 $( function(){ 
     %# 右クリックを無効  不安定必ずしも消せない。。。

@@ -525,10 +525,10 @@ sub webpubsubmemo {
 
 		      $mscoll = $msdb->get_collection("$recvlist");
                       if ( defined $mscoll ){
-                          $self->app->log->info("DEBUG: set mscoll $recvlist");
+                          $self->app->log->debug("DEBUG: set mscoll $recvlist");
                       }
 
-                      $self->app->log->info("DEBUG: $username entry finish.");
+                      $self->app->log->debug("DEBUG: $username entry finish.");
 
                         # 初回だけmemoをチェックする
                         if ( $once == 1 ) {	  
@@ -536,7 +536,7 @@ sub webpubsubmemo {
 			         $jsonmemo = $redis_memo->get("MEMO$recvlist");
 
                               my $memojson = to_json({'resmemo' => $jsonmemo});
-			      $self->app->log->info("DEBUG: resmemo: $memojson");
+			      $self->app->log->debug("DEBUG: resmemo: $memojson");
 		              $clients->{$wsid}->send($memojson) if ( $jsonmemo ne "");  # 自分に送る
 
                               $once = 0;
@@ -593,7 +593,7 @@ sub webpubsubmemo {
 
 
 		  if ( $jsonobj->{text} ){
-			  $self->app->log->info("DEBUG: recv: $jsonobj->{text} ");
+			  $self->app->log->debug("DEBUG: recv: $jsonobj->{text} ");
 			  # 書き込んだ人が共有領域に書き込む
 			  
                           my $memoname = "MEMO$recvlist";
@@ -612,7 +612,7 @@ sub webpubsubmemo {
 			  my $jsonmemo = $redis_memo->get("MEMO$recvlist");
 
 		      	  my $memojson = to_json({'resmemo' => $jsonmemo});
-			  $self->app->log->info("DEBUG: resmemo: $memojson");
+			  $self->app->log->debug("DEBUG: resmemo: $memojson");
 		          $clients->{$wsid}->send($memojson);  # 自分に送る
 		      return;
                   }
@@ -634,7 +634,7 @@ sub webpubsubmemo {
 
 		         $mscoll->insert_one($data);
 
-			 $self->app->log->info("DEBUG: writememo done. $datajson");
+			 $self->app->log->debug("DEBUG: writememo done. $datajson");
 
 			 undef $memoname;
 			 undef $data;

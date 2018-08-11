@@ -106,7 +106,8 @@ sub notifications {
     my $icon_url = $self->stash('icon_url');
        $icon_url = "https://westwind.backbone.site/imgcomm?oid=$icon" if (! defined $icon_url);
 
-    my $redis ||= Mojo::Redis2->new;
+  #  my $redis ||= Mojo::Redis2->new;
+    my $redis = $self->app->redis;
     my $getmess = $redis->get("$endpoint");
     my $messobj = from_json($getmess);
 
@@ -207,7 +208,8 @@ sub sendwebpush {
 
             return;
        }
-    my $redis ||= Mojo::Redis2->new;
+  #  my $redis ||= Mojo::Redis2->new;
+    my $redis = $self->app->redis;
 
     my $hash_json = to_json($hash);
 
