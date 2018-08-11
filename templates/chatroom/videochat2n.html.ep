@@ -229,7 +229,16 @@ function wsCall(){
          %#           console.log("connid:" + resline.connid);
 
                 %#    $("#userlist").append("<li><button id=opt" + resline.connid + " type='button' onclick='changecam();' ><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<video id=" + resline.connid +" autoplay controls width='350' hight='350'></video></button></li>");
-                    $("#userlist").append("<li id=opt" + resline.connid + "><div><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<video id=" + resline.connid +" autoplay controls width='350' hight='350'></video></div></li>");
+                %#    $("#userlist").append("<li id=opt" + resline.connid + "><div><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<video id=" + resline.connid +" autoplay controls width='350' hight='350'></video></div></li>");
+
+                      var Tri = i % 3;
+                      if ( Tri == 0 ) {
+                          $("#userlist").append("<div class='ui-block-a' id=opt" + resline.connid + "><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<video id=" + resline.connid +" autoplay controls width='350' hight='350'></video></div>");
+                      } else if ( Tri == 1 ) {
+                          $("#userlist").append("<div class='ui-block-b' id=opt" + resline.connid + "><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<video id=" + resline.connid +" autoplay controls width='350' hight='350'></video></div>");
+                      } else if ( Tri == 2 ) {
+                          $("#userlist").append("<div class='ui-block-c' id=opt" + resline.connid + "><img src='" + resline.icon_url + "' width='50' height='50'>[" + resline.username + "]<video id=" + resline.connid +" autoplay controls width='350' hight='350'></video></div>");
+                      }
 
                 } // for
 
@@ -900,7 +909,9 @@ function setMemoShare(roomname){
             </p>
         <div style="border: 1px solid">
             <p>room名はわかりやすく短いものを使いましょう。</p>
-            <ul id="userlist" data-role="listview" data-inset="true"></ul>
+            <div id="userlist" class="ui-grid-b ui-responsive">
+              %#  <ul id="userlist" data-role="listview" data-inset="true"></ul>
+            </div>
             <p><input type="text" id="roomname" placeholder="room..."></p>
   %#          <button type="button" onclick="member();">Memberlist Reload</button>
   %#          <button type="button" class="ui-btn ui-btn-inline" onclick="standby();">Standby</button>
@@ -913,6 +924,7 @@ function setMemoShare(roomname){
            <ul>
              <li>5人まで同時に接続出来ます。端末のスペックに影響されます</li>
              <li>音声は暗号化の影響でタイムラグが有ります。</li>
+             <li>PCで参照する場合は、参加者がそろったところでリロードすると、グリッドで並び直し出来ます。</li>
              <li>インジケーターは、切断されると30秒ほどで削除されます。</li>
              <li>端末の状態で接続出来ないケースがあります。Google play等でupdateが走ると処理が重くてつながらないケースがあります。</li1>
              <li>Webpushで通知が送れます。room名を入力してチャット待機状態にしてから、左上のバーボタンを開いて、相手のemailを指定して通知が出来ます。

@@ -150,11 +150,19 @@ function sendSubscriptionToServerForDelete(subscrption) {
         <h3>ようこそ、<%= $username %>さん</h3>
         <p>このサイトは、サイト構築の習作として構築しています。文言やイメージなど統一性もありませんが、機能を追加しながら実験する為のサイトです。</p>
         <h2><%= $msg %></h2>
-    <a href="#" id="push_regist"  onclick="subscribe()" class="ui-btn" rel="external" style="display:none">通知登録して！！！！</a>
-    <a href="#" id="push_delete"  onclick="unsubscribled()" class="ui-btn" rel="external" style="display:none">通知登録消して！！！！</a>
-        <a href="/walkworld/view" class="ui-btn" data-transition="flip" rel="external">散歩World</a>
+        <div class="ui-grid-b ui-responsive">
+            <div class="ui-grid-soro"><a href="#" id="push_regist"  onclick="subscribe()" class="ui-btn ui-corner-all" rel="external" style="display:none">通知登録して！！！！</a></div>
+            <div class="ui-grid-soro"><a href="#" id="push_delete"  onclick="unsubscribled()" class="ui-btn ui-corner-all" rel="external" style="display:none">通知登録消して！！！！</a></div>
+            <div class="ui-grid-soro"><a href="/walkworld/view" class="ui-btn ui-corner-all" data-transition="flip" rel="external">散歩World</a></div>
+            <div class="ui-block-a"><a href="/menu/chatopen" class="ui-btn ui-corner-all" data-transition="flip" rel="external">オープンチャット</a></div>
+            <div class="ui-block-b"><a href="/voicechat2n" class="ui-btn ui-corner-all" data-transition="flip" rel="external">VoiceChat</a></div>
+            <div class="ui-block-c"><a href="/videochat2n" class="ui-btn ui-corner-all" data-transition="flip" rel="external">VideoChat</a></div>
+            <div class="ui-block-a"><a href="/menu/webpushqrcode" class="ui-btn ui-corner-all" data-transition="flip" rel="external">Webpush QRcode</a></div>
+            <div class="ui-block-b"><a href="/menu/upload" class="ui-btn ui-corner-all" data-transition="flip" rel="external">ファイルアップロード</a></div>
+            <div class="ui-block-c"><a href="/menu/settings" class="ui-btn ui-corner-all" data-transition="flip">設定変更</a></div>
+        </div>
+
 %#        <a href="/testhtml/rewrite_walkgame.html" class="ui-btn" data-transition="flip" rel="external">散歩ゲーム</a>
-        <a href="/menu/chatopen" class="ui-btn" data-transition="flip" rel="external">オープンチャット</a>
   %#      <a href="/menu/chatroom" class="ui-btn ui-btn-inline" data-transition="flip" rel="external">チャット(websocket test)</a>
 %#        <a href="/menu/chatroomdb" class="ui-btn" data-transition="flip" rel="external">チャット(mongoDB base)</a>
 %#        <a href="/menu/chatroompg" class="ui-btn ui-btn-inline" data-transition="flip" rel="external">チャット(mongoDB base pubsub)</a>
@@ -165,13 +173,8 @@ function sendSubscriptionToServerForDelete(subscrption) {
 %#        <a href="/voicechat" class="ui-btn ui-btn-inline" data-transition="flip" rel="external">VoiceChat(OPEN CHANNEL)</a>
 %#        <a href="/videochat" class="ui-btn ui-btn-inline" data-transition="flip" rel="external">VideoChat(OPEN CHANNEL)</a>
 %#        <p>room名を知っているメンバーだけで接続出来ます</p>
-        <a href="/voicechat2n" class="ui-btn" data-transition="flip" rel="external">VoiceChat</a>
-        <a href="/videochat2n" class="ui-btn" data-transition="flip" rel="external">VideoChat</a>
-        <a href="/menu/webpushqrcode" class="ui-btn" data-transition="flip" rel="external">Webpush QRcode</a>
-        <div></div>
+%#        <div></div>
 %#        <a href="/menu/mirror" class="ui-btn" data-transition="flip" rel="external">ミラー(Video TEST)</a>
-        <a href="/menu/upload" class="ui-btn" data-transition="flip" rel="external">ファイルアップロード</a>
-        <a href="/menu/settings" class="ui-btn" data-transition="flip">設定変更</a>
 
     </div>
     <div data-role="footer" style="backgroud: #aac78d;">
