@@ -6,7 +6,7 @@
 
 <div data-role="page" style="background: #80aa55">
     <div><h3>ThisSite</h3></div>
-    <div style="color: #ff0000"><%= $msg %></div>
+%#    <div style="color: #ff0000"><%= $msg %></div>
         <div style="border: 1px solid">
 
 

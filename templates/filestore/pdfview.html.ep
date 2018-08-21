@@ -6,9 +6,12 @@
 
 <div data-role="page" style="background: #80aa55">
     <div><h3>ThisSite</h3></div>
-    <div style="color: #ff0000"><%= $msg %></div>
+  %#  <div style="color: #ff0000"><%= $msg %></div>
         <div style="border: 1px solid">
-        <div><object data="/imgload?oid=<%= $oid %>" type="application/pdf" width="320" hight="240"></object></div>
+      %#  <div><iframe src="/imgload?oid=<%= $oid %>" width="100%" hight="100%"></iframe></div>
+      %#  <div><object data="/imgload?oid=<%= $oid %>" type='application/pdf' width="320" hight="240"></object></div>
+        <div><object data="/imgload?oid=<%= $oid %>" width="100%" hight="100%" ></object></div>
+      %#  <div><embed data="/imgload?oid=<%= $oid %>"></embed></div>
         <div>
             ファイル名：<%= $filename %> | 登録日付：<%= $datetime %>
             <form method="post" action="/menu/fileviewact" enctype="multipart/form-data" data-ajax="false">

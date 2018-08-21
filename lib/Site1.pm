@@ -5,6 +5,7 @@ use Mojolicious::Plugin::OAuth2;
 use MongoDB;
 use Mango;
 use Mojo::Redis2;
+use Mojo::mysql;
 
 sub startup {
   my $self = shift;
@@ -13,8 +14,8 @@ sub startup {
   $self->config(hypnotoad=>{
                        listen => ['http://*:3800'],
                        accepts => 1000,
-                       clients => 2,
-                       workers => 50,
+                       clients => 100,
+                       workers => 10,
                        proxy => 1,
                        });
 
@@ -36,6 +37,13 @@ sub startup {
        }
       );
   } # else
+
+  # $self->app->mysql->db
+  $self->app->helper( mysql => 
+      sub {
+           my $config = $self->plugin('Config');
+              Mojo::mysql->strict_mode("mysql://sitedata:sitedatapass\@$config->{dbhost}/sitedata");
+      });
 
    # mongodb SSL option
   # my $mongooption = { ssl => {
@@ -79,6 +87,7 @@ sub startup {
                     },
                fix_get_token => 1,
                   });
+	  #
 
   # Router
   my $r = $self->routes;
@@ -148,7 +157,7 @@ sub startup {
 
 
 #  $r->get('/menu/upload')->to('filestore#upload');
-  $bridge->route('/menu/upload')->to('filestore#upload');
+  $bridge->route('/menu/upload')->to('filestore#upload');  # route????
   $bridge->post('/menu/uploadact')->to('filestore#uploadact');
 
 ## listbridgeへ移行  $bridge->get('/menu/listview')->to('filestore#listview');

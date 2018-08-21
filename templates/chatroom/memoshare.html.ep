@@ -290,6 +290,12 @@ function writememo(){
     console.log("DEBUG: writememo: " + JSON.stringify(memodata) );
 }
 
+function writepdf(){
+    var memodata = { 'writepdf' : 'dummy' , "timezone" : tz.name() };
+    ws.send(JSON.stringify(memodata));
+    console.log("DEBUG: writepdf: " + JSON.stringify(memodata) );
+}
+
 </script>
 
 <div data-role="page" style="background: #80aa55">
@@ -302,12 +308,13 @@ function writememo(){
         <p><input type="text" id="roomname" placeholder="room..."></p>
     </div>
         <ul>
-            <li>ルーム単位でメモを共有出来ます。</li>
+            <li>ルーム単位でメモを共有出来ます。(ホワイトボードのイメージです）</li>
             <li>基本的には一人が書き込み、エンターを押すごとに全員の画面が更新されます。</li>
             <li>編集者が交代する場合は、edit memoを押すと全員の画面がリロードされます。</li>
+            <li>入力モードになると画面が更新されなくなるので edit memo で画面をリロードしてください。</li>
         </ul>
    %#     <p>input
-            <textarea id="input" name="input" style="width:100% hight:100px; resize: both"></textarea>
+            <textarea id="input" name="input" style="width:360px hight:100px; resize: both"></textarea>
    %#     </p>
    %#     <p>display
    %#     <textarea id="display" name="display" style="width:100% hight:100px;"></textarea>
@@ -315,6 +322,7 @@ function writememo(){
     <div>
         <button type="button" class="ui-btn btn-inline" onclick="edit();">edit memo</button>
         <button type="button" class="ui-btn btn-inline" onclick="writememo();">write memo</button>
+        <button type="button" class="ui-btn btn-inline" onclick="writepdf();">write pdf into filestore</button>
     </div>
         <ul id="userlist" data-role="listview" data-inset="true"></ul>
     <div data-role="footer" style="backgroud: #aac78d;">

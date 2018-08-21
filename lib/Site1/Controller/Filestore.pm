@@ -196,15 +196,20 @@ sub imgload {
 
        $sth_getimag->execute($oid,$uid);
     my $res = $sth_getimag->fetchrow_hashref();
+   #  Mojo::mysql test
+   #  my $sth_getimag;
+   #    $sth_getimag = $self->app->mysql->db->query($config->{sql_getimag}, $oid,$uid);
+   #  my $res = $sth_getimag->hash;
 
        #結果が取れない場合エラーを表示
        return $self->render(text => 'error') if (! defined $res);
 
     my $extention = $types->detect($res->{mime});
 
-    $self->res->headers->content_disposition("attachment; filename=$res->{filename};");
-
-    $self->render(data => $res->{data},format => $extention);
+    #  $self->res->headers->content_disposition("attachment; filename=$res->{filename};");
+       $self->res->headers->content_disposition("inline; filename=$res->{filename};");
+       $self->res->headers->content_type("$res->{mime}");
+       $self->render(data => $res->{data}, format => $extention);
 }
 
 sub imgcomm {
@@ -285,10 +290,11 @@ sub fileview {
         }
     #pdf
     if ($mime =~ /pdf/ ){
-        return $self->render(template => 'filestore/pdfview',msg => '');
+	    #  return $self->render(template => 'filestore/pdfview',msg => '');
+        return $self->render(template => 'filestore/pdfview');
         }
     
-    $self->render(msg => '');
+	#  $self->render(msg => '');
 }
 
 sub fileviewact {
@@ -311,13 +317,27 @@ sub fileviewact {
     # data以外を取得
     my $res = $sth_getfile->fetchrow_hashref;
 
+    my $mime = $res->{mime};
+
        $self->stash('oid' => $oid_url );
        $self->stash('filename' => $res->{filename});
        $self->stash('mime' => $res->{mime});
        $self->stash('datetime' => $res->{datetime});
        $self->stash('comment' => $res->{comment});
 
-    $self->render(template => 'filestore/imgview',msg => '');
+       #  $self->render(template => 'filestore/imgview',msg => '');  #書き換えるとimagviewに成ってしまう
+    # 画像
+    if ($mime =~ /jpg|jpeg|png|gif/ ){
+        return $self->render(template => 'filestore/imgview',msg => '');
+        }
+    # 動画、音楽
+    if ($mime =~ /mpeg|3gp|mp4|m4a|mpg|realtext|mp3|octet-stream/ ){
+        return $self->render(template => 'filestore/videview',msg => '');
+        }
+    #pdf
+    if ($mime =~ /pdf/ ){
+        return $self->render(template => 'filestore/pdfview',msg => '');
+        }
 }
 
 sub delfileview {
@@ -493,19 +513,19 @@ sub getfileimg {
       $self->app->log->debug("DEBUG: oid: $oid content-type: $mimetype");
       $self->app->log->debug("DEBUG: filename: $filename");
 
-   if ($mimetype =~ /pdf/) {
+#   if ($mimetype =~ /pdf/) {
       # pdfだけはファイルに落としてから配信させる。
-       my $assetfile = Mojo::Asset::File->new;    #小さなファイルを扱うと表示ができなくなる。ファイルハンドルは使わず、メモリ上で処理できると、表示が出来るようになった。 が、今度は一度で確実に表示出来ない。。。 undefをきちんと組み込んだら動くようになった。
-          binmode($assetfile->handle);
-          $bucket->download_to_stream($oid,$assetfile->handle);
+#       my $assetfile = Mojo::Asset::File->new;    #小さなファイルを扱うと表示ができなくなる。ファイルハンドルは使わず、メモリ上で処理できると、表示が出来るようになった。 が、今度は一度で確実に表示出来ない。。。 undefをきちんと組み込んだら動くようになった。
+#          binmode($assetfile->handle);
+#          $bucket->download_to_stream($oid,$assetfile->handle);
 
-          $self->res->headers->content_disposition("attachment; filename=$filename;");
-          $self->res->headers->content_type('application/pdf');
-          $self->res->content->asset($assetfile);
-          $self->rendered(200);
+#          $self->res->headers->content_disposition("attachment; filename=$filename;");
+#          $self->res->headers->content_type('application/pdf');
+#          $self->res->content->asset($assetfile);
+#          $self->rendered(200);
 
-          return;
-   } # if mimetype
+#          return;
+#   } # if mimetype
 
 
    my $stream = $bucket->open_download_stream($oid);
@@ -514,18 +534,18 @@ sub getfileimg {
       $self->res->headers->header("Access-Control-Allow-Origin" => 'https://westwind.backbone.site' );
 
       $filename = encode_utf8($filename);
-      $self->res->headers->content_disposition("attachment; filename=$filename;");
+      #  $self->res->headers->content_disposition("attachment; filename=$filename;");
+      $self->res->headers->content_disposition("inline; filename=$filename;");
+      $self->res->headers->content_type("$mimetype");
 
 use Mojolicious::Types;
    my $types = Mojolicious::Types->new;
    my $extention = $types->detect($mimetype);
-#      $self->render(data => $assetfile->slurp, format => $extention);
       $self->render(data => $imgdata, format => $extention);
 
    undef $resobj;
    undef $oid;
    undef $mimetype;
-#   undef $assetfile;
    undef $extention;
    undef $types;
 

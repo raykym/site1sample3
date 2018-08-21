@@ -8,6 +8,7 @@ use Mojo::Util qw(dumper encode decode url_escape url_unescape md5_sum sha1_sum)
 use Mojo::Redis2;
 
 use DateTime;
+use PDF::API2;
 
 use Data::Dumper;
 
@@ -591,7 +592,6 @@ sub webpubsubmemo {
 			 return;
                   }
 
-
 		  if ( $jsonobj->{text} ){
 			  $self->app->log->debug("DEBUG: recv: $jsonobj->{text} ");
 			  # 書き込んだ人が共有領域に書き込む
@@ -642,6 +642,182 @@ sub webpubsubmemo {
 
                       return;
 		  }
+
+		  if ( $jsonobj->{writepdf} ) {
+		      $self->app->log->info("DEBUG: write pdf start");
+                      # memoをpdfに変換して、filestoreに書き込む
+                      my $dt = DateTime->now( time_zone => $jsonobj->{timezone} );
+                      my $memoname = "$recvlist$dt";
+	              my $memotext = $redis_memo->get("MEMO$recvlist");
+
+                      my $jsonmemo = $redis_memo->get("MEMO$recvlist");
+                      my $roomkeylist = $redis->keys("ENTRY$recvlist*");
+		      my @memberlist;
+
+		      # member nameを取得
+                      foreach my $aline (@$roomkeylist) {
+                             push (@memberlist, $redis->get($aline) );
+                         }
+                      
+		      my $authers = join(';',@memberlist);
+
+                      my $pdf = PDF::API2->new();
+                      my $p_num = 0;
+                      my @pages =();  # page配列
+                         push(@pages,$pdf->page($p_num));
+                         $pages[0]->mediabox("A4");
+
+                      #フォントオブジェクトを生成
+                      my $font = $pdf->cjkfont("KozGo");
+
+                      #テキストオブジェクト？を生成
+                      my @ptext = (); # textのpage配列
+                         push(@ptext, $pages[0]->text());
+                      #テキストの位置を設定
+                      my $s = 50;
+                      my $e = 750;
+                      my $max_width = 500;
+                         $ptext[0]->translate($s, $e);
+
+                      #フォントとサイズを設定
+                      my $fsize = 12;
+                         $ptext[0]->font($font, $fsize);
+
+                      # ファイルに落とさないと以下の情報は消える ->ファイルハンドラでデータだけ扱うので無意味
+                      $pdf->info(
+                            'Author'       => "$authers",
+                            'CreationDate' => "$dt->ymd('-') . 'T' . $dt->hms(':')",
+                            'Creator'      => "Webroom.pm",
+                            'Producer'     => "PDF::API2",
+                            'Title'        => "$memoname",
+                            'Subject'      => "Memo page",
+                            );
+		      my %info = {
+                            'Author'       => "$authers",
+                            'CreationDate' => "$dt->ymd('-') . 'T' . $dt->hms(':')",
+                            'Creator'      => "Webroom.pm",
+                            'Producer'     => "PDF::API2",
+                            'Title'        => "$memoname",
+                            'Subject'      => "Memo page",
+		            };
+
+                      my @lines = split(/\n/,$memotext);  #改行で分割
+
+                      my @editline;  # 幅調整後の配列
+
+                      foreach my $line (@lines){
+                          my @row = split(//,$line);  # 1行を1文字に分割
+                          my $words = "";
+
+                          # 改行のみを空白として追加する
+                          if (!@row ){
+                              @row = ( " " );
+                          }
+
+                          # 改行幅が,ページよりも大きい場合は折り返す
+                          foreach my $char (@row){
+                              $words .= $char;
+                              my $width_chk = $ptext[0]->advancewidth($words);
+                              if ( ( $s + $width_chk) > $max_width ){
+                                  push(@editline, $words);
+                                  $words = "";
+                              }
+                             #my $w = $s + $width_chk;
+                             #   say "$e : $w";
+                             #say $words;
+                          } #for @row
+                          push(@editline, $words) if ( $words ne "" );
+                       } # for @lines
+
+                       my $pcount = int( ($#editline + 1 ) / 60 ); # 1page 60rows
+                       say "pcount: $pcount";
+
+                       # 2page目以降を作成
+                       for ( my $i=1; $i <= $pcount; $i++){
+                           say "page $i";
+                           push(@pages,$pdf->page($i));
+                           $pages[$i]->mediabox("A4");
+
+                           push(@ptext, $pages[$i]->text());
+                           $ptext[$i]->translate($s, $e);
+                           $ptext[$i]->font($font, $fsize);
+                       }
+
+                       # editlineをページ毎に分割
+                       my @peditline = (); #2次元配列
+                       for ( my $i=0; $i <= $pcount; $i++) {
+                           my @tmp = splice(@editline,0,60);
+                           push(@peditline,\@tmp);
+                          #  say @tmp;
+                       }
+
+                       #テキストを描写
+                       my $p = $pcount;   # 逆算しないと末尾のページに書き込んでしまう  
+                       foreach my $editline_p (@peditline){
+                           foreach my $words (@$editline_p){
+                           #       say "words: $words";
+                               $ptext[$p]->text($words);
+                               $ptext[$p]->cr(-$fsize);
+                           }
+                           $p--;  #ページ増加
+                       }
+
+                       my $file = Mojo::Asset::File->new;
+		          $file->tmpdir('/tmp');
+		       binmode($file->handle);
+
+                       #$pdf->saveas("test.pdf");
+                       $pdf->saveas($file->handle);
+
+		       $file->contains(%info); # 効かない
+		       $file->move_to("$memoname.pdf");  # ファイル名を設定
+
+		  #   my $chk = $file->is_file;
+		  #    $self->app->log->info("DEBUG: is_file: $chk ");
+		  #    undef $chk;
+
+
+		  $self->app->log->info("DEBUG: write pdf intermission!!!!!");
+		       
+		       my $ua = Mojo::UserAgent->new;
+		          $ua->cookie_jar->ignore( sub { 1 } );
+
+			  # cookie偽装
+                          $ua->cookie_jar->add(
+                                             Mojo::Cookie::Response->new(
+                                                 name   => 'site1',
+                                                 value  => "$sid",
+                                                 domain => 'westwind.backbone.site',
+                                                 path   => '/',
+                                                 httponly => 'true'
+                                               )
+                                             );
+
+                        my $tx = $ua->post('https://westwind.backbone.site/menu/uploadact'
+			      => { Accept => 'image/*' }
+		              => form => { 'filename' => { 'file' => $file,
+						           'Content-Type' => 'application/pdf' 
+						   }}); 
+
+                        if ( $tx->success ) {
+                           $self->app->log->info("DEBUG: ua uploadact post ok!");
+                        } else {
+                           $self->app->log->info("DEBUG: uploadact post fail!!!!");
+			}
+
+		      $self->app->log->info("DEBUG: write pdf end");
+
+                      undef $file;
+                      undef $ua;
+                      undef $pdf;
+                      undef @editline;
+                      undef @pages;
+                      undef @ptext;
+                      undef @lines;
+                      undef @peditline;
+                      undef $p;
+
+		  }  # if writememo
 
                   # グループ内通信
                      my $jsontext = to_json($jsonobj);
