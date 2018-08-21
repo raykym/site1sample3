@@ -12,6 +12,7 @@
       %#  <div><object data="/imgload?oid=<%= $oid %>" type='application/pdf' width="320" hight="240"></object></div>
         <div><object data="/imgload?oid=<%= $oid %>" width="100%" hight="100%" ></object></div>
       %#  <div><embed data="/imgload?oid=<%= $oid %>"></embed></div>
+        <div>pdfはダウンロードした方が読みやすかったりします。</div>
         <div>
             ファイル名：<%= $filename %> | 登録日付：<%= $datetime %>
             <form method="post" action="/menu/fileviewact" enctype="multipart/form-data" data-ajax="false">

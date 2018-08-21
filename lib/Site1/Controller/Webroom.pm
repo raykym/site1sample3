@@ -644,7 +644,7 @@ sub webpubsubmemo {
 		  }
 
 		  if ( $jsonobj->{writepdf} ) {
-		      $self->app->log->info("DEBUG: write pdf start");
+		      $self->app->log->debug("DEBUG: write pdf start");
                       # memoをpdfに変換して、filestoreに書き込む
                       my $dt = DateTime->now( time_zone => $jsonobj->{timezone} );
                       my $memoname = "$recvlist$dt";
@@ -769,18 +769,18 @@ sub webpubsubmemo {
                        #$pdf->saveas("test.pdf");
                        $pdf->saveas($file->handle);
 
-		       $file->contains(%info); # 効かない
-		       $file->move_to("$memoname.pdf");  # ファイル名を設定
+		    #   $file->contains(%info); # 効かない
+		       $file->move_to("/tmp/$memoname.pdf");  # ファイル名を設定 
 
 		  #   my $chk = $file->is_file;
 		  #    $self->app->log->info("DEBUG: is_file: $chk ");
 		  #    undef $chk;
 
 
-		  $self->app->log->info("DEBUG: write pdf intermission!!!!!");
+		  $self->app->log->debug("DEBUG: write pdf intermission!!!!!");
 		       
 		       my $ua = Mojo::UserAgent->new;
-		          $ua->cookie_jar->ignore( sub { 1 } );
+		          $ua->cookie_jar->ignore( sub { 1 } );  # Coolieの自動生成停止
 
 			  # cookie偽装
                           $ua->cookie_jar->add(
@@ -796,7 +796,7 @@ sub webpubsubmemo {
                         my $tx = $ua->post('https://westwind.backbone.site/menu/uploadact'
 			      => { Accept => 'image/*' }
 		              => form => { 'filename' => { 'file' => $file,
-						           'Content-Type' => 'application/pdf' 
+						           'Content-Type' => 'application/pdf',
 						   }}); 
 
                         if ( $tx->success ) {
@@ -805,7 +805,9 @@ sub webpubsubmemo {
                            $self->app->log->info("DEBUG: uploadact post fail!!!!");
 			}
 
-		      $self->app->log->info("DEBUG: write pdf end");
+		      $self->app->log->debug("DEBUG: write pdf end");
+
+		      system("rm -rf /tmp/$memoname.pdf"); #テンポラリの削除
 
                       undef $file;
                       undef $ua;
