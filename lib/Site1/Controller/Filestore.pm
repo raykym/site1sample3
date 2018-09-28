@@ -78,7 +78,7 @@ sub uploadact {
     my $checkdate = DateTime->now();
 
            $sth_uploadfile->execute($oid,$filename,$data,$uid,$mimetype,$checkdate);
-           $self->app->log->debug("DEBUG: write $oid");
+           $self->app->log->info("DEBUG: write $oid $filename");
            #コメントカラムはこの時は除外
             my $dum = { dummy => {filename => '確認中・・・'}};
             $self->stash(filelist => $dum); # 登録直後の再読み込み対応
@@ -538,6 +538,7 @@ sub getfileimg {
       $self->res->headers->content_disposition("inline; filename=$filename;");
       $self->res->headers->content_type("$mimetype");
 
+      # formatオプションを使っているが、動作していない。
 use Mojolicious::Types;
    my $types = Mojolicious::Types->new;
    my $extention = $types->detect($mimetype);

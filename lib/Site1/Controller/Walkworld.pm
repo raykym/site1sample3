@@ -105,6 +105,8 @@ my $debugCount = 3;
 
 my $timelineredis = 0; # 1: redis map{$userid}  0: mongodb
 
+my $userobj = {};  # websocketでのユーザー情報も$id毎に用意する必要がある
+
 # WalkWorld websocket endpoint
 sub echo {
     my $self = shift;
@@ -145,7 +147,7 @@ sub echo {
 
     my $delay_once->{$id} = 'true';
 
-    my $userobj;  #接続しているuserの位置情報
+       $userobj->{$id} = "";  #接続しているuserの位置情報
 
     #NPCへのチャットはバイパスする mognodb負荷軽減
       if ( ! ( $username =~ /npcuser/ ) || ( $username =~ /searchnpc/ )) {  
@@ -166,7 +168,7 @@ sub echo {
                                                         '$nearSphere' => {
                                                         '$geometry' => {
                                                          type => "point",
-                                                             "coordinates" => [ $userobj->{loc}->{lng} , $userobj->{loc}->{lat} ]},
+                                                             "coordinates" => [ $userobj->{$id}->{loc}->{lng} , $userobj->{$id}->{loc}->{lat} ]},
                                                         '$minDistance' => 0,
                                                         '$maxDistance' => 1000
                                       }},
@@ -206,12 +208,12 @@ sub echo {
            }
 
            # chatデータの判定用データ Makerでも利用
-           $userobj = clone($jsonobj) if ( $jsonobj->{userid} eq $userid ); 
+           $userobj->{$id} = clone($jsonobj) if ( $jsonobj->{userid} eq $userid ); 
 
        #walkchat処理
            if ( defined $jsonobj->{chat} ){
 
-         #      if ( $userobj->{category} eq "NPC" ) { return; }   #NPC bypass
+         #      if ( $userobj->{$id}->{category} eq "NPC" ) { return; }   #NPC bypass
 
                my  $chatevt = clone($jsonobj);
 
@@ -473,7 +475,7 @@ sub echo {
                        my $makerpoint = from_json($redis->get($aline));
 
                       # radianに変換
-                      my @s_p = NESW($userobj->{loc}->{lng}, $userobj->{loc}->{lat});
+                      my @s_p = NESW($userobj->{$id}->{loc}->{lng}, $userobj->{$id}->{loc}->{lat});
                       my @t_p = NESW($makerpoint->{loc}->{lng}, $makerpoint->{loc}->{lat});
                       my $t_dist = great_circle_distance(@s_p,@t_p,6378140);
                        
@@ -598,6 +600,7 @@ sub echo {
         delete $clients->{$id};
         delete $stream_io->{$id};
         delete $delay_once->{$id};
+	delete $userobj->{$id};
 
         #redis unsubscribe
         $redis->unsubscribe(\@chatArray);
@@ -634,11 +637,11 @@ sub NESW { deg2rad($_[0]), deg2rad( 90 - $_[1]) }
                          return;
                       }
                       
-                      if ( $userobj->{category} eq "NPC" ) { return; } # NPCへはチャットを送信しない
+                      if ( $userobj->{$id}->{category} eq "NPC" ) { return; } # NPCへはチャットを送信しない
 
-                      if ( defined $userobj ){
+                      if ( defined $userobj->{$id} ){
                       # radianに変換
-                      my @s_p = NESW($userobj->{loc}->{lng}, $userobj->{loc}->{lat});
+                      my @s_p = NESW($userobj->{$id}->{loc}->{lng}, $userobj->{$id}->{loc}->{lat});
                       my @t_p = NESW($messobj->{loc}->{lng}, $messobj->{loc}->{lat});
                       my $t_dist = great_circle_distance(@s_p,@t_p,6378140);
 
@@ -649,7 +652,7 @@ sub NESW { deg2rad($_[0]), deg2rad( 90 - $_[1]) }
                             }
                           }
 
-                      } # if $userobj
+                      } # if $userobj->{$id}
                        return;
                   });  # redis on message
 
@@ -815,8 +818,8 @@ sub echo3 {
 
            if ( defined($jsonobj->{username})) {
 
-# usernamから360件(1hour)ほど検索して返す "upointlist"
-              my $unamegetlist = $timelinelog->find({ "name" => $jsonobj->{username} })->sort({ "_id" => -1 })->limit(360);
+# usernamから720件(1hour/5sec)ほど検索して返す "upointlist"
+              my $unamegetlist = $timelinelog->find({ "name" => $jsonobj->{username} })->sort({ "_id" => -1 })->limit(720);
               my @unamepointlist = $unamegetlist->all;
               my $listhash = { 'upointlist' => \@unamepointlist };
               my $jsontext = to_json($listhash);

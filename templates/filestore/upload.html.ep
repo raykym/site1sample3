@@ -17,7 +17,8 @@
         <form method="post" action="/menu/uploadact" enctype="multipart/form-data" data-ajax="false">
             <div>ファイルサイズは100MBが上限です！！</div>
          %#   <input type="file" name="filename" id="upfile" onchange="filesizeCheck(this.id)">
-            <input type="file" accept="image/*;capture=camera" name="filename" id="upfile" onchange="filesizeCheck(this.id)">
+         %#   <input type="file" accept="image/*;capture=camera" name="filename" id="upfile" onchange="filesizeCheck(this.id)">
+            <input type="file" accept="*/*;capture=camera" name="filename" id="upfile" onchange="filesizeCheck(this.id)">
             <input type="submit" value="upload">
         </form>
         <a href="/menu/listview" data-transition="flip" class="ui-btn ui-corner-all">List view</a>

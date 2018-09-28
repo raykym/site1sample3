@@ -17,6 +17,15 @@ sub top {
 sub mainmenu {
     my $self = shift;
 
+    my $SID = $self->cookie('site1');
+    my $email = $self->stash('email');
+
+    # logに今の認証を記録しておく
+       $self->app->log->info("SID: $SID  EMAIL: $email now. ");
+
+       undef $SID;
+       undef $email;
+
     #sessionidの付け替えを確率で行う チェックはせずに強制書き換え
     if ( int(rand(100)) == int(rand(100)) ) {
 
@@ -35,7 +44,8 @@ sub mainmenu {
                     my $oldsid = $reshash->{sessionid};
 
                     $self->app->redis->del("SID$oldsid");
-                    $self->app->log->debug("DELETE redis cache SID$oldsid   maybe error but ok.");
+		    # access.logにcookieを出力したので、追跡可能なように書き換え時に記録を残す
+                    $self->app->log->info("DELETE redis cache SID$oldsid   maybe error but ok. email: $email");
                     undef $oldsid;
                  }
 
@@ -46,6 +56,8 @@ sub mainmenu {
 
             # cookie設定
             $self->cookie('site1'=>"$sid",{httponly => 'true',path => '/', max_age => '31506000', secure => 'true'});
+
+	    $self->app->log->info("NEW SID $sid email: $email");
 
             undef $sid;
             undef $sth_signup_update;

@@ -2,7 +2,7 @@
 % title 'memoshare';
 
 <link rel="stylesheet" href="/js/jquery.cleditor.css" />
-%# <script src="/js/jquery.min.js"></script>
+%#  <script src="/js/jquery.min.js"></script>
 <script src="/js/jquery.cleditor.min.js"></script>
 
 <script itype="text/javascript">
@@ -45,6 +45,11 @@ function wsCall(){
         socketReady = true;
 
     socket_wait = setInterval(function (){
+       %# test cleditor
+       %#  var entryevt = {'text' : $('#input').val() };
+       %#  ws.send(JSON.stringify(entryevt));
+       %#  console.log("send text interval" + JSON.stringify(entryevt));
+
        var dummsg = {"dummy":"dummy"};
        ws.send(JSON.stringify(dummsg));
        console.log("socket wait sending!");
@@ -310,8 +315,8 @@ function writepdf(){
         <ul>
             <li>ルーム単位でメモを共有出来ます。(ホワイトボードのイメージです）</li>
             <li>基本的には一人が書き込み、エンターを押すごとに全員の画面が更新されます。</li>
-            <li>編集者が交代する場合は、edit memoを押すと全員の画面がリロードされます。</li>
-            <li>入力モードになると画面が更新されなくなるので edit memo で画面をリロードしてください。</li>
+            <li>編集者が交代する場合は、editer changeを押すと全員の画面がリロードされます。</li>
+            <li>入力モードになると画面が更新されなくなるので editer change で画面をリロードしてください。</li>
         </ul>
    %#     <p>input
             <textarea id="input" name="input" style="width:360px hight:100px; resize: both"></textarea>
@@ -320,8 +325,8 @@ function writepdf(){
    %#     <textarea id="display" name="display" style="width:100% hight:100px;"></textarea>
    %#     </p>
     <div>
-        <button type="button" class="ui-btn btn-inline" onclick="edit();">edit memo</button>
-        <button type="button" class="ui-btn btn-inline" onclick="writememo();">write memo</button>
+        <button type="button" class="ui-btn btn-inline" onclick="edit();">editer change</button>
+    %#    <button type="button" class="ui-btn btn-inline" onclick="writememo();">write memo</button>
         <button type="button" class="ui-btn btn-inline" onclick="writepdf();">write pdf into filestore</button>
     </div>
         <ul id="userlist" data-role="listview" data-inset="true"></ul>

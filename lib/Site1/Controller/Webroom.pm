@@ -626,6 +626,7 @@ sub webpubsubmemo {
                       return;
 		  }
 
+		  # 未使用
 		  if ( $jsonobj->{writememo} ) {
                       my $dt = DateTime->now( time_zone => $jsonobj->{timezone} );
                       my $memoname = "$recvlist$dt";
@@ -683,7 +684,7 @@ sub webpubsubmemo {
                       my $fsize = 12;
                          $ptext[0]->font($font, $fsize);
 
-                      # ファイルに落とさないと以下の情報は消える ->ファイルハンドラでデータだけ扱うので無意味
+                      # 何処で参照出来るのか不明 
                       $pdf->info(
                             'Author'       => "$authers",
                             'CreationDate' => "$dt->ymd('-') . 'T' . $dt->hms(':')",

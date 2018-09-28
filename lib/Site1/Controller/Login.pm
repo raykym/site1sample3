@@ -388,7 +388,7 @@ sub signinact {
    undef $config;
    undef $sth_signup_update;
 
-  $self->redirect_to('/menu'); #/menuへリダイレクト
+   $self->redirect_to('/menu'); #/menuへリダイレクト
 }
 
 sub menusettings {

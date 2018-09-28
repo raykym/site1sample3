@@ -6,7 +6,7 @@
             <h1>ThisSite 52through</h1>
             <div id="topasign" class="ui-conent">
             %#    <a href="/signup" data-rel="dialog" data-transition="flip" class="ui-btn ui-corner-all ">SignUp</a>
-            %#    <a href="/signin" data-rel="dialog" data-transition="flip" class="ui-btn ui-corner-all ">SignIn</a>
+                <a href="/signin" data-rel="dialog" data-transition="flip" class="ui-btn ui-corner-all ">SignIn</a>
             %#    <a href="https://westwind.backbone.site/googleauth" data-rel="dialog" data-transition="flip" class="ui-btn ui-corner-all" rel="external">Google+</a>
                 <a href="<%= $url_orig %>googleauth" data-rel="dialog" data-transition="flip" class="ui-btn ui-corner-all" rel="external">Google+</a>
             </div>
