@@ -85,7 +85,7 @@ sub startup {
                #   token_url => "https://accounts.google.com/o/oauth2/token",
                   token_url => "https://www.googleapis.com/oauth2/v4/token",
                     },
-               fix_get_token => 1,
+		    #  fix_get_token => 1,
                   });
 	  #
 

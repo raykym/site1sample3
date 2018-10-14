@@ -6,6 +6,7 @@ use MIME::Base64::URLSafe; # icon用oidを渡す
 use Mojo::JSON qw(from_json to_json encode_json decode_json);
 use Mojo::Util qw(dumper);
 use Mojo::URL;
+use Mojo::IOLoop;
 
 # 独自パスを指定して自前モジュールを利用
 use lib '/home/debian/perlwork/mojowork/server/site1/lib/Site1';
@@ -524,8 +525,8 @@ sub oauth2callback {
   my $sth_signup_update_gp2 = $self->app->dbconn->dbh->prepare("$config->{sql_signup_update_gp2}");
   my $sth_chk_signup = $self->app->dbconn->dbh->prepare("$config->{sql_chk_signup}");
 
-
-    $self->delay(
+  my $delay = Mojo::IOLoop->delay(
+#     $self->delay(
         sub {
          my $delay = shift;
              my $args = {redirect_uri => "https://westwind.backbone.site/oauth2callback"};
@@ -591,6 +592,7 @@ sub oauth2callback {
 
            $self->redirect_to("/menu");
          });
+ #  $delay->wait;
 }
 
 sub webpushallow {
