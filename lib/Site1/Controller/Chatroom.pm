@@ -740,16 +740,16 @@ sub echopubsub {
 
        # 書き込みを通知
        $resmsg = to_json($resmsg); #JSONにしてから 
-       $self->redis->publish( $recvlist , $resmsg );
+       $self->app->redis->publish( $recvlist , $resmsg );
 
     #pubsubから受信設定 共通なので基本ブロードキャスト
-          $self->redis->subscribe( $recvlist , sub {
+          $self->app->redis->subscribe( $recvlist , sub {
             my ($redis, $err) = @_;
                 return $redis->incr($recvlist);
           });
-          $self->redis->expire( $recvlist => 3600 );
+          $self->app->redis->expire( $recvlist => 3600 );
 
-       $self->redis->on(message => sub {
+       $self->app->redis->on(message => sub {
                 my ($redis,$mess,$channel) = @_;
                 
                 if ( $channel eq $recvlist ){
@@ -781,7 +781,7 @@ sub echopubsub {
                      $resmsg = to_json($resmsg);
                    $self->app->log->debug("resmsg: $resmsg");
                    # 書き込みを通知 念の為後置のunless
-                   $self->redis->publish( $recvlist , $resmsg ) unless ($chkmsg->{dummy});
+                   $self->app->redis->publish( $recvlist , $resmsg ) unless ($chkmsg->{dummy});
                   });
 
     # on finish・・・・・・・
@@ -800,9 +800,9 @@ sub echopubsub {
                                      };
                    $resmsg = to_json($resmsg);
                # 書き込みを通知
-               $self->redis->publish($recvlist => $resmsg);
+               $self->app->redis->publish($recvlist => $resmsg);
 
-               $self->redis->unsubscribe('$recvlist');
+               $self->app->redis->unsubscribe('$recvlist');
 
               });
 
