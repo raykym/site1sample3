@@ -11,6 +11,8 @@ use Encode;
 #use Mojo::Pg;
 #use Mojo::Pg::PubSub;
 
+use Mojo::Redis2;
+
 # 独自パスを指定して自前モジュールを利用
 use lib '/home/debian/perlwork/mojowork/server/site1/lib/Site1';
 use Inputchk;
@@ -708,6 +710,11 @@ sub echopubsub {
     my $self = shift;
  # chatopen用 
  # redisで書き換え
+ 
+    $self->app->plugin('Config');
+    my $redisserver = $self->app->config->{redisserver};
+ 
+    my $redis = Mojo::Redis2->new(url => "redis://$redisserver:6379");
 
     #param 認証をパスしているので、username,icon_url,emailがstashされている。
     my $username = $self->stash('username');
@@ -740,16 +747,16 @@ sub echopubsub {
 
        # 書き込みを通知
        $resmsg = to_json($resmsg); #JSONにしてから 
-       $self->app->redis->publish( $recvlist , $resmsg );
+       $redis->publish( $recvlist , $resmsg );
 
     #pubsubから受信設定 共通なので基本ブロードキャスト
-          $self->app->redis->subscribe( $recvlist , sub {
+          $redis->subscribe( $recvlist , sub {
             my ($redis, $err) = @_;
                 return $redis->incr($recvlist);
           });
-          $self->app->redis->expire( $recvlist => 3600 );
+          $redis->expire( $recvlist => 3600 );
 
-       $self->app->redis->on(message => sub {
+       $redis->on(message => sub {
                 my ($redis,$mess,$channel) = @_;
                 
                 if ( $channel eq $recvlist ){
@@ -781,7 +788,7 @@ sub echopubsub {
                      $resmsg = to_json($resmsg);
                    $self->app->log->debug("resmsg: $resmsg");
                    # 書き込みを通知 念の為後置のunless
-                   $self->app->redis->publish( $recvlist , $resmsg ) unless ($chkmsg->{dummy});
+                   $redis->publish( $recvlist , $resmsg ) unless ($chkmsg->{dummy});
                   });
 
     # on finish・・・・・・・
@@ -800,9 +807,9 @@ sub echopubsub {
                                      };
                    $resmsg = to_json($resmsg);
                # 書き込みを通知
-               $self->app->redis->publish($recvlist => $resmsg);
+               $redis->publish($recvlist => $resmsg);
 
-               $self->app->redis->unsubscribe('$recvlist');
+               $redis->unsubscribe('$recvlist');
 
               });
 
